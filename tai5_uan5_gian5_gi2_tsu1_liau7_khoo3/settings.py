@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    '資料庫',
+    '臺灣言語資料庫',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -7,24 +7,31 @@ class 編修(models.Model):
 	版本 = models.CharField(max_length = 100, null = True)
 	結果 = models.ForeignKey('self', related_name = '+',
 		null = True)
-	起來時間 = models.DateField(auto_now_add = True)
+	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def __str__(self):
+		return str(self.流水號)
 	class Meta():
 		db_table = '編修'
 
 class 文字(models.Model):
 	文字種類 = (('字詞', '字詞'), ('語句', '語句'), ('章表冊', '章表冊'))
-	流水號 = models.ForeignKey('編修', primary_key = True)
+	流水號 = models.ForeignKey('編修', related_name = '文字',
+		primary_key = True)
 	來源 = models.CharField(max_length = 100)
 	種類 = models.CharField(max_length = 10, choices = 文字種類)
 	腔口 = models.CharField(max_length = 100)
 	地區 = models.CharField(max_length = 100)
 	年代 = models.IntegerField()
-	組合 = models.TextField(null = True)
+	組合 = models.TextField(blank = True)
 	型體 = models.TextField()
-	音標 = models.TextField(null = True)
-	起來時間 = models.DateField(auto_now_add = True)
+	音標 = models.TextField(blank = True)
+	調變 = models.TextField(blank = True)
+	音變 = models.TextField(blank = True)
+	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def __str__(self):
+		return str(self.流水號)
 	class Meta():
 		db_table = '文字'
 
@@ -42,8 +49,10 @@ class 關係(models.Model):
 	乙對甲的關係類型 = models.CharField(max_length = 100)
 	關係性質 = models.CharField(max_length = 100)
 	詞性 = models.CharField(max_length = 100)
-	起來時間 = models.DateField(auto_now_add = True)
+	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def __str__(self):
+		return str(self.流水號)
 	class Meta():
 		db_table = '關係'
 
@@ -56,7 +65,9 @@ class 演化(models.Model):
 	乙對甲的演化類型 = models.CharField(max_length = 100)
 	解釋 = models.CharField(max_length = 100)
 	解釋流水號 = models.ForeignKey('編修', related_name = '解釋')
-	起來時間 = models.DateField(auto_now_add = True)
+	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def __str__(self):
+		return str(self.流水號)
 	class Meta():
 		db_table = '演化'
