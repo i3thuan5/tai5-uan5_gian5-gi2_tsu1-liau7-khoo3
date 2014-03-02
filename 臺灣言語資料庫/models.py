@@ -4,9 +4,9 @@ class 編修(models.Model):
 	編修種類 = (('文字', '文字'), ('關係', '關係'), ('演化', '演化'))
 	流水號 = models.AutoField(primary_key = True)
 	種類 = models.CharField(max_length = 10, choices = 編修種類)
-	版本 = models.CharField(max_length = 100, null = True)
+	版本 = models.CharField(max_length = 100, default = '正常')
 	結果 = models.ForeignKey('self', related_name = '+',
-		null = True)
+		null = True, default = None)
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
 	def __str__(self):
@@ -14,6 +14,12 @@ class 編修(models.Model):
 	class Meta():
 		db_table = '編修'
 
+class 資料(models.Model):
+	def save(self, *args, **kwargs):
+		if self.pk == None:
+			self.流水號 = 編修.objects.create(種類 = '文字')
+		super(文字, self).save(*args, **kwargs)
+		
 class 文字(models.Model):
 	文字種類 = (('字詞', '字詞'), ('語句', '語句'), ('章表冊', '章表冊'))
 	流水號 = models.ForeignKey('編修', related_name = '文字',
@@ -30,6 +36,10 @@ class 文字(models.Model):
 	音變 = models.TextField(blank = True)
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def save(self, *args, **kwargs):
+		if self.pk == None:
+			self.流水號 = 編修.objects.create(種類 = '文字')
+		super(文字, self).save(*args, **kwargs)
 	def __str__(self):
 		return str(self.流水號)
 	class Meta():

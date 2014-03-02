@@ -16,6 +16,8 @@ from 臺灣言語資料庫.models import 演化
 
 def 頭頁(request):
 # 	編修.objects.create().save()
+	文字a=文字(年代=22)
+	文字a.save()
 	揣著資料 = 編修.objects.order_by('流水號')
 	字串=''
 	for 資料 in 揣著資料:
