@@ -16,14 +16,20 @@ from 臺灣言語資料庫.models import 演化
 
 def 頭頁(request):
 # 	編修.objects.create().save()
-	文字a=文字(年代=22)
-	文字a.save()
-	揣著資料 = 編修.objects.order_by('流水號')
-	字串=''
-	for 資料 in 揣著資料:
-		字串=str(資料.__dict__)
-		print(資料.文字)
-		for 文字逝 in 資料.文字.all():
-			print(文字逝.年代)
-		print(資料.__dict__)
-	return HttpResponse(字串)
+# 	文字a=文字(年代=22)
+# 	文字a.save()
+# 	print(文字a.流水號)
+# 	關係.objects.create(甲流水號=文字a.流水號,
+# 					乙流水號=文字a.流水號,)
+	全部資料 = 編修.objects.order_by('流水號')[:100]
+# 	字串=[]
+# 	for 資料 in 揣著資料:
+# 		for 文字逝 in 資料.文字.all():
+# 			字串.append(str(資料))
+# 			字串.append(str(文字逝.年代))
+# 	return HttpResponse(' '.join(字串))
+	版 = loader.get_template('臺灣言語資料庫/全部資料.html')
+	文 = RequestContext(request, {
+		'全部資料': 全部資料,
+	})
+	return HttpResponse(版.render(文))

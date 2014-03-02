@@ -10,17 +10,21 @@ class 編修(models.Model):
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
 	def __str__(self):
-		return str(self.流水號)
+		return ' '.join([
+			str(self.流水號) , self.種類
+			])
 	class Meta():
 		db_table = '編修'
 
 class 資料(models.Model):
 	def save(self, *args, **kwargs):
 		if self.pk == None:
-			self.流水號 = 編修.objects.create(種類 = '文字')
-		super(文字, self).save(*args, **kwargs)
-		
-class 文字(models.Model):
+			self.流水號 = 編修.objects.create(種類 = self.__class__.__name__)
+		return super(資料, self).save(*args, **kwargs)
+	class Meta:
+		abstract = True
+
+class 文字(資料):
 	文字種類 = (('字詞', '字詞'), ('語句', '語句'), ('章表冊', '章表冊'))
 	流水號 = models.ForeignKey('編修', related_name = '文字',
 		primary_key = True)
@@ -36,16 +40,17 @@ class 文字(models.Model):
 	音變 = models.TextField(blank = True)
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
-	def save(self, *args, **kwargs):
-		if self.pk == None:
-			self.流水號 = 編修.objects.create(種類 = '文字')
-		super(文字, self).save(*args, **kwargs)
+# 	def save(self, *args, **kwargs):
+# 		if self.pk == None:
+# 			self.流水號 = 編修.objects.create(種類 = self.__class__.__name__)
+# 		super(文字, self).save(*args, **kwargs)
 	def __str__(self):
-		return str(self.流水號)
+		return ' '.join([
+			str(self.流水號) , self.來源 , self.型體])
 	class Meta():
 		db_table = '文字'
 
-class 關係(models.Model):
+class 關係(資料):
 	'仝字，用佇無仝言語層', '反義', '近義'
 	'文讀層'
 	'''會當替換	
@@ -62,22 +67,26 @@ class 關係(models.Model):
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
 	def __str__(self):
-		return str(self.流水號)
+		return ' '.join(
+			[str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
+			, self.乙對甲的關係類型
+			])
 	class Meta():
 		db_table = '關係'
 
-class 演化(models.Model):
+class 演化(資料):
 	'俗音', '合音'
 	流水號 = models.ForeignKey('編修', related_name = '演化',
 		primary_key = True)
 	甲流水號 = models.ForeignKey('編修', related_name = '演化甲')
 	乙流水號 = models.ForeignKey('編修', related_name = '演化乙')
 	乙對甲的演化類型 = models.CharField(max_length = 100)
-	解釋 = models.CharField(max_length = 100)
 	解釋流水號 = models.ForeignKey('編修', related_name = '解釋')
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
 	def __str__(self):
-		return str(self.流水號)
+		return ' '.join([
+			str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
+			, self.乙對甲的演化類型])
 	class Meta():
 		db_table = '演化'
