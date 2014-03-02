@@ -9,6 +9,14 @@ class 編修(models.Model):
 		null = True, default = None)
 	收錄時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	def 有對著資料無(self):
+		return self.對著幾个資料() == 1
+	def 對著幾个資料(self):
+		數量=0
+		for 項,目 in self.編修種類:
+			數量+=getattr(self,項).count()
+		return 數量
+# 		return self.文字.count() + self.關係.count() + self.演化.count()
 	def __str__(self):
 		return ' '.join([
 			str(self.流水號) , self.種類
@@ -20,7 +28,8 @@ class 資料(models.Model):
 	def save(self, *args, **kwargs):
 		if self.pk == None:
 			self.流水號 = 編修.objects.create(種類 = self.__class__.__name__)
-		return super(資料, self).save(*args, **kwargs)
+		if self.流水號.有對著資料無() == False:
+			super(資料, self).save(*args, **kwargs)
 	class Meta:
 		abstract = True
 
