@@ -59,8 +59,8 @@ WSGI_APPLICATION = 'tai5_uan5_gian5_gi2_tsu1_liau7_khoo3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '臺灣言語工具',
-            'USER': '臺灣言語工具',
+        'NAME': '臺灣言語資料庫',
+            'USER': '臺灣言語資料庫',
             'PASSWORD': 'gian5_gi2',
             'HOST': 'localhost',
             'PORT': '',

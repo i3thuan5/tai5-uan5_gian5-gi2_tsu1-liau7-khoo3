@@ -9,6 +9,8 @@ class 編修(models.Model):
 		null = True)
 	起來時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	class Meta():
+		db_table = '編修'
 
 class 文字(models.Model):
 	文字種類 = (('字詞', '字詞'), ('語句', '語句'), ('章表冊', '章表冊'))
@@ -24,7 +26,7 @@ class 文字(models.Model):
 	起來時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
 	class Meta():
-		db_table = 'whatever_schema'
+		db_table = '文字'
 
 class 關係(models.Model):
 	'仝字，用佇無仝言語層', '反義', '近義'
@@ -42,6 +44,8 @@ class 關係(models.Model):
 	詞性 = models.CharField(max_length = 100)
 	起來時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	class Meta():
+		db_table = '關係'
 
 class 演化(models.Model):
 	'俗音', '合音'
@@ -54,3 +58,5 @@ class 演化(models.Model):
 	解釋流水號 = models.ForeignKey('編修', related_name = '解釋')
 	起來時間 = models.DateField(auto_now_add = True)
 	修改時間 = models.DateField(auto_now = True)
+	class Meta():
+		db_table = '演化'
