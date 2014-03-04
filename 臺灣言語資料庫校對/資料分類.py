@@ -1,6 +1,6 @@
 from django.db.models import Q
-from 臺灣言語資料庫.models import 編修
-from 臺灣言語工具.資料庫.欄位資訊 import 閩南語
+from 臺灣言語資料庫.模型 import 編修
+from 臺灣言語資料庫.欄位資訊 import 閩南語
 
 class 資料分類:
 	def 揣出檢查字音的資料(腔, 來源):

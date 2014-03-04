@@ -9,10 +9,10 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Q
-from 臺灣言語資料庫.models import 編修
-from 臺灣言語資料庫.models import 文字
-from 臺灣言語資料庫.models import 關係
-from 臺灣言語資料庫.models import 演化
+from 臺灣言語資料庫.模型 import 編修
+from 臺灣言語資料庫.模型 import 文字
+from 臺灣言語資料庫.模型 import 關係
+from 臺灣言語資料庫.模型 import 演化
 from 臺灣言語資料庫校對.資料分類 import 資料分類
 
 __資料分類 = 資料分類()
