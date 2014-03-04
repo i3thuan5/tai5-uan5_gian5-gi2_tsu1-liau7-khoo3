@@ -1,13 +1,16 @@
 from django.db import models
+from 臺灣言語資料庫.欄位資訊 import 編修種類
+from 臺灣言語資料庫.欄位資訊 import 狀況種類
+from 臺灣言語資料庫.欄位資訊 import 猶未檢查
+from 臺灣言語資料庫.欄位資訊 import 文字種類
+from 臺灣言語資料庫.欄位資訊 import 關係種類
+from 臺灣言語資料庫.欄位資訊 import 演化種類
 
-產生種類陣列 = lambda 種類:[(物件, 物件) for 物件 in 種類]
 
 class 編修(models.Model):
-	編修種類 = 產生種類陣列(['文字', '關係', '演化'])
-	狀況種類 = 產生種類陣列(['正常', '正常，免改', '正常，改過', '毋知', '愛看', '愛改'])
 	流水號 = models.AutoField(primary_key=True)
 	種類 = models.CharField(max_length=10, choices=編修種類)
-	狀況 = models.CharField(max_length=100, choices=狀況種類, default='正常')
+	狀況 = models.CharField(max_length=100, choices=狀況種類, default=猶未檢查)
 	結果 = models.ForeignKey('self', related_name='+',
 		null=True, default=None)
 	收錄時間 = models.DateField(auto_now_add=True)
@@ -37,7 +40,6 @@ class 資料(models.Model):
 		abstract = True
 
 class 文字(資料):
-	文字種類 = 產生種類陣列(['字詞', '語句', '章表冊'])
 	流水號 = models.ForeignKey('編修', related_name='文字',
 		primary_key=True)
 	來源 = models.CharField(max_length=100)
@@ -63,7 +65,6 @@ class 文字(資料):
 		db_table = '文字'
 
 class 關係(資料):
-	'仝字，用佇無仝言語層', '反義', '近義'
 	'文讀層'
 	'''會當替換	
 	白話層
@@ -74,7 +75,7 @@ class 關係(資料):
 	甲流水號 = models.ForeignKey('編修', related_name='關係甲')
 	乙流水號 = models.ForeignKey('編修', related_name='關係乙')
 	乙對甲的關係類型 = models.CharField(max_length=100)
-	關係性質 = models.CharField(max_length=100)
+	關係性質 = models.CharField(max_length=100, choices=關係種類,)
 	詞性 = models.CharField(max_length=100)
 	收錄時間 = models.DateField(auto_now_add=True)
 	修改時間 = models.DateField(auto_now=True)
@@ -87,12 +88,11 @@ class 關係(資料):
 		db_table = '關係'
 
 class 演化(資料):
-	演化種類 = 產生種類陣列(['俗音', '合音'])
 	流水號 = models.ForeignKey('編修', related_name='演化',
 		primary_key=True)
 	甲流水號 = models.ForeignKey('編修', related_name='演化甲')
 	乙流水號 = models.ForeignKey('編修', related_name='演化乙')
-	乙對甲的演化類型 = models.CharField(max_length=100)
+	乙對甲的演化類型 = models.CharField(max_length=100, choices=演化種類,)
 	解釋流水號 = models.ForeignKey('編修', related_name='解釋')
 	收錄時間 = models.DateField(auto_now_add=True)
 	修改時間 = models.DateField(auto_now=True)
