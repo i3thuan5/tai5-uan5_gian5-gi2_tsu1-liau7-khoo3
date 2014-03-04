@@ -15,4 +15,4 @@ class 資料分類:
 		愛檢查的資料 = 公家.filter(~要求)
 		return (標準資料, 愛檢查的資料)
 	def 揣出愛改的資料():
-		return 編修.objects.get(狀況='愛改')
+		return 編修.objects.filter(狀況='愛改')

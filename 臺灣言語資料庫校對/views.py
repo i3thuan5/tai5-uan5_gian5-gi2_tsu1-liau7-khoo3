@@ -15,7 +15,7 @@ from 臺灣言語資料庫.models import 關係
 from 臺灣言語資料庫.models import 演化
 from 臺灣言語資料庫校對.資料分類 import 資料分類
 
-__資料分類=資料分類()
+__資料分類 = 資料分類()
 def 最近改的資料(request):
 # 	編修.objects.create().save()
 # 	文字a=文字(年代=22)
@@ -33,9 +33,12 @@ def 最近改的資料(request):
 def 檢查猶未標的資料():
 	pass
 def 改愛改的資料(request):
-	資料 = __資料分類.揣出愛改的資料()
+	愛改資料 = __資料分類.揣出愛改的資料()[:1]
+	if 愛改資料.count() > 0:
+		文 = RequestContext(request, {
+			'愛改資料': 愛改資料[0],
+		})
+	else:
+		文 = RequestContext(request)
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
-	文 = RequestContext(request, {
-		'資料': 資料,
-	})
 	return HttpResponse(版.render(文))
