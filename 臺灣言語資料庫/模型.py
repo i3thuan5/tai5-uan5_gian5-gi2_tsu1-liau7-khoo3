@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from 臺灣言語資料庫.欄位資訊 import 編修種類
 from 臺灣言語資料庫.欄位資訊 import 狀況種類
 from 臺灣言語資料庫.欄位資訊 import 猶未檢查
@@ -30,7 +31,27 @@ class 編修(models.Model):
 	class Meta():
 		db_table = '編修'
 
+class 資料控制(QuerySet):
+	def filter_one_or_create(self, **參數):
+		資 = self.filter(**參數)
+		if 資.exists():
+			return 資.first()
+		return self.create(**參數)
+
+class 資料管理(models.Manager):
+	use_for_related_fields = True
+	def __init__(self, 控制方式=models.query.QuerySet):
+		self.控制方式 = 控制方式
+		super(資料管理, self).__init__()
+	def get_query_set(self):
+		return self.控制方式(self.model)
+	def __getattr__(self, name, *args):
+		if name.startswith("_"): 
+			raise AttributeError
+		return getattr(self.get_query_set(), name, *args) 
+
 class 資料(models.Model):
+	objects = 資料管理(資料控制)
 	def save(self, *args, **kwargs):
 		if self.pk == None:
 			self.流水號 = 編修.objects.create(種類=self.__class__.__name__)

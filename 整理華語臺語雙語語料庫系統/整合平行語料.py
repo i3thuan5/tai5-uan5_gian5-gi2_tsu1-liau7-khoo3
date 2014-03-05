@@ -154,18 +154,10 @@ class 整合平行語料:
 		return self.譀鏡.看型(章物件, 物件分詞符號=' ')
 	def 加文字(self, **參數):
 # 		print(參數)
-		揣文字=文字.objects.filter(**參數)
-		if 揣文字.exists():
-			return 揣文字.first().流水號
-		文字物件 = 文字.objects.create(**參數)
-		return 文字物件.流水號
+		return 文字.objects.filter_one_or_create(**參數).流水號
 	def 加關係(self, 甲流水號, 乙流水號, 乙對甲的關係類型, 關係性質):
-		揣關係 = 關係.objects.filter(甲流水號=甲流水號, 乙流水號=乙流水號,
-			乙對甲的關係類型=乙對甲的關係類型, 關係性質=關係性質)
-		if 揣關係.exists():
-			return 揣關係.first().流水號
-		關係物件 = 關係.objects.create(甲流水號=甲流水號, 乙流水號=乙流水號,
-			乙對甲的關係類型=乙對甲的關係類型, 關係性質=關係性質)
-		return 關係物件.流水號
+		return 關係.objects.filter_one_or_create(
+			甲流水號=甲流水號, 乙流水號=乙流水號,
+			乙對甲的關係類型=乙對甲的關係類型, 關係性質=關係性質).流水號
 if __name__ == '__main__':
 	整合平行語料()
