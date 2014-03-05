@@ -19,7 +19,7 @@ class 編修(models.Model):
 		return self.對著幾个資料() == 1
 	def 對著幾个資料(self):
 		數量 = 0
-		for 項, 目 in self.編修種類:
+		for 項, 目 in 編修種類:
 			數量 += getattr(self, 項).count()
 		return 數量
 # 		return self.文字.count() + self.關係.count() + self.演化.count()
