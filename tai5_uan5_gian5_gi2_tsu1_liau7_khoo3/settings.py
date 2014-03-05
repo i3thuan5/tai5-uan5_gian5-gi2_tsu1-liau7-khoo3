@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     '臺灣言語資料庫',
+    '臺灣言語資料庫校對',
+    '整理教育部臺灣閩南語常用詞辭典',
 )
 
 MIDDLEWARE_CLASSES = (
