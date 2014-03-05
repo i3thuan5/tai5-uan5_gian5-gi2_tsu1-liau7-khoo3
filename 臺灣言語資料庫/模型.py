@@ -76,7 +76,7 @@ class 關係(資料):
 	乙流水號 = models.ForeignKey('編修', related_name='關係乙')
 	乙對甲的關係類型 = models.CharField(max_length=100)
 	關係性質 = models.CharField(max_length=100, choices=關係種類,)
-	詞性 = models.CharField(max_length=100)
+	詞性 = models.CharField(max_length=100, blank=True)
 	收錄時間 = models.DateField(auto_now_add=True)
 	修改時間 = models.DateField(auto_now=True)
 	def __str__(self):
@@ -93,7 +93,8 @@ class 演化(資料):
 	甲流水號 = models.ForeignKey('編修', related_name='演化甲')
 	乙流水號 = models.ForeignKey('編修', related_name='演化乙')
 	乙對甲的演化類型 = models.CharField(max_length=100, choices=演化種類,)
-	解釋流水號 = models.ForeignKey('編修', related_name='解釋')
+	解釋流水號 = models.ForeignKey('編修', related_name='解釋',
+		null=True, default=None)
 	收錄時間 = models.DateField(auto_now_add=True)
 	修改時間 = models.DateField(auto_now=True)
 	def __str__(self):
