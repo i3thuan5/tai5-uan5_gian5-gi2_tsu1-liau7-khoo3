@@ -66,7 +66,7 @@ class 整合到文字():
 		# {'--tsi̍t-kuá'}
 		# 13602因
 		音空 = {''}
-		for 主編號, 屬性, 漢字, 音標, 方言差 in 揣主條目(372):
+		for 主編號, 屬性, 漢字, 音標, 方言差 in 揣主條目(1):
 # 			print('主編號',主編號)
 			try:
 	# 			print('@'.join([str(主編號), str(屬性), 漢字, 音標]))
@@ -295,7 +295,7 @@ class 整合到文字():
 								乙對甲的關係類型=近義, 關係性質=會當替換)
 			except Exception as 錯誤:
 				print(主編號, 漢字, 錯誤)
-				raise 錯誤
+# 				raise 錯誤
 # 				raise RuntimeError('{}{}{}'.format(主編號, 漢字, 錯誤))
 	def 語句調整(self, 主編號, 資料型體, 音):
 		if 音 == "sai-kong-á (面稱)":
