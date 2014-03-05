@@ -24,7 +24,6 @@ def 最近改的資料(request):
 # 	關係.objects.create(甲流水號=文字a.流水號,
 # 					乙流水號=文字a.流水號,)
 	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:100]
-# 	全部資料 = 編修.objects.filter(狀況='正常').filter(文字__年代=22)
 	版 = loader.get_template('臺灣言語資料庫/全部資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 全部資料,
@@ -33,12 +32,9 @@ def 最近改的資料(request):
 def 檢查猶未標的資料():
 	pass
 def 改愛改的資料(request):
-	愛改資料 = __資料分類.揣出愛改的資料()[:1]
-	if 愛改資料.count() > 0:
-		文 = RequestContext(request, {
-			'愛改資料': 愛改資料[0],
+	愛改資料 = __資料分類.揣出愛改的資料()
+	文 = RequestContext(request, {
+		'愛改資料': 愛改資料.first(),
 		})
-	else:
-		文 = RequestContext(request)
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
