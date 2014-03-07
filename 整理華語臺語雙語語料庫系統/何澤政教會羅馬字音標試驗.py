@@ -15,24 +15,19 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 """
-from 臺灣言語工具.字詞組集句章.解析整理工具.集內組照排 import 集內組照排
+import unittest
+from 臺灣言語工具.字詞組集句章.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
+from 整理華語臺語雙語語料庫系統.何澤政教會羅馬字音標 import 何澤政教會羅馬字音標
 
-class 排標音結果:
-	組照排 = 集內組照排()
+class 何澤政教會羅馬字音標試驗(unittest.TestCase):
+	def test_何澤政教會羅馬字音標(self):
+		原音拼音 = 何澤政教會羅馬字音標
+		結果拼音 = 臺灣閩南語羅馬字拼音
+		原音語句 = 'Pang-liau5 hi5-kang2 「 Toa7-tiau5-hang7 」 siang7-khoah nng7-kong-chhioh'
+		標準結果 = 'Pang-liau5 hi5-kang2 「 Tua7-tiau5-hang7 」 siang7-khuah nng7-kong-tshioh'
+		原音章物件 = self.處理語句(原音拼音, 原音語句)
+		後來章物件 = self.處理語句(結果拼音, 標準結果)
+		self.assertEqual(原音章物件, 後來章物件)
 
-	def 照白文層排(self, 物件):
-		return self.組照排.排好(self.白文照排, 物件)
-
-	def 白文照排(self, 組物件):
-		詞物件 = 組物件.內底詞[0]
-		白 = 0
-		文 = 0
-		流水號=0
-		if hasattr(詞物件, '屬性'):
-			if self.白話層 in 詞物件.屬性:
-				白 = -詞物件.屬性[白話層]
-			if self.文讀層 in 詞物件.屬性:
-				文 = 詞物件.屬性[文讀層]
-			if '流水號' in 詞物件.屬性:
-				流水號 = 詞物件.屬性['流水號']
-		return (白, 文,流水號)
+if __name__ == '__main__':
+	unittest.main()
