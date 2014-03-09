@@ -17,8 +17,8 @@ from 臺灣言語資料庫校對.資料分類 import 資料分類
 from 臺灣言語資料庫.腔口資訊 import 閩南語
 from itertools import chain
 from 臺灣言語工具.斷詞.型音辭典 import 型音辭典
-from 臺灣言語工具.字詞組集句章.解析整理工具.拆文分析器 import 拆文分析器
-from 臺灣言語工具.字詞組集句章.解析整理工具.字物件篩仔 import 字物件篩仔
+from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.字詞組集句章.解析整理.字物件篩仔 import 字物件篩仔
 
 __資料分類 = 資料分類()
 def 最近改的資料(request):
