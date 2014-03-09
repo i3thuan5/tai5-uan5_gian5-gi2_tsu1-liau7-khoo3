@@ -90,9 +90,13 @@ def 檢查猶未標的資料(request):
 	})
 	return HttpResponse(版.render(文))
 def 改愛改的資料(request):
-	愛改資料 = __資料分類.揣出愛改的資料()
+	愛改資料 = __資料分類.揣出愛改的資料().first()
+	print('@@')
+	參考語句=__資料分類.揣出有這文字的語句(愛改資料.流水號).first()
+	print(參考語句)
 	文 = RequestContext(request, {
-		'愛改資料': 愛改資料.first(),
+		'愛改資料': 愛改資料,
+		'參考語句':參考語句
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
