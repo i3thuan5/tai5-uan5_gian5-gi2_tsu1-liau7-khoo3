@@ -43,6 +43,7 @@ __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
 __篩仔 = 字物件篩仔()
 __網仔 = 詞物件網仔()
+__譀鏡 = 物件譀鏡()
 Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
@@ -53,7 +54,7 @@ def 最近改的資料(request):
 # 	print(文字a.流水號)
 # 	關係.objects.create(甲流水號=文字a.流水號,
 # 					乙流水號=文字a.流水號,)
-	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:100]
+	全部資料 = 編修.objects.order_by('-流水號')[:10]
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 全部資料,
@@ -154,7 +155,6 @@ def 改愛改的資料(request):
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
 def 檢查改的資料(request, pk):
-	資料 = ''
 	if request.method == 'POST':
 		動作 = request.POST['動作']
 		if 動作 in [愛查, 外來詞]:
@@ -179,8 +179,8 @@ def 檢查改的資料(request, pk):
 			文字資料.pk = None
 			文字資料.來源 = 人工校對
 # 			文字資料.年代 = '103'#應該下資料的時代
-			文字資料.型體 = request.POST['型體']
-			文字資料.音標 = request.POST['音標']
+			文字資料.型體 = __譀鏡.看型(物件)
+			文字資料.音標 = __譀鏡.看音(物件)
 			文字資料.save()
 			新編修資料 = 文字資料.流水號
 			新編修資料.狀況 = 人工校對
