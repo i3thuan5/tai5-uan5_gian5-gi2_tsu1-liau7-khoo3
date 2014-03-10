@@ -106,9 +106,10 @@ def 檢查猶未標的資料(request):
 	return HttpResponse(版.render(文))
 def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
-	參考語句 = __資料分類.揣出有這文字的語句(愛改資料.流水號).first()
+	參考語句 = __資料分類.揣出有這文字的語句(閩南語,愛改資料.流水號).first()
 	Pyro4.config.SERIALIZER = 'pickle'
 	愛改文字資料 = 愛改資料.文字.first()
+	參考字物件所在=0
 	try:
 		try:
 			物件 = __分析器.產生對齊組(愛改文字資料.型體, 愛改文字資料.音標)
@@ -125,7 +126,7 @@ def 改愛改的資料(request):
 			if 對著:
 				break
 	except Exception as 錯誤:
-		raise 錯誤
+		print( 錯誤)
 	try:
 		建議結果物件 = __閩南語標音.語句斷詞標音(參考語句.音標)
 	except Exception as 錯誤:
@@ -176,9 +177,9 @@ def 檢查改的資料(request, pk):
 			新編修資料 = 文字資料.流水號
 			新編修資料.狀況 = 人工校對
 			新編修資料.save()
-			原來編修資料 = 文字.objects.get(流水號=pk)
+			原來編修資料 = 編修.objects.get(流水號=pk)
 			原來編修資料.狀況 = 改過
-			原來編修資料.結果 = 新編修資料.流水號
+			原來編修資料.結果 = 新編修資料
 			原來編修資料.save()
 			return redirect('改愛改的資料')
 		else:
