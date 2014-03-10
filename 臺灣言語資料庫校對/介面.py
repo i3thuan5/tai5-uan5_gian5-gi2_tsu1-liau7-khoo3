@@ -24,6 +24,7 @@ from 臺灣言語資料庫.欄位資訊 import 愛改
 from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 標點符號
 from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
+from django.db.models import Count
 
 __資料分類 = 資料分類()
 def 最近改的資料(request):
@@ -99,12 +100,19 @@ def 檢查猶未標的資料(request):
 	return HttpResponse(版.render(文))
 def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
-	print('@@')
 	參考語句=__資料分類.揣出有這文字的語句(愛改資料.流水號).first()
-	print(參考語句)
 	文 = RequestContext(request, {
 		'愛改資料': 愛改資料,
 		'參考語句':參考語句
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
+def 閩南語狀況(request):
+	閩南語資料 = 編修.objects.filter(文字__腔口__startswith = 閩南語)\
+		.values('狀況').annotate(數量=Count('狀況')).order_by()
+	文 = RequestContext(request, {
+		'閩南語': 閩南語資料,
+		})
+	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
+	return HttpResponse(版.render(文))
+	

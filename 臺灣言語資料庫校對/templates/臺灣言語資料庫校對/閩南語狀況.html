@@ -1,0 +1,13 @@
+{% extends "臺灣言語資料庫校對/框.html" %}
+
+{% block 內容 %}
+	<table>
+	{% for 閩南 in 閩南語 %}
+		<tr><td>
+		{{ 閩南.狀況 }}
+		</td><td>
+		{{ 閩南.數量 }}
+		</td></tr>
+	{% endfor %}
+	</table>
+{% endblock %}
