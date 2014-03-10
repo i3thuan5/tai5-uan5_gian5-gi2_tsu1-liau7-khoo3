@@ -42,7 +42,17 @@
 			<tr><td>建議結果</td><td>
 			{{ 建議結果 }}
 			</td></tr>
+			<tr><td>型體</td><td>
+			{{ 校對表格.型體 }}
+			</td></tr>
+			<tr><td>音標</td><td>
+			{{ 校對表格.音標 }}
+			</td></tr>
 		</table>
+		<form action="{% url '檢查改的資料' %}" method="post">{% csrf_token %}
+		{{ 校對表格.as_p }}
+			<input type="submit" value="確定" />
+		</form>
 	{% else %}
 		<p>恭喜喲～無資料需要改矣～～</p>
 	{% endif %}

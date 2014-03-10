@@ -32,6 +32,7 @@ import traceback
 from 臺灣言語工具.字詞組集句章.解析整理.轉物件音家私 import 轉物件音家私
 from 臺灣言語工具.字詞組集句章.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
 from 臺灣言語工具.字詞組集句章.解析整理.詞物件網仔 import 詞物件網仔
+from 臺灣言語資料庫校對.表格 import 文字校對表格
 
 __資料分類 = 資料分類()
 def 最近改的資料(request):
@@ -70,7 +71,7 @@ def 檢查猶未標的資料(request):
 	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	家私 = 轉物件音家私()
 	音標工具 = 臺灣閩南語羅馬字拼音
-	for 愛檢查 in 愛檢查的資料[:10]:
+	for 愛檢查 in 愛檢查的資料[:]:
 		文 = 愛檢查.文字.first()
 		try:
 			if 文.型體 in 標點符號 and 文.音標 in 標點符號:
@@ -91,8 +92,8 @@ def 檢查猶未標的資料(request):
 				詞物件 = 分析器.建立詞物件('')
 				詞物件.內底字.append(字物件)
 				查著的資料 = 閩南語標音.物件斷詞標音(詞物件)
-				查著的句物件=查著的資料[0]
-				詞陣列=網仔.網出詞物件(查著的句物件)
+				查著的句物件 = 查著的資料[0]
+				詞陣列 = 網仔.網出詞物件(查著的句物件)
 # 				print('查著的資料',查著的資料[0].內底集[0].內底組[0].內底詞[0].屬性)
 # 				print('詞陣列',詞陣列[0].屬性)
 				if '無佇辭典' in 詞陣列[0].屬性 and 詞陣列[0].屬性['無佇辭典']:
@@ -102,8 +103,8 @@ def 檢查猶未標的資料(request):
 			愛檢查.狀況 = 免改
 		else:
 			愛檢查.狀況 = 愛改
-# 		愛檢查.save()
-		print(物件,資料攏著)
+		愛檢查.save()
+		print(物件, 資料攏著)
 	版 = loader.get_template('臺灣言語資料庫/全部資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 愛檢查的資料[:10],
@@ -116,20 +117,34 @@ def 改愛改的資料(request):
 	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	try:
 		建議結果物件 = 閩南語標音.語句斷詞標音(參考語句.音標)
-		print(type(建議結果物件))
 	except Exception as 錯誤:
 		print(錯誤)
  		
 # 		錯誤.printStackTrace()
 		raise 錯誤
 	譀鏡 = 物件譀鏡()
+	校對表格 = 文字校對表格(instance=愛改資料.文字.first())
 	文 = RequestContext(request, {
 		'愛改資料': 愛改資料,
 		'參考語句':參考語句,
-		'建議結果':譀鏡.看型(建議結果物件[0], 物件分詞符號=' ')
+		'建議結果':譀鏡.看型(建議結果物件[0], 物件分詞符號=' '),
+		'校對表格':校對表格,
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
+def 檢查改的資料(request):
+	資料=''
+	if request.method == 'POST':
+		校對表格 = 文字校對表格(request.POST)
+		資料=str(request.POST)
+		print(request.POST,'request.POST')
+		print(request.POST['型體'],'request.POST')
+# 		if 校對表格.is_valid():
+# 			文章 = 文章表格.save()
+# 			文章.自動斷詞()
+# 			return redirect('改國語斷詞', pk=文章.pk)
+# 	else:
+	return HttpResponse("資料:"+資料)
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
 		.values('狀況').annotate(數量=Count('狀況')).order_by()
@@ -139,7 +154,7 @@ def 閩南語狀況(request):
 	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
 	return HttpResponse(版.render(文))
 	
-if __name__=='__main__':
-	參考語句='Obama tua7-sing3 bi2-kok4 thau5-tsit8-ui7 oo1-lang5 tsong2-thong2 '
+if __name__ == '__main__':
+	參考語句 = 'Obama tua7-sing3 bi2-kok4 thau5-tsit8-ui7 oo1-lang5 tsong2-thong2 '
 	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	建議結果物件 = 閩南語標音.語句斷詞標音(參考語句)
