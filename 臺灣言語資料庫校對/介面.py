@@ -40,6 +40,10 @@ from 臺灣言語資料庫.欄位資訊 import 外來詞
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
 __篩仔 = 字物件篩仔()
+__網仔 = 詞物件網仔()
+Pyro4.config.SERIALIZER = 'pickle'
+__閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
+
 def 最近改的資料(request):
 # 	編修.objects.create().save()
 # 	文字a=文字(年代=22)
@@ -70,10 +74,6 @@ def 國語改免檢查(request):
 def 檢查猶未標的資料(request):
 	愛檢查的資料 = __資料分類.揣出檢查字音的資料(閩南語)
 	分析器 = 拆文分析器()
-	篩仔 = 字物件篩仔()
-	網仔 = 詞物件網仔()
-	Pyro4.config.SERIALIZER = 'pickle'
-	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	家私 = 轉物件音家私()
 	音標工具 = 臺灣閩南語羅馬字拼音
 	for 愛檢查 in 愛檢查的資料[:]:
@@ -91,19 +91,7 @@ def 檢查猶未標的資料(request):
 		except:
 			資料攏著 = False
 		else:
-			資料攏著 = True
-			字陣列 = 篩仔.篩出字物件(正規物件)
-			for 字物件 in 字陣列:
-				詞物件 = 分析器.建立詞物件('')
-				詞物件.內底字.append(字物件)
-				查著的資料 = 閩南語標音.物件斷詞標音(詞物件)
-				查著的句物件 = 查著的資料[0]
-				詞陣列 = 網仔.網出詞物件(查著的句物件)
-# 				print('查著的資料',查著的資料[0].內底集[0].內底組[0].內底詞[0].屬性)
-# 				print('詞陣列',詞陣列[0].屬性)
-				if '無佇辭典' in 詞陣列[0].屬性 and 詞陣列[0].屬性['無佇辭典']:
-					資料攏著 = False
-					break
+			資料攏著 = 是毋是攏佇辭典內底(正規物件)
 		if 資料攏著:
 			愛檢查.狀況 = 免改
 		else:
@@ -119,7 +107,6 @@ def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
 	參考語句 = __資料分類.揣出有這文字的語句(愛改資料.流水號).first()
 	Pyro4.config.SERIALIZER = 'pickle'
-	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	愛改文字資料=愛改資料.文字.first()
 	try:
 		try:
@@ -139,7 +126,7 @@ def 改愛改的資料(request):
 	except Exception as 錯誤:
 		raise 錯誤
 	try:
-		建議結果物件 = 閩南語標音.語句斷詞標音(參考語句.音標)
+		建議結果物件 = __閩南語標音.語句斷詞標音(參考語句.音標)
 	except Exception as 錯誤:
 		print(錯誤)
 		raise 錯誤
@@ -167,8 +154,16 @@ def 檢查改的資料(request, pk):
 			無法度處理的物件.狀況=動作
 			無法度處理的物件.save()
 			return redirect('改愛改的資料')
-		校對表格 = 文字校對表格(request.POST)
-		資料 = str(dict(request.POST))
+		try:
+			物件=__分析器.產生對齊組(request.POST['型體'],request.POST['音標'])
+		except:
+			物件=__分析器.產生對齊字(request.POST['型體'],request.POST['音標'])
+		攏佇辭典=是毋是攏佇辭典內底(物件)
+		if 攏佇辭典:
+			校對表格 = 文字校對表格(request.POST)
+			return HttpResponse("對資料:" + 資料)
+		else:
+			return HttpResponse("毋著資料:" + 資料)
 # 		if 校對表格.is_valid():
 # 			文章 = 文章表格.save()
 # 			文章.自動斷詞()
@@ -183,8 +178,20 @@ def 閩南語狀況(request):
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
 	return HttpResponse(版.render(文))
-	
-if __name__ == '__main__':
-	參考語句 = 'Obama tua7-sing3 bi2-kok4 thau5-tsit8-ui7 oo1-lang5 tsong2-thong2 '
-	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
-	建議結果物件 = 閩南語標音.語句斷詞標音(參考語句)
+
+def 是毋是攏佇辭典內底(正規物件):
+	資料攏著=True
+	字陣列 = __篩仔.篩出字物件(正規物件)
+	for 字物件 in 字陣列:
+		詞物件 = __分析器.建立詞物件('')
+		詞物件.內底字.append(字物件)
+		print(詞物件)
+		查著的資料 = __閩南語標音.物件斷詞標音(詞物件)
+		查著的句物件 = 查著的資料[0]
+		詞陣列 = __網仔.網出詞物件(查著的句物件)
+# 				print('查著的資料',查著的資料[0].內底集[0].內底組[0].內底詞[0].屬性)
+# 				print('詞陣列',詞陣列[0].屬性)
+		if '無佇辭典' in 詞陣列[0].屬性 and 詞陣列[0].屬性['無佇辭典']:
+			資料攏著 = False
+			break
+	return 資料攏著
