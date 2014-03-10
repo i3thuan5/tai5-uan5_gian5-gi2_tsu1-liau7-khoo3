@@ -154,22 +154,23 @@ def 檢查改的資料(request, pk):
 			無法度處理的物件.狀況=動作
 			無法度處理的物件.save()
 			return redirect('改愛改的資料')
+		攏佇辭典=True
 		try:
-			物件=__分析器.產生對齊組(request.POST['型體'],request.POST['音標'])
+			if request.POST['型體'] in 標點符號 and request.POST['音標'] in 標點符號:
+				物件=__分析器.產生對齊字(request.POST['型體'],request.POST['音標'])
+			else:
+				物件=__分析器.產生對齊組(request.POST['型體'],request.POST['音標'])
 		except:
-			物件=__分析器.產生對齊字(request.POST['型體'],request.POST['音標'])
-		攏佇辭典=是毋是攏佇辭典內底(物件)
+			攏佇辭典=False
+		else:
+			攏佇辭典=是毋是攏佇辭典內底(物件)
 		if 攏佇辭典:
 			校對表格 = 文字校對表格(request.POST)
 			return HttpResponse("對資料:" + 資料)
 		else:
-			return HttpResponse("毋著資料:" + 資料)
-# 		if 校對表格.is_valid():
-# 			文章 = 文章表格.save()
-# 			文章.自動斷詞()
-# 			return redirect('改國語斷詞', pk=文章.pk)
-# 	else:
-	return HttpResponse("資料:" + 資料)
+			return HttpResponse("「{}」「{}」無佇辭典"
+				.format(request.POST['型體'],request.POST['音標']))
+	return redirect('改愛改的資料')
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
 		.values('狀況').annotate(數量=Count('狀況')).order_by()
