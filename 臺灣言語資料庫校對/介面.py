@@ -104,13 +104,20 @@ def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
 	參考語句 = __資料分類.揣出有這文字的語句(愛改資料.流水號).first()
 	Pyro4.config.SERIALIZER = 'pickle'
-	閩南語標音 = Pyro4.Proxy("PYRONAME:內部自動標音")
-	建議結果物件 = 閩南語標音.語句斷詞標音(參考語句)
+	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
+	try:
+		建議結果物件 = 閩南語標音.語句斷詞標音(參考語句.音標)
+		print(type(建議結果物件))
+	except Exception as 錯誤:
+		print(錯誤)
+ 		
+# 		錯誤.printStackTrace()
+		raise 錯誤
 	譀鏡 = 物件譀鏡()
 	文 = RequestContext(request, {
 		'愛改資料': 愛改資料,
 		'參考語句':參考語句,
-		'建議結果':譀鏡.看型(建議結果物件, 物件分詞符號=' ')
+		'建議結果':譀鏡.看型(建議結果物件[0], 物件分詞符號=' ')
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
@@ -123,3 +130,7 @@ def 閩南語狀況(request):
 	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
 	return HttpResponse(版.render(文))
 	
+if __name__=='__main__':
+	參考語句='Obama tua7-sing3 bi2-kok4 thau5-tsit8-ui7 oo1-lang5 tsong2-thong2 '
+	閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
+	建議結果物件 = 閩南語標音.語句斷詞標音(參考語句)
