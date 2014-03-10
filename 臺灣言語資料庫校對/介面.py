@@ -33,6 +33,9 @@ from 臺灣言語工具.字詞組集句章.解析整理.轉物件音家私 impor
 from 臺灣言語工具.字詞組集句章.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
 from 臺灣言語工具.字詞組集句章.解析整理.詞物件網仔 import 詞物件網仔
 from 臺灣言語資料庫校對.表格 import 文字校對表格
+from 臺灣言語資料庫.欄位資訊 import 改過
+from 臺灣言語資料庫.欄位資訊 import 愛查
+from 臺灣言語資料庫.欄位資訊 import 外來詞
 
 __資料分類 = 資料分類()
 def 最近改的資料(request):
@@ -129,6 +132,7 @@ def 改愛改的資料(request):
 		'參考語句':參考語句,
 		'建議結果':譀鏡.看型(建議結果物件[0], 物件分詞符號=' '),
 		'校對表格':校對表格,
+		'動作':[改過, 愛查, 外來詞],
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
@@ -136,7 +140,7 @@ def 檢查改的資料(request, pk):
 	資料 = ''
 	if request.method == 'POST':
 		校對表格 = 文字校對表格(request.POST)
-		資料 =str( dict(request.POST))
+		資料 = str(dict(request.POST))
 		print(request.POST, 'request.POST')
 		print(request.POST['型體'], 'request.POST')
 # 		if 校對表格.is_valid():

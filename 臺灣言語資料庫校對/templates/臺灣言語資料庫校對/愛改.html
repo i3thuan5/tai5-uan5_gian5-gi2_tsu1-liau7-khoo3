@@ -50,8 +50,9 @@
 			{{ 校對表格.音標 }}
 			</td></tr>
 		</table>
-			<input type="submit" name='確定' value="@@" />
-			<input type="submit" name='確定' value="XD" />
+			{% for 做 in 動作 %}
+				<input type="submit" name='確定' value="{{ 做 }}" />
+			{% endfor %}
 		</form>
 	{% else %}
 		<p>恭喜喲～無資料需要改矣～～</p>
