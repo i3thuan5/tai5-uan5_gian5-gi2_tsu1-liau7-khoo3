@@ -153,6 +153,8 @@ class 整合平行語料:
 		章物件 = self.斷詞結構化.斷詞轉章物件(self.斷詞剖析工具.斷詞(一逝國語))
 		return self.譀鏡.看型(章物件, 物件分詞符號=' ')
 	def 加文字(self, **參數):
+		if '音標' in 參數 and 參數['音標']==參數['型體']:
+			return 文字.objects.create(**參數).流水號
 # 		print(參數)
 		return 文字.objects.filter_one_or_create(**參數).流水號
 	def 加關係(self, 甲流水號, 乙流水號, 乙對甲的關係類型, 關係性質):
