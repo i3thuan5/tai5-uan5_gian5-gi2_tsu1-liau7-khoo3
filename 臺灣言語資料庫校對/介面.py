@@ -139,10 +139,14 @@ def 改愛改的資料(request):
 def 檢查改的資料(request, pk):
 	資料 = ''
 	if request.method == 'POST':
+		動作=request.POST['動作']
+		if 動作 in [愛查, 外來詞]:
+			無法度處理的物件 = 編修.objects.get(流水號=pk)
+			無法度處理的物件.狀況=動作
+			無法度處理的物件.save()
+			return redirect('改愛改的資料')
 		校對表格 = 文字校對表格(request.POST)
 		資料 = str(dict(request.POST))
-		print(request.POST, 'request.POST')
-		print(request.POST['型體'], 'request.POST')
 # 		if 校對表格.is_valid():
 # 			文章 = 文章表格.save()
 # 			文章.自動斷詞()
