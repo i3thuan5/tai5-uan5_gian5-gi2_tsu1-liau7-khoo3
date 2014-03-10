@@ -8,7 +8,7 @@ from django.forms.widgets import TextInput, HiddenInput
 class 文字校對表格(ModelForm):
 	class Meta:
 		model = 文字
-		fields = ['流水號','型體', '音標', ]
+		fields = ['型體', '音標', ]
 		labels = {
         }
 		help_texts = {

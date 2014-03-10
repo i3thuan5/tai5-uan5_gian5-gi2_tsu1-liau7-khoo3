@@ -8,6 +8,7 @@
 		{% elif 愛改資料.結果%}
 			<p>這筆資料有改過矣！！</p>
 		{% endif %}
+		<form action="{% url '檢查改的資料' 愛改資料.流水號 %}" method="post">{% csrf_token %}
 		<table>
 			<tr><td>流水號</td><td>
 			{{ 愛改資料.流水號 }}
@@ -49,9 +50,8 @@
 			{{ 校對表格.音標 }}
 			</td></tr>
 		</table>
-		<form action="{% url '檢查改的資料' %}" method="post">{% csrf_token %}
-		{{ 校對表格.as_p }}
-			<input type="submit" value="確定" />
+			<input type="submit" name='確定' value="@@" />
+			<input type="submit" name='確定' value="XD" />
 		</form>
 	{% else %}
 		<p>恭喜喲～無資料需要改矣～～</p>

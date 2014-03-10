@@ -132,19 +132,19 @@ def 改愛改的資料(request):
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
-def 檢查改的資料(request):
-	資料=''
+def 檢查改的資料(request, pk):
+	資料 = ''
 	if request.method == 'POST':
 		校對表格 = 文字校對表格(request.POST)
-		資料=str(request.POST)
-		print(request.POST,'request.POST')
-		print(request.POST['型體'],'request.POST')
+		資料 =str( dict(request.POST))
+		print(request.POST, 'request.POST')
+		print(request.POST['型體'], 'request.POST')
 # 		if 校對表格.is_valid():
 # 			文章 = 文章表格.save()
 # 			文章.自動斷詞()
 # 			return redirect('改國語斷詞', pk=文章.pk)
 # 	else:
-	return HttpResponse("資料:"+資料)
+	return HttpResponse("資料:" + 資料)
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
 		.values('狀況').annotate(數量=Count('狀況')).order_by()
