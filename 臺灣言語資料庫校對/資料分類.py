@@ -38,6 +38,10 @@ class 資料分類:
 			乙對甲的關係類型=近義,關係性質=會當替換).first()
 		print(流水號,關係資料)
 		return self.揣出有這文字的語句(腔口,關係資料.流水號.流水號)
+	def 揣腔口近義(self,腔口,流水號):
+		return 編修.objects.filter(關係乙__甲流水號=流水號,
+			關係乙__乙對甲的關係類型=近義,關係乙__關係性質=會當替換)\
+			.filter(文字__腔口__startswith=腔口)
 	def 揣國語猶未檢查(self):
 		return 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True).\
 				filter(文字__腔口__startswith=國語)
