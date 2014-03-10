@@ -21,10 +21,9 @@ class 資料分類:
 		標準資料 = 公家.filter(要求)
 		return 標準資料
 	def 揣出檢查字音的資料(self, 腔):
-		標準資料 = 編修.objects.filter(狀況 = 標準, 結果__isnull = True)
 		愛檢查的資料 = 編修.objects.filter(狀況 = 猶未檢查, 結果__isnull = True).\
 			filter(文字__腔口__startswith = 腔).filter(文字__組合 = '')
-		return (標準資料, 愛檢查的資料)
+		return 愛檢查的資料
 	def 揣出愛改的資料(self):
 		return 編修.objects.filter(種類 = '文字', 狀況 = 愛改)
 	def 揣出有這文字的語句(self, 流水號):
