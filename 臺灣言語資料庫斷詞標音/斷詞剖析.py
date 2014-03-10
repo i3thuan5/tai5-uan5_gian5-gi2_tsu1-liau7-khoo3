@@ -26,9 +26,9 @@ from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
 import Pyro4
 from 臺灣言語資料庫斷詞標音.閩南語標音整合 import 閩南語標音整合
-
+# import 臺灣言語資料庫斷詞標音.斷詞標音服務 import 斷詞標音服務
 __資料分類 = 資料分類()
-def 斷詞剖析():
+def 斷詞標音服務():
 	Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
 	閩南語標音整合 = 閩南語標音整合(閩南語,型音辭典)
 	Pyro4.Daemon.serveSimple(
