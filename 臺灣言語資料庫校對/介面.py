@@ -23,6 +23,7 @@ from 臺灣言語資料庫.欄位資訊 import 免改
 from 臺灣言語資料庫.欄位資訊 import 愛改
 from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 標點符號
 from 臺灣言語資料庫.欄位資訊 import 標準
+from 臺灣言語資料庫.欄位資訊 import 免檢查
 
 __資料分類 = 資料分類()
 def 最近改的資料(request):
@@ -45,6 +46,13 @@ def 定教育部辭典做標準(request):
 		猶未設.狀況 = 標準
 		猶未設.save()
 	return HttpResponse("設{}做標準矣".format(來源))
+def 國語改免檢查(request):
+	國語資料= __資料分類.揣國語猶未檢查()
+	for 國語文字 in 國語資料:
+		國語文字.狀況 = 免檢查
+		國語文字.save()
+	return HttpResponse("國語攏改免檢查矣")
+		
 def 檢查猶未標的資料(request):
 	標準資料, 愛檢查的資料 = __資料分類.揣出檢查字音的資料(閩南語)
 	全部資料 = chain(標準資料[:10], 愛檢查的資料[:10])
