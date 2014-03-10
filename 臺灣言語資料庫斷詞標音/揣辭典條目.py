@@ -30,19 +30,20 @@ from 臺灣言語資料庫.模型 import 關係
 from 臺灣言語資料庫.欄位資訊 import 字詞
 
 class 揣辭典條目():
-	def 揣言語層的字詞(self, 語言層):
-		資料 = 關係.objects.values_list('乙流水號').distinct()\
-			.filter(乙對甲的關係類型 = 無仝言語層, 關係性質 = 語言層).\
-			order_by('乙流水號')
-		流水號集 = []
-		for 文字 in 資料:
-			流水號集.append(資料.流水號.流水號)
+	def 揣言語層的字詞(self, 腔口, 語言層):
+		乙流水號 = '乙流水號'
+		資料 = 關係.objects.values(乙流水號).distinct()\
+			.filter(乙對甲的關係類型=無仝言語層, 關係性質=語言層)\
+			.order_by(乙流水號)
+		流水號集 = set()
+		for 關 in 資料:
+			流水號集.add(關[乙流水號])
 		return 流水號集
 	def 揣腔口資料(self, 腔口):
 # 	文字.objects.values_list('型體', '音標')\
-		return 編修.objects.filter(狀況 = 標準, 結果__isnull = True)\
-			.filter(文字__腔口__contains = 腔口)
+		return 編修.objects.filter(狀況=標準, 結果__isnull=True)\
+			.filter(文字__腔口__contains=腔口)
 	def 揣腔口字詞資料(self, 腔口):
 # 		return 文字.objects.values_list('型體', '音標')\
-		return 編修.objects.filter(狀況 = 標準, 結果__isnull = True)\
-			.filter(腔口__contains = 腔口, 種類 = 字詞)
+		return 編修.objects.filter(狀況=標準, 結果__isnull=True)\
+			.filter(腔口__contains=腔口, 種類=字詞)
