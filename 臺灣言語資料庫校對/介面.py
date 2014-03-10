@@ -163,16 +163,18 @@ def 檢查改的資料(request, pk):
 			無法度處理的物件.save()
 			return redirect('改愛改的資料')
 		攏佇辭典 = True
+		是標點符號=False
 		try:
 			if request.POST['型體'] in 標點符號 and request.POST['音標'] in 標點符號:
 				物件 = __分析器.產生對齊字(request.POST['型體'], request.POST['音標'])
+				是標點符號=True
 			else:
 				物件 = __分析器.產生對齊組(request.POST['型體'], request.POST['音標'])
 		except:
 			攏佇辭典 = False
 		else:
 			攏佇辭典 = 是毋是攏佇辭典內底(物件)
-		if 攏佇辭典:
+		if 是標點符號 or 攏佇辭典:
 			文字資料 = 文字.objects.get(流水號=pk)
 			文字資料.pk = None
 			文字資料.來源 = 人工校對
