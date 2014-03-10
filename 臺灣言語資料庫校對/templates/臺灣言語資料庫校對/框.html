@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block 標題 %}臺灣言語資料庫校對{% endblock %}</title>
+    {% block extrahead %}{% endblock %}
+    {% load staticfiles %}
+</head>
+
+<body>
+    <div id="container">
+
+        <div id="目錄">
+    <a href={% url '改愛改的資料' %}>改愛改的資料</a>
+	<a href={% url '檢查猶未標的資料' %}>檢查猶未標的資料</a>
+	<a href={% url '定教育部辭典做標準' %}>定教育部辭典做標準</a>
+	<a href={% url '國語改免檢查' %}>國語改免檢查</a>
+	<a href={% url '最近改的資料' %}>最近改的資料</a>
+		</div>
+
+        <div id="內容">
+            {% block 內容 %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>
