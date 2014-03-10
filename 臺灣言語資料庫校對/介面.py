@@ -36,6 +36,7 @@ from 臺灣言語資料庫校對.表格 import 文字校對表格
 from 臺灣言語資料庫.欄位資訊 import 改過
 from 臺灣言語資料庫.欄位資訊 import 愛查
 from 臺灣言語資料庫.欄位資訊 import 外來詞
+from 臺灣言語資料庫.欄位資訊 import 人工校對
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -107,20 +108,20 @@ def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
 	參考語句 = __資料分類.揣出有這文字的語句(愛改資料.流水號).first()
 	Pyro4.config.SERIALIZER = 'pickle'
-	愛改文字資料=愛改資料.文字.first()
+	愛改文字資料 = 愛改資料.文字.first()
 	try:
 		try:
-			物件=__分析器.產生對齊組(愛改文字資料.型體,愛改文字資料.音標)
+			物件 = __分析器.產生對齊組(愛改文字資料.型體, 愛改文字資料.音標)
 		except:
-			物件=__分析器.產生對齊字(愛改文字資料.型體,愛改文字資料.音標)
-		字陣列=__篩仔.篩出字物件(物件)
-		參考組物件=__分析器.產生對齊組(參考語句.型體,參考語句.音標)
-		參考字陣列=__篩仔.篩出字物件(參考組物件)
-		for 參考字物件所在 in range(len(參考字陣列)-len(字陣列)):
-			對著=True
+			物件 = __分析器.產生對齊字(愛改文字資料.型體, 愛改文字資料.音標)
+		字陣列 = __篩仔.篩出字物件(物件)
+		參考組物件 = __分析器.產生對齊組(參考語句.型體, 參考語句.音標)
+		參考字陣列 = __篩仔.篩出字物件(參考組物件)
+		for 參考字物件所在 in range(len(參考字陣列) - len(字陣列)):
+			對著 = True
 			for 字物件所在 in range(len(字陣列)):
-				if 參考字陣列[參考字物件所在+字物件所在]!=字陣列[字物件所在]:
-					對著=False
+				if 參考字陣列[參考字物件所在 + 字物件所在] != 字陣列[字物件所在]:
+					對著 = False
 			if 對著:
 				break
 	except Exception as 錯誤:
@@ -131,11 +132,11 @@ def 改愛改的資料(request):
 		print(錯誤)
 		raise 錯誤
 	譀鏡 = 物件譀鏡()
-	建議字陣列=__篩仔.篩出字物件(建議結果物件[0])
-	詞物件=__分析器.建立詞物件('')
-	詞物件.內底字=建議字陣列[參考字物件所在:參考字物件所在+len(字陣列)]
+	建議字陣列 = __篩仔.篩出字物件(建議結果物件[0])
+	詞物件 = __分析器.建立詞物件('')
+	詞物件.內底字 = 建議字陣列[參考字物件所在:參考字物件所在 + len(字陣列)]
 	校對表格 = 文字校對表格(
-		initial={'型體':譀鏡.看型(詞物件)},instance=愛改文字資料)
+		initial={'型體':譀鏡.看型(詞物件)}, instance=愛改文字資料)
 	文 = RequestContext(request, {
 		'愛改資料': 愛改資料,
 		'參考語句':參考語句,
@@ -148,28 +149,41 @@ def 改愛改的資料(request):
 def 檢查改的資料(request, pk):
 	資料 = ''
 	if request.method == 'POST':
-		動作=request.POST['動作']
+		動作 = request.POST['動作']
 		if 動作 in [愛查, 外來詞]:
 			無法度處理的物件 = 編修.objects.get(流水號=pk)
-			無法度處理的物件.狀況=動作
+			無法度處理的物件.狀況 = 動作
 			無法度處理的物件.save()
 			return redirect('改愛改的資料')
-		攏佇辭典=True
+		攏佇辭典 = True
 		try:
 			if request.POST['型體'] in 標點符號 and request.POST['音標'] in 標點符號:
-				物件=__分析器.產生對齊字(request.POST['型體'],request.POST['音標'])
+				物件 = __分析器.產生對齊字(request.POST['型體'], request.POST['音標'])
 			else:
-				物件=__分析器.產生對齊組(request.POST['型體'],request.POST['音標'])
+				物件 = __分析器.產生對齊組(request.POST['型體'], request.POST['音標'])
 		except:
-			攏佇辭典=False
+			攏佇辭典 = False
 		else:
-			攏佇辭典=是毋是攏佇辭典內底(物件)
+			攏佇辭典 = 是毋是攏佇辭典內底(物件)
 		if 攏佇辭典:
-			校對表格 = 文字校對表格(request.POST)
-			return HttpResponse("對資料:" + 資料)
+			文字資料 = 文字.objects.get(流水號=pk)
+			文字資料.pk = None
+			文字資料.來源 = 人工校對
+# 			文字資料.年代 = '103'#應該下資料的時代
+			文字資料.型體 = request.POST['型體']
+			文字資料.音標 = request.POST['音標']
+			文字資料.save()
+			新編修資料 = 文字資料.流水號
+			新編修資料.狀況 = 人工校對
+			新編修資料.save()
+			原來編修資料 = 文字.objects.get(流水號=pk)
+			原來編修資料.狀況 = 改過
+			原來編修資料.結果 = 新編修資料.流水號
+			原來編修資料.save()
+			return redirect('改愛改的資料')
 		else:
 			return HttpResponse("「{}」「{}」無佇辭典"
-				.format(request.POST['型體'],request.POST['音標']))
+				.format(request.POST['型體'], request.POST['音標']))
 	return redirect('改愛改的資料')
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
@@ -181,7 +195,7 @@ def 閩南語狀況(request):
 	return HttpResponse(版.render(文))
 
 def 是毋是攏佇辭典內底(正規物件):
-	資料攏著=True
+	資料攏著 = True
 	字陣列 = __篩仔.篩出字物件(正規物件)
 	for 字物件 in 字陣列:
 		詞物件 = __分析器.建立詞物件('')
