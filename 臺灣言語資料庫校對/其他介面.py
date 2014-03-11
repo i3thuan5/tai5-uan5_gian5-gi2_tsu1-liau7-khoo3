@@ -56,15 +56,17 @@ def 揣出一字全羅(request):
 # 					乙流水號=文字a.流水號,)
 	全部資料 = 編修.objects.filter(文字__型體=F('文字__音標'))\
 		.filter(文字__型體__regex='.*[0-9]')\
-		.exclude(文字__型體__regex='.*[0-9].*[0-9]')
-	for 一字編修 in 全部資料[:10]:
+		.exclude(文字__型體__regex='.*[0-9].*[0-9]').order_by('流水號')
+	有改資料=[]
+	for 一字編修 in 全部資料[:]:
 		參考語句 = __資料分類.揣出有這文字的語句(閩南語, 一字編修.流水號)
-		print(參考語句.count())
-		if 參考語句.count()>5:
+# 		print(參考語句.count())
+		if 參考語句.count()<=1:
 			continue
 		一字編修.狀況 = 愛改
 		一字編修.結果 = None
 		一字編修.save()
+		有改資料.append(一字編修)
 		原本流水號組合 = 文字組合符號 + str(一字編修.流水號) + 文字組合符號
 		for 參考一句 in 參考語句[1:]:
 			複製 = 文字.objects.get(流水號=一字編修.流水號)
@@ -74,14 +76,13 @@ def 揣出一字全羅(request):
 			新編修資料.狀況 = 愛改
 			新編修資料.save()
 			複製流水號組合 = 文字組合符號 + str(新編修資料.流水號) + 文字組合符號
-			print(參考一句.組合)
+# 			print(參考一句.組合)
 			參考一句.組合=參考一句.組合.replace(原本流水號組合,複製流水號組合)
 			參考一句.save()
 			print(原本流水號組合,複製流水號組合,)
-		break
-			
+# 		break
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
-		'全部資料': 全部資料[:10],
+		'全部資料': 有改資料[:100],
 	})
 	return HttpResponse(版.render(文))
