@@ -162,10 +162,12 @@ def 改愛改的資料(request):
 def 檢查改的資料(request, pk):
 	if request.method == 'POST':
 		動作 = request.POST['動作']
+		愛處理的物件 = 編修.objects.get(流水號=pk)
+		if 愛處理的物件.狀況!=愛改:
+			return HttpResponse("這个詞有人改過矣")
 		if 動作 in [愛查, 外來詞, 字典無收著]:
-			無法度處理的物件 = 編修.objects.get(流水號=pk)
-			無法度處理的物件.狀況 = 動作
-			無法度處理的物件.save()
+			愛處理的物件.狀況 = 動作
+			愛處理的物件.save()
 			return redirect('改愛改的資料')
 		攏佇辭典 = True
 		是標點符號 = False
