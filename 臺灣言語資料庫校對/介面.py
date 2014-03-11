@@ -161,10 +161,17 @@ def 改愛改的資料(request):
 def 檢查改的資料(request, pk):
 	if request.method == 'POST':
 		動作 = request.POST['動作']
+		if 動作 not in [改過, 愛查, 外來詞, 字典無收著]:
+			return HttpResponse("動作有問題")
 		愛處理的物件 = 編修.objects.get(流水號=pk)
 		if 愛處理的物件.狀況!=愛改:
 			return HttpResponse("這个詞有人改過矣")
-		if 動作 in [愛查, 外來詞, 字典無收著]:
+		字典無收著有改=False
+		if 動作 in [字典無收著]:
+			愛處理的物件文字=愛處理的物件.文字.first()
+			if 愛處理的物件文字.型體!=request.POST['型體'] or 愛處理的物件文字.音標!=request.POST['音標']:
+				字典無收著有改=True
+		if not 字典無收著有改 and 動作 in [愛查, 外來詞, 字典無收著]:
 			愛處理的物件.狀況 = 動作
 			愛處理的物件.save()
 			return redirect('改愛改的資料')
@@ -180,7 +187,7 @@ def 檢查改的資料(request, pk):
 			攏佇辭典 = False
 		else:
 			攏佇辭典 = 是毋是攏佇辭典內底(物件)
-		if 是標點符號 or 攏佇辭典:
+		if 是標點符號 or 攏佇辭典 or 字典無收著有改:
 			文字資料 = 文字.objects.get(流水號=pk)
 			文字資料.pk = None
 			文字資料.來源 = 人工校對
@@ -189,7 +196,7 @@ def 檢查改的資料(request, pk):
 			文字資料.音標 = __譀鏡.看音(物件)
 			文字資料.save()
 			新編修資料 = 文字資料.流水號
-			新編修資料.狀況 = 人工校對
+			新編修資料.狀況 = 動作
 			新編修資料.save()
 			原來編修資料 = 編修.objects.get(流水號=pk)
 			原來編修資料.狀況 = 改過
