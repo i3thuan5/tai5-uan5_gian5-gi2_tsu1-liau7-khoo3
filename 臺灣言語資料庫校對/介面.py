@@ -49,18 +49,18 @@ Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
 def 最近改的資料(request):
-#     編修.objects.create().save()
-#     文字a=文字(年代=22)
-#     文字a.save()
-#     print(文字a.流水號)
-#     關係.objects.create(甲流水號=文字a.流水號,
-#                     乙流水號=文字a.流水號,)
-    全部資料 = 編修.objects.order_by('-流水號')[:10]
-    版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
-    文 = RequestContext(request, {
-        '全部資料': 全部資料,
-    })
-    return HttpResponse(版.render(文))
+#	 編修.objects.create().save()
+#	 文字a=文字(年代=22)
+#	 文字a.save()
+#	 print(文字a.流水號)
+#	 關係.objects.create(甲流水號=文字a.流水號,
+#					 乙流水號=文字a.流水號,)
+	全部資料 = 編修.objects.order_by('-流水號')[:10]
+	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+	文 = RequestContext(request, {
+		'全部資料': 全部資料,
+	})
+	return HttpResponse(版.render(文))
 def 無正常的資料(request):
 	全部資料 = 編修.objects.filter(結果=None,狀況=改過).order_by('流水號')
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
@@ -233,6 +233,7 @@ def 是毋是攏佇辭典內底(正規物件):
 	詞陣列 = __網仔.網出詞物件(查著的句物件)
 	for 詞物件 in 詞陣列:
 		if '無佇辭典' in 詞物件.屬性 and 詞物件.屬性['無佇辭典']:
+			print(詞物件,'無佇辭典')
 			資料攏著 = False
 			break
 	return 資料攏著
