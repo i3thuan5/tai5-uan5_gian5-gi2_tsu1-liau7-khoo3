@@ -55,8 +55,8 @@ class 資料(models.Model):
 	def save(self, *args, **kwargs):
 		if self.pk == None:
 			self.流水號 = 編修.objects.create(種類=self.__class__.__name__)
-		if self.流水號.有對著資料無() == False:
-			super(資料, self).save(*args, **kwargs)
+# 		if self.流水號.有對著資料無() == False:
+		super(資料, self).save(*args, **kwargs)
 	class Meta:
 		abstract = True
 
