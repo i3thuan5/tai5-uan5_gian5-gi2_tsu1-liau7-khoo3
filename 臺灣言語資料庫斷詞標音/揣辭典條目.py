@@ -32,7 +32,7 @@ from 臺灣言語資料庫.欄位資訊 import 會使提來用
 
 class 揣辭典條目():
 	def __init__(self):
-		self.要求 = Q(狀況=會使提來用)
+		self.要求 = Q(狀況=會使提來用[0])
 		for 用 in 會使提來用[1:]:
 			self.要求 = self.要求 | Q(狀況=用)
 	def 揣言語層的字詞(self, 腔口, 語言層):
