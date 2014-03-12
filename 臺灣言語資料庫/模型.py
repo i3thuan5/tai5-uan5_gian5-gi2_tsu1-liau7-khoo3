@@ -6,6 +6,7 @@ from 臺灣言語資料庫.欄位資訊 import 猶未檢查
 from 臺灣言語資料庫.欄位資訊 import 文字種類
 from 臺灣言語資料庫.欄位資訊 import 關係種類
 from 臺灣言語資料庫.欄位資訊 import 演化種類
+from 臺灣言語資料庫.欄位資訊 import 改過
 
 
 class 編修(models.Model):
@@ -57,6 +58,16 @@ class 資料(models.Model):
 			self.流水號 = 編修.objects.create(種類=self.__class__.__name__)
 # 		if self.流水號.有對著資料無() == False:
 		super(資料, self).save(*args, **kwargs)
+	def 改過閣加結果(self):
+		資料物件 = self.__class__.objects.get(流水號=self.pk)
+		資料物件.pk = None
+		資料物件.save()
+		新編修資料 = 資料物件.流水號
+		原來編修資料 = self.流水號
+		原來編修資料.狀況 = 改過
+		原來編修資料.結果 = 新編修資料
+		原來編修資料.save()
+		return 資料物件
 	class Meta:
 		abstract = True
 
