@@ -42,6 +42,7 @@ from 臺灣言語資料庫.欄位資訊 import 字典無收著
 from 臺灣言語資料庫校對.建議漢字 import 建議漢字
 from 臺灣言語資料庫校對.檢查校對資料 import 校對資料整理
 from 臺灣言語資料庫.欄位資訊 import 電腦校對
+from 臺灣言語資料庫校對.主動校對 import 主動校對
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -52,6 +53,7 @@ __建議漢字 = 建議漢字()
 __校對資料整理 = 校對資料整理()
 Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
+__主動校對 = 主動校對()
 
 def 定教育部辭典做標準(request):
 	來源 = ['教育部臺灣閩南語常用詞辭典', '駱嘉鵬老師對應表']
@@ -102,3 +104,16 @@ def 自動改有國語語句的資料(request):
 				print('插入失敗：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
 		全部 += 1
 	return HttpResponse("全部：{}，有改：{}".format(全部, 有改))
+
+def 揣資料庫有的來校對(request):
+	編修資料 = __資料分類.揣出愛改的資料().first()
+	編修資料 = 編修.objects.get(pk=203421)  # 1817313
+	愛改的資料, 標準漢字, 仝款音標 = __主動校對.鬥校對仝音的資料(編修資料)
+	for 愛改資料 in 愛改的資料:
+		__校對資料整理.加校對資料(愛改資料, 電腦校對, 電腦校對,
+			 標準漢字, 仝款音標)
+	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+	文 = RequestContext(request, {
+		'全部資料': 愛改的資料,
+	})
+	return HttpResponse(版.render(文))
