@@ -74,6 +74,14 @@ def 無正常的資料(request):
 		'全部資料': 全部資料[:10],
 	})
 	return HttpResponse(版.render(文))
+def 閩南語狀況(request):
+	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
+		.values('狀況').annotate(數量=Count('狀況')).order_by('-數量')
+	文 = RequestContext(request, {
+		'閩南語': 閩南語資料,
+		})
+	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
+	return HttpResponse(版.render(文))
 def 定教育部辭典做標準(request):
 	來源 = ['教育部臺灣閩南語常用詞辭典', '駱嘉鵬老師對應表']
 	猶未設的標準資料 = __資料分類.揣出指定來源準備做檔準(閩南語, 來源=來源)
@@ -129,14 +137,6 @@ def 檢查改的資料(request, pk):
 		if 插入結果 != None:
 			return HttpResponse(插入結果)
 	return redirect('改愛改的資料')
-def 閩南語狀況(request):
-	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
-		.values('狀況').annotate(數量=Count('狀況')).order_by('-數量')
-	文 = RequestContext(request, {
-		'閩南語': 閩南語資料,
-		})
-	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
-	return HttpResponse(版.render(文))
 
 def 自動改有國語語句的資料(request):
 	全部 = 0
