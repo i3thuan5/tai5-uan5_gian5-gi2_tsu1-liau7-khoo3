@@ -105,7 +105,7 @@ class 建議漢字:
 			return []
 		return 建議字陣列[所在:所在 + len(字陣列)]
 	def 建議字陣列有包含字陣列(self, 建議字陣列, 字陣列):
-		print(建議字陣列, 字陣列)
+# 		print(建議字陣列, 字陣列)
 		for 參考字物件所在 in range(len(建議字陣列) - len(字陣列) + 1):
 			對著 = True
 			for 字物件所在 in range(len(字陣列)):
