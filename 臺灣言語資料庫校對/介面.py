@@ -40,6 +40,7 @@ from 臺灣言語資料庫.欄位資訊 import 人工校對
 from 臺灣言語資料庫.腔口資訊 import 國語
 from 臺灣言語資料庫.欄位資訊 import 字典無收著
 from 臺灣言語資料庫校對.建議漢字 import 建議漢字
+from 臺灣言語資料庫校對.檢查校對資料 import 校對資料整理
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -47,6 +48,7 @@ __篩仔 = 字物件篩仔()
 __網仔 = 詞物件網仔()
 __譀鏡 = 物件譀鏡()
 __建議漢字 = 建議漢字()
+__校對資料整理 = 校對資料整理()
 Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
@@ -136,50 +138,10 @@ def 改愛改的資料(request):
 	return HttpResponse(版.render(文))
 def 檢查改的資料(request, pk):
 	if request.method == 'POST':
-		動作 = request.POST['動作']
-		if 動作 not in [改過, 愛查, 外來詞, 字典無收著]:
-			return HttpResponse("動作有問題")
-		愛處理的物件 = 編修.objects.get(流水號=pk)
-		if 愛處理的物件.狀況 != 愛改:
-			return HttpResponse("這个詞有人改過矣")
-		字典無收著有改 = False
-		if 動作 in [字典無收著]:
-			愛處理的物件文字 = 愛處理的物件.文字.first()
-			if 愛處理的物件文字.型體 != request.POST['型體'] or 愛處理的物件文字.音標 != request.POST['音標']:
-				字典無收著有改 = True
-		if not 字典無收著有改 and 動作 in [愛查, 外來詞, 字典無收著]:
-			愛處理的物件.狀況 = 動作
-			愛處理的物件.save()
-			return redirect('改愛改的資料')
-		攏佇辭典 = True
-		是標點符號 = False
-		try:
-			if request.POST['型體'] in 標點符號 and request.POST['音標'] in 標點符號:
-				物件 = __分析器.產生對齊字(request.POST['型體'], request.POST['音標'])
-				是標點符號 = True
-			else:
-				物件 = __分析器.產生對齊組(request.POST['型體'], request.POST['音標'])
-		except:
-			攏佇辭典 = False
-		else:
-			攏佇辭典 = 是毋是攏佇辭典內底(物件)
-		if 是標點符號 or 攏佇辭典 or 字典無收著有改:
-			原來文字資料 = 愛處理的物件.文字.first()
-			文字資料 = 原來文字資料.改過閣加結果()
-			文字資料.來源 = 人工校對
-			文字資料.型體 = __譀鏡.看型(物件)
-			文字資料.音標 = __譀鏡.看音(物件)
-			文字資料.save()
-			新編修資料 = 文字資料.流水號
-			if 動作 in [字典無收著]:
-				新編修資料.狀況 = 動作
-			else:
-				新編修資料.狀況 = 人工校對
-			新編修資料.save()
-			return redirect('改愛改的資料')
-		else:
-			return HttpResponse("「{}」「{}」無佇辭典"
-				.format(request.POST['型體'], request.POST['音標']))
+		插入結果 = __校對資料整理.加校對資料(編修.objects.get(流水號=pk),
+			request.POST['動作'], request.POST['型體'], request.POST['音標'])
+		if 插入結果 != None:
+			return HttpResponse(插入結果)
 	return redirect('改愛改的資料')
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
