@@ -15,8 +15,8 @@ class 編修(models.Model):
 	狀況 = models.CharField(max_length=100, choices=狀況種類, default=猶未檢查)
 	結果 = models.ForeignKey('self', related_name='+',
 		null=True, default=None)
-	收錄時間 = models.DateField(auto_now_add=True)
-	修改時間 = models.DateField(auto_now=True)
+	收錄時間 = models.DateTimeField(auto_now_add=True)
+	修改時間 = models.DateTimeField(auto_now=True)
 	def 有對著資料無(self):
 		return self.對著幾个資料() == 1
 	def 對著幾个資料(self):
@@ -84,8 +84,8 @@ class 文字(資料):
 	音標 = models.TextField(blank=True)
 	調變 = models.TextField(blank=True)
 	音變 = models.TextField(blank=True)
-	收錄時間 = models.DateField(auto_now_add=True)
-	修改時間 = models.DateField(auto_now=True)
+	收錄時間 = models.DateTimeField(auto_now_add=True)
+	修改時間 = models.DateTimeField(auto_now=True)
 # 	def save(self, *args, **kwargs):
 # 		if self.pk == None:
 # 			self.流水號 = 編修.objects.create(種類 = self.__class__.__name__)
@@ -109,8 +109,8 @@ class 關係(資料):
 	乙對甲的關係類型 = models.CharField(max_length=100, choices=關係種類,)
 	關係性質 = models.CharField(max_length=100)
 	詞性 = models.CharField(max_length=100, blank=True)
-	收錄時間 = models.DateField(auto_now_add=True)
-	修改時間 = models.DateField(auto_now=True)
+	收錄時間 = models.DateTimeField(auto_now_add=True)
+	修改時間 = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return ' '.join(
 			[str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
@@ -127,8 +127,8 @@ class 演化(資料):
 	乙對甲的演化類型 = models.CharField(max_length=100, choices=演化種類,)
 	解釋流水號 = models.ForeignKey('編修', related_name='解釋',
 		null=True, default=None)
-	收錄時間 = models.DateField(auto_now_add=True)
-	修改時間 = models.DateField(auto_now=True)
+	收錄時間 = models.DateTimeField(auto_now_add=True)
+	修改時間 = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return ' '.join([
 			str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
