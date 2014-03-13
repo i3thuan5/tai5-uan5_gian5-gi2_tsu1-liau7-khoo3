@@ -131,7 +131,7 @@ def 檢查改的資料(request, pk):
 	return redirect('改愛改的資料')
 def 閩南語狀況(request):
 	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
-		.values('狀況').annotate(數量=Count('狀況')).order_by()
+		.values('狀況').annotate(數量=Count('狀況')).order_by('-數量')
 	文 = RequestContext(request, {
 		'閩南語': 閩南語資料,
 		})
