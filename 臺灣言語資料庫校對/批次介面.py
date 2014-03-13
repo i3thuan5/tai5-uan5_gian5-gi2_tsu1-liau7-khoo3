@@ -53,32 +53,52 @@ __校對資料整理 = 校對資料整理()
 Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
-def 最近改的資料(request):
-# 	 編修.objects.create().save()
-# 	 文字a=文字(年代=22)
-# 	 文字a.save()
-# 	 print(文字a.流水號)
-# 	 關係.objects.create(甲流水號=文字a.流水號,
-# 					 乙流水號=文字a.流水號,)
-# 	全部資料 = 編修.objects.order_by('-流水號')[:10]
-	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:20]
-	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+def 定教育部辭典做標準(request):
+	來源 = ['教育部臺灣閩南語常用詞辭典', '駱嘉鵬老師對應表']
+	猶未設的標準資料 = __資料分類.揣出指定來源準備做檔準(閩南語, 來源=來源)
+	for 猶未設 in 猶未設的標準資料:
+		猶未設.狀況 = 標準
+		猶未設.save()
+	return HttpResponse("設{}做標準矣".format(來源))
+
+def 國語改免檢查(request):
+	國語資料 = __資料分類.揣國語猶未檢查()
+	for 國語文字 in 國語資料:
+		國語文字.狀況 = 免檢查
+		國語文字.save()
+	return HttpResponse("國語攏改免檢查矣")
+		
+def 檢查猶未標的資料(request):
+	愛檢查的資料 = __資料分類.揣出檢查字音的資料(閩南語)
+	分析器 = 拆文分析器()
+	家私 = 轉物件音家私()
+	音標工具 = 臺灣閩南語羅馬字拼音
+	for 愛檢查 in 愛檢查的資料[:]:
+		文 = 愛檢查.文字.first()
+		if __校對資料整理.型音是毋是攏佇辭典內底(文.型體, 文.音標):
+			愛檢查.狀況 = 免改
+		else:
+			愛檢查.狀況 = 愛改
+		愛檢查.save()
+	版 = loader.get_template('臺灣言語資料庫/全部資料.html')
 	文 = RequestContext(request, {
-		'全部資料': 全部資料,
+		'全部資料': 愛檢查的資料[:10],
 	})
 	return HttpResponse(版.render(文))
-def 無正常的資料(request):
-	全部資料 = 編修.objects.filter(結果=None, 狀況=改過).order_by('流水號')
-	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
-	文 = RequestContext(request, {
-		'全部資料': 全部資料[:10],
-	})
-	return HttpResponse(版.render(文))
-def 閩南語狀況(request):
-	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
-		.values('狀況').annotate(數量=Count('狀況')).order_by('-數量')
-	文 = RequestContext(request, {
-		'閩南語': 閩南語資料,
-		})
-	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
-	return HttpResponse(版.render(文))
+
+def 自動改有國語語句的資料(request):
+	全部 = 0
+	有改 = 0
+	for 愛改資料 in __資料分類.揣出愛改的資料()[:20]:
+		(愛改文字資料, 參考語句, 參考語句音轉漢字, \
+			參考國語文字, 閩南語唸參考國語文字, 建議結果, 建議結果來源) = __建議漢字.問建議(愛改資料)
+		if 建議結果來源 == __建議漢字.閩南語唸國語:
+			插入結果 = __校對資料整理.加校對資料(愛改資料, 電腦校對, 電腦校對,
+				 建議結果, 愛改文字資料.音標)
+			if 插入結果 == None:
+				有改 += 1
+				print('插入成功：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
+			else:
+				print('插入失敗：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
+		全部 += 1
+	return HttpResponse("全部：{}，有改：{}".format(全部, 有改))

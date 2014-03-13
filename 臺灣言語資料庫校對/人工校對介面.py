@@ -53,32 +53,29 @@ __校對資料整理 = 校對資料整理()
 Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
-def 最近改的資料(request):
-# 	 編修.objects.create().save()
-# 	 文字a=文字(年代=22)
-# 	 文字a.save()
-# 	 print(文字a.流水號)
-# 	 關係.objects.create(甲流水號=文字a.流水號,
-# 					 乙流水號=文字a.流水號,)
-# 	全部資料 = 編修.objects.order_by('-流水號')[:10]
-	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:20]
-	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+
+def 改愛改的資料(request):
+	愛改資料 = __資料分類.揣出愛改的資料().first()
+	(愛改文字資料, 參考語句, 參考語句音轉漢字, \
+		參考國語文字, 閩南語唸參考國語文字, 建議結果, 建議結果來源) = __建議漢字.問建議(愛改資料)
+	校對表格 = 文字校對表格(
+		initial={'型體':建議結果}, instance=愛改文字資料)
 	文 = RequestContext(request, {
-		'全部資料': 全部資料,
-	})
-	return HttpResponse(版.render(文))
-def 無正常的資料(request):
-	全部資料 = 編修.objects.filter(結果=None, 狀況=改過).order_by('流水號')
-	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
-	文 = RequestContext(request, {
-		'全部資料': 全部資料[:10],
-	})
-	return HttpResponse(版.render(文))
-def 閩南語狀況(request):
-	閩南語資料 = 編修.objects.filter(文字__腔口__startswith=閩南語)\
-		.values('狀況').annotate(數量=Count('狀況')).order_by('-數量')
-	文 = RequestContext(request, {
-		'閩南語': 閩南語資料,
+		'愛改資料': 愛改資料,
+		'參考語句':參考語句,
+		'參考語句音轉漢字':參考語句音轉漢字,
+		'參考國語文字':參考國語文字,
+		'閩南語唸國語':閩南語唸參考國語文字,
+		'校對表格':校對表格,
+		'動作':[人工校對, 愛查, 外來詞, 字典無收著],
 		})
-	版 = loader.get_template('臺灣言語資料庫校對/閩南語狀況.html')
+	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
+
+def 檢查改的資料(request, pk):
+	if request.method == 'POST':
+		插入結果 = __校對資料整理.加校對資料(編修.objects.get(流水號=pk),
+			request.POST['動作'], 人工校對, request.POST['型體'], request.POST['音標'])
+		if 插入結果 != None:
+			return HttpResponse(插入結果)
+	return redirect('改愛改的資料')
