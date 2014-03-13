@@ -117,14 +117,14 @@ def 改愛改的資料(request):
 		'參考國語文字':參考國語文字,
 		'閩南語唸國語':閩南語唸參考國語文字,
 		'校對表格':校對表格,
-		'動作':[改過, 愛查, 外來詞, 字典無收著],
+		'動作':[人工校對, 愛查, 外來詞, 字典無收著],
 		})
 	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
 	return HttpResponse(版.render(文))
 def 檢查改的資料(request, pk):
 	if request.method == 'POST':
 		插入結果 = __校對資料整理.加校對資料(編修.objects.get(流水號=pk),
-			request.POST['動作'], request.POST['型體'], request.POST['音標'])
+			request.POST['動作'], 人工校對, request.POST['型體'], request.POST['音標'])
 		if 插入結果 != None:
 			return HttpResponse(插入結果)
 	return redirect('改愛改的資料')
