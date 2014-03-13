@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
-from 臺灣言語資料庫校對.介面 import 最近改的資料
-from 臺灣言語資料庫校對.介面 import 閩南語狀況
+from 臺灣言語資料庫校對.瀏覽介面 import 最近改的資料
+from 臺灣言語資料庫校對.瀏覽介面 import 閩南語狀況
 from 臺灣言語資料庫校對.批次介面 import 定教育部辭典做標準
 from 臺灣言語資料庫校對.批次介面 import 國語改免檢查
 from 臺灣言語資料庫校對.批次介面 import 檢查猶未標的資料
