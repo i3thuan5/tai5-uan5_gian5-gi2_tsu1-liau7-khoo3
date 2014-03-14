@@ -43,6 +43,8 @@ from 臺灣言語資料庫校對.建議漢字 import 建議漢字
 from 臺灣言語資料庫校對.檢查校對資料 import 校對資料整理
 from 臺灣言語資料庫.欄位資訊 import 電腦校對
 from 臺灣言語資料庫校對.主動校對 import 主動校對
+from 臺灣言語資料庫.欄位資訊 import 猶未檢查
+from 臺灣言語資料庫.欄位資訊 import 無效資料
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -115,5 +117,24 @@ def 揣資料庫有的來校對(request):
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 愛改的資料,
+	})
+	return HttpResponse(版.render(文))
+
+def 清掉無愛的資料(request):
+	狀況 = [猶未檢查, 愛改, 免檢查]
+	來源 = ['華語台語雙語語料庫系統']
+	要求狀況 = Q(狀況=狀況[0])
+	for 況 in 狀況[1:]:
+		要求狀況 = 要求狀況 | Q(狀況=況)
+	要求來源 = Q(文字__來源=來源[0])
+	for 源 in 來源[1:]:
+		要求來源 = 要求來源 | Q(文字__來源=源)
+	全部編修 = 編修.objects.filter(要求狀況).filter(要求來源)
+	for 編修資料 in 全部編修:
+		編修資料.狀況=無效資料
+		編修資料.save()
+	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+	文 = RequestContext(request, {
+		'全部資料': 全部編修[:10],
 	})
 	return HttpResponse(版.render(文))
