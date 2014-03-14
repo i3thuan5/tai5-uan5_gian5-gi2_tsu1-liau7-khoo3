@@ -131,7 +131,20 @@ def 清掉無愛的資料(request):
 		要求來源 = 要求來源 | Q(文字__來源=源)
 	全部編修 = 編修.objects.filter(要求狀況).filter(要求來源)
 	for 編修資料 in 全部編修:
-		編修資料.狀況=無效資料
+		編修資料.狀況 = 無效資料
+		編修資料.save()
+	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+	文 = RequestContext(request, {
+		'全部資料': 全部編修[:10],
+	})
+	return HttpResponse(版.render(文))
+
+def 清掉無路用的關係演化(request):
+	要求來源 = Q(關係甲__乙流水號__狀況=無效資料) | Q(關係乙__甲流水號__狀況=無效資料)\
+		| Q(演化甲__乙流水號__狀況=無效資料) | Q(演化乙__甲流水號__狀況=無效資料)
+	全部編修 = 編修.objects.exclude(狀況=無效資料).filter(要求來源).distinct()
+	for 編修資料 in 全部編修:
+		編修資料.狀況 = 無效資料
 		編修資料.save()
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
