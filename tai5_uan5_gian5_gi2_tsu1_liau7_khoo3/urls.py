@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^臺灣言語資料庫/', include('臺灣言語資料庫.網址')),
     url(r'^校對/', include('臺灣言語資料庫校對.網址')),
+    url(r'^整理華語臺語雙語語料庫系統/', include('整理華語臺語雙語語料庫系統.網址')),
 )
