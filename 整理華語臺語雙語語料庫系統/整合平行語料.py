@@ -160,18 +160,18 @@ class 整合平行語料:
 		章物件 = self.斷詞結構化.斷詞轉章物件(self.斷詞剖析工具.斷詞(一逝國語))
 		return self.譀鏡.看型(章物件, 物件分詞符號=' ')
 	def 加文字(self, **參數):
-		if '音標' in 參數 and 參數['音標']==參數['型體']:
-			try:
-				組物件=self.分析器.產生對齊組(參數['型體'], 參數['音標'])
-				if len(self.篩仔.篩出字物件(組物件))==1:
-					self.轉音家私.轉做標準音標(臺灣閩南語羅馬字拼音, 組物件)
-					return 文字.objects.create(**參數).流水號
-			except:
-				pass
-# 		print(參數)
-		return 文字.objects.filter_one_or_create(**參數).流水號
+# 		if '音標' in 參數 and 參數['音標']==參數['型體']:
+# 			try:
+# 				組物件=self.分析器.產生對齊組(參數['型體'], 參數['音標'])
+# 				if len(self.篩仔.篩出字物件(組物件))==1:
+# 					self.轉音家私.轉做標準音標(臺灣閩南語羅馬字拼音, 組物件)
+# 					return 文字.objects.create(**參數).流水號
+# 			except:
+# 				pass
+# # 		print(參數)
+		return 文字.objects.create(**參數).流水號
 	def 加關係(self, 甲流水號, 乙流水號, 乙對甲的關係類型, 關係性質):
-		return 關係.objects.filter_one_or_create(
+		return 關係.objects.create(
 			甲流水號=甲流水號, 乙流水號=乙流水號,
 			乙對甲的關係類型=乙對甲的關係類型, 關係性質=關係性質).流水號
 if __name__ == '__main__':
