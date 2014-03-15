@@ -18,7 +18,7 @@ setup(
 	keywords=[
 		'語料庫', '語言合成', '機器翻譯',
 		'Taiwan', 'Natural Language', 'Corpus',
-		'Text to Speech','TTS',
+		'Text to Speech', 'TTS',
 		'Machine Translateion',
 		],
 	classifiers=[
@@ -33,6 +33,7 @@ setup(
 		'Topic :: Text Processing :: Linguistic',
 		],
 	install_requires=[
+		'django>=1.6.0',
 		'tai5_uan5_gian5_gi2_kang1_ku7'
 		],
 )
