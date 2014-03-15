@@ -34,6 +34,5 @@ setup(
 		],
 	install_requires=[
 		'django>=1.6.0',
-		'tai5_uan5_gian5_gi2_kang1_ku7'
 		],
 )
