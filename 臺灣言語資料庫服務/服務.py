@@ -16,7 +16,6 @@
 感謝您的使用與推廣～～勞力！承蒙！
 """
 from django.http.response import HttpResponse
-from http.server import HTTPServer
 import Pyro4
 from 臺灣言語工具.語音合成.合音檔.舊閩南語句物件轉合成標籤 import 舊閩南語句物件轉合成標籤
 from 臺灣言語工具.語音合成.合音檔.句物件轉合成標籤 import 句物件轉合成標籤
@@ -39,7 +38,7 @@ from 臺灣言語資料庫.腔口資訊 import 客話
 
 Pyro4.config.SERIALIZER = 'pickle'
 class 服務:
-	標音工具 = Pyro4.Proxy("PYRONAME:閩南語標音")
+	標音工具 = Pyro4.Proxy("PYRONAME:內部自動標音")
 	翻譯 = 翻譯者()
 	揀字 = 揀集內組()
 	舊閩南語合成標籤工具 = 舊閩南語句物件轉合成標籤()
@@ -57,10 +56,13 @@ class 服務:
 		四縣腔:1.0, 海陸腔:1.05, 大埔腔:1.6,
 		饒平腔:1.02, 詔安腔:1.02, }
 
-	def 自動標音(self,查詢腔口, 查詢語句):
+	def 自動標音(self, request, 查詢腔口, 查詢語句):
+		if not self.腔口有支援無(查詢腔口):
+			return self.文字包做回應('無這个腔口')
 		標音結果 = self.標音工具.語句標音(查詢腔口, 查詢語句)
 		return self.文字包做回應(標音結果)
-	def 語音合成(self,查詢腔口, 集選擇字串, 查詢語句):
+	def 語音合成(self, request, 查詢腔口, 集選擇字串, 查詢語句):
+		print(查詢腔口, 查詢語句)
 		集選擇 = self.看集選擇(集選擇字串)
 		章物件 = self.標音工具.語句斷詞(查詢腔口, 查詢語句)
 		揀好章物件 = self.揀字.揀(章物件, 集選擇)
@@ -68,7 +70,7 @@ class 服務:
 		音檔 = self.標仔合音檔(查詢腔口, 全部標仔)
 		調好音 = self.音標調音(查詢腔口, 音檔)
 		return self.音檔包做回應(調好音)
-	def 翻譯國語(self, 查詢腔口, 查詢語句):
+	def 翻譯國語(self, request, 查詢腔口, 查詢語句):
 		原來腔口 = 國語
 		章物件 = self.標音工具.語句斷詞(原來腔口, 查詢語句)
 		翻譯了章物件 = self.翻譯.翻譯章物件(原來腔口, 查詢腔口, 章物件)
@@ -77,7 +79,7 @@ class 服務:
 		標音結果 = self.標音工具.物件綜合標音(
 			查詢腔口, 翻譯了章物件)
 		return self.文字包做回應(標音結果)
-	def 翻譯合成(self, 查詢腔口, 集選擇字串, 查詢語句):
+	def 翻譯合成(self, request, 查詢腔口, 集選擇字串, 查詢語句):
 		原來腔口 = 國語
 		集選擇 = self.看集選擇(集選擇字串)
 		章物件 = self.標音工具.語句斷詞(原來腔口, 查詢語句)
@@ -122,11 +124,11 @@ class 服務:
 			調好音 = 音檔
 		return 調好音
 
-	def 文字包做回應(self,文字):
+	def 文字包做回應(self, 文字):
 		回應 = HttpResponse(文字)
 		return 回應
 
-	def 音檔包做回應(self,音檔):
+	def 音檔包做回應(self, 音檔):
 		回應 = HttpResponse()
 		回應.write(音檔)
 		回應['Content-Type'] = 'audio/x-wav'
