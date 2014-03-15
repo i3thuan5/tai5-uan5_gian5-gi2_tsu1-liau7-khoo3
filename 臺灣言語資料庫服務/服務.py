@@ -38,7 +38,7 @@ from 臺灣言語資料庫.腔口資訊 import 客話
 
 Pyro4.config.SERIALIZER = 'pickle'
 class 服務:
-	標音工具 = Pyro4.Proxy("PYRONAME:內部自動標音")
+	標音工具 = Pyro4.Proxy("PYRONAME:閩南語標音")
 	翻譯 = 翻譯者()
 	揀字 = 揀集內組()
 	舊閩南語合成標籤工具 = 舊閩南語句物件轉合成標籤()
@@ -59,10 +59,10 @@ class 服務:
 	def 自動標音(self, request, 查詢腔口, 查詢語句):
 		if not self.腔口有支援無(查詢腔口):
 			return self.文字包做回應('無這个腔口')
-		標音結果 = self.標音工具.語句標音(查詢腔口, 查詢語句)
+		標音結果 = self.標音工具.語句綜合標音(查詢腔口, 查詢語句)
 		return self.文字包做回應(標音結果)
 	def 語音合成(self, request, 查詢腔口, 集選擇字串, 查詢語句):
-		print(查詢腔口, 查詢語句)
+		print(查詢腔口, 集選擇字串, 查詢語句)
 		集選擇 = self.看集選擇(集選擇字串)
 		章物件 = self.標音工具.語句斷詞(查詢腔口, 查詢語句)
 		揀好章物件 = self.揀字.揀(章物件, 集選擇)
