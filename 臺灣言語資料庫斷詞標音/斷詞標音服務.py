@@ -35,11 +35,13 @@ from 臺灣言語資料庫斷詞標音.斷詞標音服務 import 斷詞標音服
 __資料分類 = 資料分類()
 def 斷詞標音服務():
 	Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
-	閩南語標音 = 自動標音()
+	斷詞標音 = 自動標音()
+	閩南語標音 = 閩南語標音整合(閩南語,型音辭典)
 	while True:
 		try:
 			Pyro4.Daemon.serveSimple(
 			{
+				斷詞標音: "斷詞標音",
 				閩南語標音: "閩南語標音"
 			}, ns=True)
 		except:
