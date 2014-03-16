@@ -36,10 +36,10 @@ from 臺灣言語資料庫.模型 import 文字
 from 臺灣言語資料庫.模型 import 關係
 from 臺灣言語工具.斷詞.中研院工具.官方斷詞剖析工具 import 官方斷詞剖析工具
 from 臺灣言語工具.斷詞.中研院工具.斷詞結構化工具 import 斷詞結構化工具
-from 臺灣言語工具.字詞組集句章.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
 from 臺灣言語工具.字詞組集句章.解析整理.字物件篩仔 import 字物件篩仔
 from 整理華語臺語雙語語料庫系統.模型 import 存入來的文章
 from django.http.response import HttpResponse
+from time import sleep
 
 '''
 from 整理華語臺語雙語語料庫系統.整合平行語料 import 整合平行語料
@@ -164,7 +164,13 @@ class 整合平行語料:
 	def 國語斷詞(self, 一逝國語):
 		if ' ' in 一逝國語:
 			return 一逝國語
-		章物件 = self.斷詞結構化.斷詞轉章物件(self.斷詞剖析工具.斷詞(一逝國語))
+		while True:
+			try:
+				章物件 = self.斷詞結構化.斷詞轉章物件(self.斷詞剖析工具.斷詞(一逝國語))
+			except:
+				sleep(10)
+			else:
+				break
 		return self.譀鏡.看型(章物件, 物件分詞符號=' ')
 	def 加文字(self, **參數):
 	# 		print(參數)
