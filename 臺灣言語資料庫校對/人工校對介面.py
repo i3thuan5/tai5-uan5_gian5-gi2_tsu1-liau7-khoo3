@@ -72,7 +72,7 @@ def 改愛改的資料(request):
 			})
 	else:
 		文 = RequestContext(request,{})
-	版 = loader.get_template('臺灣言語資料庫校對/愛改.html')
+	版 = loader.get_template('臺灣言語資料庫校對/改愛改的資料.html')
 	return HttpResponse(版.render(文))
 
 def 檢查改的資料(request, pk):

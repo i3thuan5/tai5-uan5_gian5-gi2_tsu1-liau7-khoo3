@@ -1,66 +1,62 @@
-{% extends "臺灣言語資料庫校對/框.html" %}
-
-{% block 內容 %}
-	{% if 愛改資料 %}
-		{% if 愛改資料.種類 != '文字' %}
-			<p>應該愛揀出文字的資料</p>
-			<p>系統揀著{{ 愛改資料.種類 }}的資料</p>
-		{% elif 愛改資料.結果%}
-			<p>這筆資料有改過矣！！</p>
-		{% endif %}
-		<form action="{% url '檢查改的資料' 愛改資料.流水號 %}" method="post">{% csrf_token %}
-		<table>
-			<tr><td>流水號</td><td>
-			{{ 愛改資料.流水號 }}
-			</td></tr>
-			<tr><td>種類</td><td>
-			{{ 愛改資料.種類 }}
-			</td></tr>
-			<tr><td>結果</td><td>
-			{{ 愛改資料.結果 }}
-			</td></tr>
-			<tr><td>種類</td><td>
-			{{ 愛改資料.文字.first.種類 }}
-			</td></tr>
-			<tr><td>腔口</td><td>
-			{{ 愛改資料.文字.first.腔口 }}
-			</td></tr>
-			<tr><td>組合</td><td>
-			{{ 愛改資料.文字.first.組合 }}
-			</td></tr>
-			<tr><td>型體</td><td>
-			{{ 愛改資料.文字.first.型體 }}
-			</td></tr>
-			<tr><td>音標</td><td>
-			{{ 愛改資料.文字.first.音標 }}
-			</td></tr>
-			<tr><td>參考語句型體</td><td>
-			{{ 參考語句.型體 }}
-			</td></tr>
-			<tr><td>參考語句音標</td><td>
-			{{ 參考語句.音標 }}
-			</td></tr>
-			<tr><td>參考國語</td><td>
-			{{ 參考國語文字.型體 }}
-			</td></tr>
-			<tr><td>照國語字唸</td><td>
-			{{ 閩南語唸國語 }}
-			</td></tr>
-			<tr><td>參考語句音轉漢字</td><td>
-			{{ 參考語句音轉漢字 }}
-			</td></tr>
-			<tr><td>型體</td><td>
-			{{ 校對表格.型體 }}
-			</td></tr>
-			<tr><td>音標</td><td>
-			{{ 校對表格.音標 }}
-			</td></tr>
-		</table>
-			{% for 做 in 動作 %}
-				<input type="submit" name='動作' value="{{ 做 }}" />
-			{% endfor %}
-		</form>
-	{% else %}
-		<p>恭喜喲～無資料需要改矣～～</p>
+{% if 愛改資料 %}
+	{% if 愛改資料.種類 != '文字' %}
+		<p>應該愛揀出文字的資料</p>
+		<p>系統揀著{{ 愛改資料.種類 }}的資料</p>
+	{% elif 愛改資料.結果%}
+		<p>這筆資料有改過矣！！</p>
 	{% endif %}
-{% endblock %}
+	<form action="{% url '檢查改的資料' 愛改資料.流水號 %}" method="post">{% csrf_token %}
+	<table>
+		<tr><td>流水號</td><td>
+		{{ 愛改資料.流水號 }}
+		</td></tr>
+		<tr><td>種類</td><td>
+		{{ 愛改資料.種類 }}
+		</td></tr>
+		<tr><td>結果</td><td>
+		{{ 愛改資料.結果 }}
+		</td></tr>
+		<tr><td>種類</td><td>
+		{{ 愛改資料.文字.first.種類 }}
+		</td></tr>
+		<tr><td>腔口</td><td>
+		{{ 愛改資料.文字.first.腔口 }}
+		</td></tr>
+		<tr><td>組合</td><td>
+		{{ 愛改資料.文字.first.組合 }}
+		</td></tr>
+		<tr><td>型體</td><td>
+		{{ 愛改資料.文字.first.型體 }}
+		</td></tr>
+		<tr><td>音標</td><td>
+		{{ 愛改資料.文字.first.音標 }}
+		</td></tr>
+		<tr><td>參考語句型體</td><td>
+		{{ 參考語句.型體 }}
+		</td></tr>
+		<tr><td>參考語句音標</td><td>
+		{{ 參考語句.音標 }}
+		</td></tr>
+		<tr><td>參考國語</td><td>
+		{{ 參考國語文字.型體 }}
+		</td></tr>
+		<tr><td>照國語字唸</td><td>
+		{{ 閩南語唸國語 }}
+		</td></tr>
+		<tr><td>參考語句音轉漢字</td><td>
+		{{ 參考語句音轉漢字 }}
+		</td></tr>
+		<tr><td>型體</td><td>
+		{{ 校對表格.型體 }}
+		</td></tr>
+		<tr><td>音標</td><td>
+		{{ 校對表格.音標 }}
+		</td></tr>
+	</table>
+		{% for 做 in 動作 %}
+			<input type="submit" name='動作' value="{{ 做 }}" />
+		{% endfor %}
+	</form>
+{% else %}
+	<p>恭喜喲～無資料需要改矣～～</p>
+{% endif %}
