@@ -25,6 +25,11 @@ class 編修(models.Model):
 			數量 += getattr(self, 項).count()
 		return 數量
 # 		return self.文字.count() + self.關係.count() + self.演化.count()
+	def 揣上尾結果(self):
+		這馬結果=self
+		while 這馬結果.結果!=None:
+			這馬結果=這馬結果.結果
+		return 這馬結果
 	def __str__(self):
 		return ' '.join([
 			str(self.流水號) , self.種類
