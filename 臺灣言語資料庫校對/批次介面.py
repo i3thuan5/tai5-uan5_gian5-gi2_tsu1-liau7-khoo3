@@ -108,7 +108,18 @@ def 自動改有國語語句的資料(request):
 	return HttpResponse("全部：{}，有改：{}".format(全部, 有改))
 
 def 揣資料庫有的來校對(request):
-	編修資料 = __資料分類.揣出愛改的資料().first()
+	改幾个=0
+	for 編修資料 in __資料分類.揣出愛改的資料():
+		if 編修資料.狀況==愛改: 
+			電腦校對資料(request, 編修資料)
+			改幾个+=1
+	return HttpResponse('攏總改{}个'.format(改幾个))
+
+def 揣上尾一个改的來校對(request):
+	編修資料 = __資料分類.揣出上尾一个改的()
+	return HttpResponse('{} {} {} {}'.format(編修資料.流水號,
+				編修資料.文字.first().型體,編修資料.文字.first().音標,
+				編修資料.文字.first().來源,))
 	if 編修資料 == None:
 		return HttpResponse('無資料愛處理喲～～')
 	return 電腦校對資料(request, 編修資料)
