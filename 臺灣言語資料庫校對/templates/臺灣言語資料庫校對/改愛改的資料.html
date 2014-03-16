@@ -1,5 +1,8 @@
 {% extends "臺灣言語資料庫校對/框.html" %}
 
 {% block 內容 %}
-		{% include '臺灣言語資料庫校對/改愛改的資料.html' %}
+	<iframe src="{% url '揣資料庫有的來校對' %}" height=100px>
+	  <p>Your browser does not support iframes.</p>
+	</iframe>
+	{% include '臺灣言語資料庫校對/愛改.html' %}
 {% endblock %}
