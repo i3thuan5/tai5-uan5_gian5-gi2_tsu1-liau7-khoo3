@@ -15,26 +15,24 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 """
-from 臺灣言語工具.字詞組集句章.解析整理.集內組照排 import 集內組照排
-from 臺灣言語資料庫.欄位資訊 import 白話層
-from 臺灣言語資料庫.欄位資訊 import 文讀層
+from django.db.models import Q
+from 臺灣言語資料庫.模型 import 編修
+from 臺灣言語資料庫.腔口資訊 import 閩南語
+from 臺灣言語資料庫.欄位資訊 import 愛改
+from 臺灣言語資料庫.欄位資訊 import 猶未檢查
+from 臺灣言語資料庫.欄位資訊 import 標準
+from 臺灣言語資料庫.模型 import 文字
+from 臺灣言語資料庫.欄位資訊 import 語句
+from 臺灣言語資料庫.欄位資訊 import 文字組合符號
+from 臺灣言語資料庫.腔口資訊 import 國語
+from 臺灣言語資料庫.欄位資訊 import 無仝言語層
+from 臺灣言語資料庫.模型 import 關係
+from 臺灣言語資料庫.欄位資訊 import 字詞
+from 臺灣言語資料庫.欄位資訊 import 會使提來用
 
-class 排標音結果:
-	組照排 = 集內組照排()
-
-	def 照白文層排(self, 物件):
-		return self.組照排.排好(self.白文照排, 物件)
-
-	def 白文照排(self, 組物件):
-		詞物件 = 組物件.內底詞[0]
-		白 = 0
-		文 = 0
-		流水號=0
-		if hasattr(詞物件, '屬性'):
-			if 白話層 in 詞物件.屬性:
-				白 = -詞物件.屬性[白話層]
-			if 文讀層 in 詞物件.屬性:
-				文 = 詞物件.屬性[文讀層]
-			if '流水號' in 詞物件.屬性:
-				流水號 = 詞物件.屬性['流水號']
-		return (白, 文,流水號)
+class 揣辭典條目():
+	def 翻譯(self, 原來腔口, 型體, 音標, 欲揣腔口):
+		return 編修.objects.filter(文字__腔口__startswith=欲揣腔口)\
+			.filter(關係甲__乙流水號__文字__腔口__startswith=原來腔口,\
+				關係甲__乙流水號__文字__型體=型體, 關係甲__乙流水號__文字__音標=音標)
+			

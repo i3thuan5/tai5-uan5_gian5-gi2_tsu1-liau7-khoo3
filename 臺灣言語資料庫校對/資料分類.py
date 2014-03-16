@@ -11,6 +11,7 @@ from 臺灣言語資料庫.腔口資訊 import 國語
 from 臺灣言語資料庫.模型 import 關係
 from 臺灣言語資料庫.欄位資訊 import 近義
 from 臺灣言語資料庫.欄位資訊 import 會當替換
+from 臺灣言語資料庫.欄位資訊 import 會使提來用
 
 class 資料分類:
 	def 揣出指定來源準備做檔準(self, 腔, 來源):
@@ -43,5 +44,9 @@ class 資料分類:
 			關係乙__乙對甲的關係類型=近義,關係乙__關係性質=會當替換)\
 			.filter(文字__腔口__startswith=腔口)
 	def 揣國語猶未檢查(self):
-		return 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True).\
-				filter(文字__腔口__startswith=國語)
+		return 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True)\
+				.filter(文字__腔口__startswith=國語)
+	def 揣出上尾一个改的(self):
+		return 編修.objects.filter(狀況__in=會使提來用, 結果__isnull=True)\
+				.filter(文字__腔口__startswith=閩南語)\
+				.order_by('-修改時間').first()

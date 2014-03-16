@@ -60,15 +60,26 @@ class 主動校對:
 			self.會使用 = self.會使用 | Q(狀況=會使)
 	def 鬥校對仝音的資料(self, 編修資料):
 		音標 = 編修資料.文字.first().音標
-# 		公家 = 編修.objects.filter(self.會使用, 結果__isnull=True)\
-# 			.filter(文字__音標=音標)
-		標準資料 = 編修.objects.values_list('文字__型體').distinct()\
+		標準資料 = 編修.objects.values_list('文字__型體', '文字__音標').distinct()\
 			.filter(self.會使用, 結果__isnull=True).filter(文字__音標=音標)
-		print(標準資料)
+		無正確的 = 編修.objects.filter(結果__isnull=False).filter(文字__音標=音標)
+		print ('無正確的', 無正確的.count())
+		上尾結果流水號 = set()
+		for 無著 in 無正確的:
+			上尾結果流水號.add(無著.揣上尾結果().流水號)
+		參考資料 = set(標準資料)
+		print(上尾結果流水號)
+		if len(上尾結果流水號) > 0:
+			上尾結果資料 = 編修.objects.values_list('文字__型體', '文字__音標').distinct()\
+				.filter(流水號__in=上尾結果流水號)
+			參考資料 = 參考資料 | set(上尾結果資料)
+			print(上尾結果資料.query)
+			print(上尾結果資料.count())
 		# [('言論',), ('言論',), ('言論',), ('言論',), ('言論',)]
-		if 標準資料.count() != 1:
-			print('{}有遮濟可能：{}'.format(音標, set(標準資料)))
-			return
+		print(參考資料)
+		if len(參考資料) != 1:
+			print('{}有遮濟可能：{}'.format(音標, set(參考資料)))
+			return None, None, None
 		標準漢字 = 標準資料[0][0]
 		愛改的資料 = 編修.objects.filter(狀況=愛改)\
 			.filter(文字__音標=音標)

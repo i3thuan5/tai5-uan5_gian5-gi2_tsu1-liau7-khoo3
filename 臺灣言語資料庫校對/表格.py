@@ -10,11 +10,11 @@ class 文字校對表格(ModelForm):
 		model = 文字
 		fields = ['型體', '音標', ]
 		labels = {
-        }
+		}
 		help_texts = {
-        }
+		}
 		error_messages = {
-        }
+		}
 		widgets = {
 			'':HiddenInput(),
 			'型體': TextInput(attrs={'class':'校對'}),

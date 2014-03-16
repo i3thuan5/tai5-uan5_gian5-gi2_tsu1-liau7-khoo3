@@ -15,26 +15,32 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 """
-from 臺灣言語工具.字詞組集句章.解析整理.集內組照排 import 集內組照排
-from 臺灣言語資料庫.欄位資訊 import 白話層
-from 臺灣言語資料庫.欄位資訊 import 文讀層
+from http.server import HTTPServer
+import Pyro4
+from 臺灣言語工具.服務架設.翻譯合成服務 import 翻譯合成服務
 
-class 排標音結果:
-	組照排 = 集內組照排()
+class 自動標音服務(翻譯合成服務):
+	def 服務(self):
+		查詢字串 = self.連線路徑()
+		切開資料 = 查詢字串.split('/', 1)
+		查詢腔口 = None
+		查詢語句 = None
+		if len(切開資料) == 2:
+			查詢腔口, 查詢語句 = 切開資料
+		if not self.腔口有支援無(查詢腔口):
+			查詢腔口 = self.袂前遺的腔口
+			查詢語句 = 查詢字串
+		標音結果 = self.標音工具.語句標音(查詢腔口, 查詢語句)
+		self.送出連線成功資訊()
+		self.送出字串資料(標音結果)
+		return
 
-	def 照白文層排(self, 物件):
-		return self.組照排.排好(self.白文照排, 物件)
-
-	def 白文照排(self, 組物件):
-		詞物件 = 組物件.內底詞[0]
-		白 = 0
-		文 = 0
-		流水號=0
-		if hasattr(詞物件, '屬性'):
-			if 白話層 in 詞物件.屬性:
-				白 = -詞物件.屬性[白話層]
-			if 文讀層 in 詞物件.屬性:
-				文 = 詞物件.屬性[文讀層]
-			if '流水號' in 詞物件.屬性:
-				流水號 = 詞物件.屬性['流水號']
-		return (白, 文,流水號)
+if __name__ == '__main__':
+	Pyro4.config.SERIALIZER = 'pickle'
+	try:
+		server = HTTPServer(('localhost', 8001), 自動標音服務)
+		print ('服務啟動！！')
+		server.serve_forever()
+	except KeyboardInterrupt:
+		print ('^C received, shutting down server')
+		server.socket.close()

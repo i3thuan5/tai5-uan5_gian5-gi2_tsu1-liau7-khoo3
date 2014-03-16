@@ -26,6 +26,8 @@ from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
 import Pyro4
 from 臺灣言語資料庫斷詞標音.閩南語標音整合 import 閩南語標音整合
+from time import sleep
+from 臺灣言語資料庫斷詞標音.自動標音 import 自動標音
 '''
 from 臺灣言語資料庫斷詞標音.斷詞標音服務 import 斷詞標音服務
 斷詞標音服務()
@@ -33,11 +35,17 @@ from 臺灣言語資料庫斷詞標音.斷詞標音服務 import 斷詞標音服
 __資料分類 = 資料分類()
 def 斷詞標音服務():
 	Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
+	斷詞標音 = 自動標音()
 	閩南語標音 = 閩南語標音整合(閩南語,型音辭典)
-	Pyro4.Daemon.serveSimple(
-	{
-		閩南語標音: "閩南語標音"
-	}, ns = True)
+	while True:
+		try:
+			Pyro4.Daemon.serveSimple(
+			{
+				斷詞標音: "斷詞標音",
+				閩南語標音: "閩南語標音"
+			}, ns=True)
+		except:
+			sleep(6)
 # 	標準資料, 愛檢查的資料 = __資料分類.揣出檢查字音的資料(閩南語)
 # 	分析器 = 拆文分析器()
 # 	篩仔 = 字物件篩仔()

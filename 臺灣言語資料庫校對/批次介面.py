@@ -108,12 +108,29 @@ def 自動改有國語語句的資料(request):
 	return HttpResponse("全部：{}，有改：{}".format(全部, 有改))
 
 def 揣資料庫有的來校對(request):
-	編修資料 = __資料分類.揣出愛改的資料().first()
-	編修資料 = 編修.objects.get(pk=203421)  # 1817313
+	改幾个=0
+	for 編修資料 in __資料分類.揣出愛改的資料():
+		if 編修資料.狀況==愛改: 
+			電腦校對資料(request, 編修資料)
+			改幾个+=1
+	return HttpResponse('攏總改{}个'.format(改幾个))
+
+def 揣上尾一个改的來校對(request):
+	編修資料 = __資料分類.揣出上尾一个改的()
+	return HttpResponse('{} {} {} {}'.format(編修資料.流水號,
+				編修資料.文字.first().型體,編修資料.文字.first().音標,
+				編修資料.文字.first().來源,))
+	if 編修資料 == None:
+		return HttpResponse('無資料愛處理喲～～')
+	return 電腦校對資料(request, 編修資料)
+
+def 揣來校對(request, 流水號):
+	編修資料 = 編修.objects.get(流水號=流水號)#昨日1656444 2188298  # 言論203421 1817313
+	return 電腦校對資料(request, 編修資料)
+
+def 電腦校對資料(request, 編修資料):
 	愛改的資料, 標準漢字, 仝款音標 = __主動校對.鬥校對仝音的資料(編修資料)
-	for 愛改資料 in 愛改的資料:
-		__校對資料整理.加校對資料(愛改資料, 電腦校對, 電腦校對,
-			 標準漢字, 仝款音標)
+	__校對資料整理.電腦校對改一堆資料(愛改的資料, 標準漢字, 仝款音標)
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 愛改的資料,
