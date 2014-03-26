@@ -115,8 +115,11 @@ def 自動改有國語語句的資料(request):
 
 def 揣資料庫有的來校對(request):
 	改幾个 = 0
-	for 編修資料 in __資料分類.揣出愛改的資料():
-		if 編修資料.狀況 == 愛改: 
+	for 音標 in __資料分類.揣出愛改的音():
+		編修資料 = 編修.objects.filter(種類='文字', 狀況=愛改)\
+			.filter(文字__音標=音標[0]).first()
+		if 編修資料 != None:
+			print(編修資料)
 			電腦校對資料(request, 編修資料)
 			改幾个 += 1
 	return HttpResponse('攏總改{}个'.format(改幾个))
