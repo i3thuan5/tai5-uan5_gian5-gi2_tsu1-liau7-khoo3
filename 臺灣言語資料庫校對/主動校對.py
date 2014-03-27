@@ -80,8 +80,9 @@ class 主動校對:
 		if len(參考資料) != 1:
 			print('{}有遮濟可能：{}'.format(音標, set(參考資料)))
 			return None, None, None
-		標準漢字 = 標準資料[0][0]
+		標準漢字 = 參考資料.pop()[0]
 		愛改的資料 = 編修.objects.filter(狀況=愛改)\
 			.filter(文字__音標=音標)
+# 		print('愛改的資料, 標準漢字, 音標',愛改的資料, 標準漢字, 音標)
 		return 愛改的資料, 標準漢字, 音標
 		
