@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from 臺灣言語資料庫.模型 import 編修
 from 臺灣言語資料庫.模型 import 文字

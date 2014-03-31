@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from 臺灣言語資料庫服務.服務 import 服務
 

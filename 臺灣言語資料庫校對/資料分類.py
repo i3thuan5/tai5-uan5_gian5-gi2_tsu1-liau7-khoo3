@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db.models import Q
 from 臺灣言語資料庫.模型 import 編修
 from 臺灣言語資料庫.腔口資訊 import 閩南語
@@ -30,6 +31,9 @@ class 資料分類:
 		return 愛檢查的資料
 	def 揣出愛改的資料(self):
 		return 編修.objects.filter(種類='文字', 狀況=愛改)
+	def 揣出愛改的音(self):
+		return 編修.objects.filter(種類='文字', 狀況=愛改)\
+			.values_list('文字__音標').distinct()
 	def 揣出有這文字的語句(self, 腔口, 流水號):
 		文字資料=文字.objects.filter(種類=語句, 腔口__startswith=腔口,
 			組合__contains=文字組合符號 + str(流水號) + 文字組合符號)

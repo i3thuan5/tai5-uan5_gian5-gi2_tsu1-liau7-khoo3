@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
@@ -93,45 +94,54 @@ def 檢查猶未標的資料(request):
 def 自動改有國語語句的資料(request):
 	全部 = 0
 	有改 = 0
-	for 愛改資料 in __資料分類.揣出愛改的資料()[:20]:
-		(愛改文字資料, 參考語句, 參考語句音轉漢字, \
-			參考國語文字, 閩南語唸參考國語文字, 建議結果, 建議結果來源) = __建議漢字.問建議(愛改資料)
-		if 建議結果來源 == __建議漢字.閩南語唸國語:
-			插入結果 = __校對資料整理.加校對資料(愛改資料, 電腦校對, 電腦校對,
-				 建議結果, 愛改文字資料.音標)
-			if 插入結果 == None:
-				有改 += 1
-				print('插入成功：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
-			else:
-				print('插入失敗：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
+	for 愛改資料 in __資料分類.揣出愛改的資料()[:]:
+# 	for 愛改資料 in 編修.objects.filter(流水號=2394836):
+		try:
+			(愛改文字資料, 參考語句, 參考語句音轉漢字, \
+				參考國語文字, 閩南語唸參考國語文字, 建議結果, 建議結果來源) = __建議漢字.問建議(愛改資料)
+			print(全部, 有改, 愛改文字資料.音標, 愛改文字資料.型體, 建議結果, 建議結果來源)
+			if 建議結果來源 == __建議漢字.閩南語唸國語:
+				插入結果 = __校對資料整理.加校對資料(愛改資料, 電腦校對, 電腦校對,
+					 建議結果, 愛改文字資料.音標)
+				if 插入結果 == None:
+					有改 += 1
+					print('插入成功：{}，{}'.format(愛改文字資料.型體, 愛改文字資料.音標))
+				else:
+					print('插入失敗：{}，{}，插入結果：{}'
+						.format(愛改文字資料.型體, 愛改文字資料.音標, 插入結果))
+		except:
+			pass
 		全部 += 1
 	return HttpResponse("全部：{}，有改：{}".format(全部, 有改))
 
 def 揣資料庫有的來校對(request):
-	改幾个=0
-	for 編修資料 in __資料分類.揣出愛改的資料():
-		if 編修資料.狀況==愛改: 
+	改幾个 = 0
+	for 音標 in __資料分類.揣出愛改的音():
+		編修資料 = 編修.objects.filter(種類='文字', 狀況=愛改)\
+			.filter(文字__音標=音標[0]).first()
+		if 編修資料 != None:
+			print(編修資料)
 			電腦校對資料(request, 編修資料)
-			改幾个+=1
+			改幾个 += 1
 	return HttpResponse('攏總改{}个'.format(改幾个))
 
 def 揣上尾一个改的來校對(request):
 	編修資料 = __資料分類.揣出上尾一个改的()
-	return HttpResponse('{} {} {} {}'.format(編修資料.流水號,
-				編修資料.文字.first().型體,編修資料.文字.first().音標,
-				編修資料.文字.first().來源,))
+# 	return HttpResponse('{} {} {} {}'.format(編修資料.流水號,
+# 				編修資料.文字.first().型體, 編修資料.文字.first().音標,
+# 				編修資料.文字.first().來源,))
 	if 編修資料 == None:
 		return HttpResponse('無資料愛處理喲～～')
 	return 電腦校對資料(request, 編修資料)
 
 def 揣來校對(request, 流水號):
-	編修資料 = 編修.objects.get(流水號=流水號)#昨日1656444 2188298  # 言論203421 1817313
+	編修資料 = 編修.objects.get(流水號=流水號)  # 昨日1656444 2188298  # 言論203421 1817313
 	return 電腦校對資料(request, 編修資料)
 
 def 電腦校對資料(request, 編修資料):
 	愛改的資料, 標準漢字, 仝款音標 = __主動校對.鬥校對仝音的資料(編修資料)
 	__校對資料整理.電腦校對改一堆資料(愛改的資料, 標準漢字, 仝款音標)
-	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
+	版 = loader.get_template('臺灣言語資料庫/全部資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 愛改的資料,
 	})
@@ -147,9 +157,9 @@ def 清掉無愛的資料(request):
 	for 源 in 來源[1:]:
 		要求來源 = 要求來源 | Q(文字__來源=源)
 	全部編修 = 編修.objects.filter(要求狀況).filter(要求來源)
-	for 編修資料 in 全部編修:
-		編修資料.狀況 = 無效資料
-		編修資料.save()
+# 	for 編修資料 in 全部編修:
+# 		編修資料.狀況 = 無效資料
+# 		編修資料.save()
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 全部編修[:10],
