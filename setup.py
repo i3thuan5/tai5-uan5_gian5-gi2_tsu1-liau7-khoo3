@@ -3,7 +3,7 @@ from distutils.core import setup
 import os
 
 def 讀(檔名):
-	return open(os.path.join(os.path.dirname(__file__), 檔名)).read()
+	return open(os.path.join(os.path.dirname(__file__), 檔名), encoding='utf-8').read()
 
 setup(
 	# 臺灣言語資料庫 tai5_uan5_gian5_gi2_tsu1_liau7_khoo3
