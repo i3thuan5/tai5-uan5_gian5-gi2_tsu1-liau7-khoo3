@@ -1,3 +1,4 @@
+/# -*- coding: utf-8 -*-
 import os
 import xlrd
 from 臺灣言語工具.資料庫.資料庫連線 import 資料庫連線

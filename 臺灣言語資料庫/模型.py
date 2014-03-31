@@ -1,3 +1,4 @@
+/# -*- coding: utf-8 -*-
 from django.db import models
 from django.db.models.query import QuerySet
 from 臺灣言語資料庫.欄位資訊 import 編修種類

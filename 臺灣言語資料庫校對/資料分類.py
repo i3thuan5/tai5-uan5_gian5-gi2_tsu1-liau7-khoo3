@@ -1,3 +1,4 @@
+/# -*- coding: utf-8 -*-
 from django.db.models import Q
 from 臺灣言語資料庫.模型 import 編修
 from 臺灣言語資料庫.腔口資訊 import 閩南語
