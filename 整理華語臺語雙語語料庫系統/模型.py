@@ -1,4 +1,4 @@
-/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.db import models
 
 class 存入來的文章(models.Model):

@@ -1,4 +1,4 @@
-/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from 臺灣言語工具.資料庫.資料庫連線 import 資料庫連線
 import urllib.request

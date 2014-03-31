@@ -1,4 +1,4 @@
-/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os
 from 臺灣言語工具.字詞組集句章.音標系統.國語.國語注音符號 import 國語注音符號
 

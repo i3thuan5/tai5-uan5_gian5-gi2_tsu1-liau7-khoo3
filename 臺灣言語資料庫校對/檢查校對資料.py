@@ -1,4 +1,4 @@
-/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import Pyro4
 from 臺灣言語資料庫.模型 import 編修
 from 臺灣言語資料庫.模型 import 文字

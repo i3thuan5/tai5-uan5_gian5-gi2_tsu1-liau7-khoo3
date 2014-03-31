@@ -1,4 +1,4 @@
-/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 WSGI config for tai5_uan5_gian5_gi2_tsu1_liau7_khoo3 project.
 
