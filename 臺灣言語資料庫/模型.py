@@ -78,7 +78,7 @@ class 資料(models.Model):
 		abstract = True
 
 class 文字(資料):
-	流水號 = models.ForeignKey('編修', related_name='文字',
+	流水號 = models.OneToOneField('編修', related_name='文字',
 		primary_key=True)
 	來源 = models.CharField(max_length=100)
 	種類 = models.CharField(max_length=10, choices=文字種類)
@@ -108,7 +108,7 @@ class 關係(資料):
 	白話層
 	袂當替換
 	'''
-	流水號 = models.ForeignKey('編修', related_name='關係',
+	流水號 = models.OneToOneField('編修', related_name='關係',
 		primary_key=True,)
 	甲流水號 = models.ForeignKey('編修', related_name='關係甲')
 	乙流水號 = models.ForeignKey('編修', related_name='關係乙')
@@ -126,7 +126,7 @@ class 關係(資料):
 		db_table = '關係'
 
 class 演化(資料):
-	流水號 = models.ForeignKey('編修', related_name='演化',
+	流水號 = models.OneToOneField('編修', related_name='演化',
 		primary_key=True)
 	甲流水號 = models.ForeignKey('編修', related_name='演化甲')
 	乙流水號 = models.ForeignKey('編修', related_name='演化乙')
