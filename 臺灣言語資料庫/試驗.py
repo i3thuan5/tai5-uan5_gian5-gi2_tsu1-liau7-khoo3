@@ -12,8 +12,32 @@ class 資料庫測試(TestCase):
 					乙流水號=文字物件.流水號,)
 		self.assertEqual(文字物件.流水號.揣文字編修(),文字物件.流水號)
 		self.assertEqual(關係物件.流水號.揣文字編修(),文字物件.流水號)
+	def test_揣文字編修愛考慮校對(self):
+		文字物件=文字(年代=22)
+		文字物件.save()
+		新文字物件=文字物件.改過閣加結果()
+		關係物件=關係.objects.create(甲流水號=文字物件.流水號,
+					乙流水號=文字物件.流水號,)
+		self.assertEqual(文字物件.流水號.揣文字編修(),新文字物件.流水號)
+		self.assertEqual(關係物件.流水號.揣文字編修(),新文字物件.流水號)
 	def test_提文字組合(self):
 		文字你=文字.objects.create(年代=103,型體='你',音標='li2')
+		文字好=文字.objects.create(年代=103,型體='好',音標='ho2')
+		文字你好=文字.objects.create(年代=103,組合=
+			'#,'+str(文字你.流水號.流水號)+','+str(文字好.流水號.流水號)+',#')
+		文字你好你好=文字.objects.create(年代=103,組合=
+			'#,'+str(文字你.流水號.流水號)+','+str(文字你好.流水號.流水號)+',#')
+		self.assertEqual(文字你.組合文字()[0],['你'])
+		self.assertEqual(文字你.組合文字()[1],['li2'])
+		self.assertEqual(文字你好.組合文字()[0],['你','好'])
+		self.assertEqual(文字你好.組合文字()[1],['li2','ho2'])
+		self.assertEqual(文字你好你好.組合文字()[0],['你','你','好'])
+		self.assertEqual(文字你好你好.組合文字()[1],['li2','li2','ho2'])
+	def test_提文字組合愛提校對過的(self):
+		文字你=文字.objects.create(年代=103,型體='你',音標='li1')
+		新文字物件=文字你.改過閣加結果()
+		新文字物件.音標='li2'
+		新文字物件.save()
 		文字好=文字.objects.create(年代=103,型體='好',音標='ho2')
 		文字你好=文字.objects.create(年代=103,組合=
 			'#,'+str(文字你.流水號.流水號)+','+str(文字好.流水號.流水號)+',#')
