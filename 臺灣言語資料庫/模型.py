@@ -100,7 +100,7 @@ class 文字(資料):
 	音變 = models.TextField(blank=True)
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
-	def 提組合文字(self):
+	def 組合文字(self):
 		if self.組合.startswith('#,') and self.組合.endswith(',#'):
 			型體 = []
 			音標 = []
@@ -108,15 +108,16 @@ class 文字(資料):
 			音變 = []
 			for 流水號 in self.組合.split(',')[1:-1]:
 				文字編修 = 編修.objects.get(流水號=流水號).揣文字編修()
-				資料 = 文字編修.文字.提組合文字()
-				型體.append(資料[0])
-				音標.append(資料[1])
-				調變.append(資料[2])
-				音變.append(資料[3])
+				資料 = 文字編修.文字.組合文字()
+				型體.extend(資料[0])
+				音標.extend(資料[1])
+				調變.extend(資料[2])
+				音變.extend(資料[3])
 			return [型體, 音標, 調變, 音變]
 # 			return [' '.join(型體), ' '.join(音標),
 # 				' '.join(調變), ' '.join(音變)]
-		return [self.型體, self.音標, self.調變, self.音變]
+		return [[self.型體], [self.音標],
+			[self.調變], [self.音變]]
 	def __str__(self):
 		return ' '.join([
 			str(self.流水號) , self.來源 , self.型體])
