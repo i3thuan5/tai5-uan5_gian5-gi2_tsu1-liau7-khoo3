@@ -1,2 +1,5 @@
 include *程式授權
 include *著作權聲明
+recursive-include 臺灣言語資料庫/static *
+recursive-include 臺灣言語資料庫/templates *
+recursive-include 臺灣言語資料庫/templatetags *
