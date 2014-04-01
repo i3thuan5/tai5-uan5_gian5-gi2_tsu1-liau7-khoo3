@@ -69,7 +69,7 @@ def 最近改的資料(request):
 	})
 	return HttpResponse(版.render(文))
 def 無正常的資料(request):
-	全部資料 = 編修.objects.filter(結果=None, 狀況=改過).order_by('流水號')
+	全部資料 = 編修.objects.filter(校對=None, 狀況=改過).order_by('流水號')
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
 		'全部資料': 全部資料[:10],

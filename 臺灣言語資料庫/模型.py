@@ -14,7 +14,7 @@ class 編修(models.Model):
 	流水號 = models.AutoField(primary_key=True)
 	種類 = models.CharField(max_length=10, choices=編修種類)
 	狀況 = models.CharField(max_length=100, choices=狀況種類, default=猶未檢查)
-	結果 = models.ForeignKey('self', related_name='+',
+	校對 = models.ForeignKey('self', related_name='+',
 		null=True, default=None)
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
@@ -26,19 +26,19 @@ class 編修(models.Model):
 			if hasattr(self, 項):
 				數量 += 1
 		return 數量
-	def 揣上尾結果(self):
-		這馬結果 = self
-		while 這馬結果.結果 != None:
-			這馬結果 = 這馬結果.結果
-		return 這馬結果
+	def 揣上尾校對(self):
+		這馬校對 = self
+		while 這馬校對.校對 != None:
+			這馬校對 = 這馬校對.校對
+		return 這馬校對
 	def 揣文字編修(self):
-		上尾結果=self.揣上尾結果()
-		if 上尾結果.種類 == '文字':
-			return 上尾結果
-		if 上尾結果.種類 == '關係':
-			return 上尾結果.關係.甲流水號.揣文字編修()
-		if 上尾結果.種類 == '演化':
-			return 上尾結果.演化.甲流水號.揣文字編修()
+		上尾校對=self.揣上尾校對()
+		if 上尾校對.種類 == '文字':
+			return 上尾校對
+		if 上尾校對.種類 == '關係':
+			return 上尾校對.關係.甲流水號.揣文字編修()
+		if 上尾校對.種類 == '演化':
+			return 上尾校對.演化.甲流水號.揣文字編修()
 		return None
 	def __str__(self):
 		return ' '.join([
@@ -73,21 +73,21 @@ class 資料(models.Model):
 			self.流水號 = 編修.objects.create(種類=self.__class__.__name__)
 # 		if self.流水號.有對著資料無() == False:
 		super(資料, self).save(*args, **kwargs)
-	def 改過閣加結果(self):
+	def 改過閣加校對(self):
 		資料物件 = self.__class__.objects.get(流水號=self.pk)
 		資料物件.pk = None
 		資料物件.save()
 		新編修資料 = 資料物件.流水號
 		原來編修資料 = self.流水號
 		原來編修資料.狀況 = 改過
-		原來編修資料.結果 = 新編修資料
+		原來編修資料.校對 = 新編修資料
 		原來編修資料.save()
 		return 資料物件
 	class Meta:
 		abstract = True
 
 class 文字(資料):
-	流水號 = models.OneToOneField('編修', related_name='文字',
+	編修 = models.OneToOneField('編修', related_name='文字',
 		primary_key=True)
 	來源 = models.CharField(max_length=100)
 	種類 = models.CharField(max_length=10, choices=文字種類)
@@ -102,13 +102,13 @@ class 文字(資料):
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
 	def 組合文字(self):
-		上尾結果=self.流水號.揣上尾結果().文字
-		if 上尾結果.組合.startswith('#,') and 上尾結果.組合.endswith(',#'):
+		上尾校對=self.流水號.揣上尾校對().文字
+		if 上尾校對.組合.startswith('#,') and 上尾校對.組合.endswith(',#'):
 			型體 = []
 			音標 = []
 			調變 = []
 			音變 = []
-			for 流水號 in 上尾結果.組合.split(',')[1:-1]:
+			for 流水號 in 上尾校對.組合.split(',')[1:-1]:
 				文字編修 = 編修.objects.get(流水號=流水號).揣文字編修()
 				資料 = 文字編修.文字.組合文字()
 				型體.extend(資料[0])
@@ -118,8 +118,8 @@ class 文字(資料):
 			return [型體, 音標, 調變, 音變]
 # 			return [' '.join(型體), ' '.join(音標),
 # 				' '.join(調變), ' '.join(音變)]
-		return [[上尾結果.型體], [上尾結果.音標],
-			[上尾結果.調變], [上尾結果.音變]]
+		return [[上尾校對.型體], [上尾校對.音標],
+			[上尾校對.調變], [上尾校對.音變]]
 	def __str__(self):
 		return ' '.join([
 			str(self.流水號) , self.來源 , self.型體])
@@ -132,7 +132,7 @@ class 關係(資料):
 	白話層
 	袂當替換
 	'''
-	流水號 = models.OneToOneField('編修', related_name='關係',
+	編修 = models.OneToOneField('編修', related_name='關係',
 		primary_key=True,)
 	甲流水號 = models.ForeignKey('編修', related_name='關係甲')
 	乙流水號 = models.ForeignKey('編修', related_name='關係乙')
@@ -150,7 +150,7 @@ class 關係(資料):
 		db_table = '關係'
 
 class 演化(資料):
-	流水號 = models.OneToOneField('編修', related_name='演化',
+	編修 = models.OneToOneField('編修', related_name='演化',
 		primary_key=True)
 	甲流水號 = models.ForeignKey('編修', related_name='演化甲')
 	乙流水號 = models.ForeignKey('編修', related_name='演化乙')

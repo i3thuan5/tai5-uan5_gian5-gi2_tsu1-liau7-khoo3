@@ -18,7 +18,7 @@ class 資料分類:
 	def 揣出指定來源準備做檔準(self, 腔, 來源):
 		if len(來源) == 0:
 			return []
-		公家 = 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True).\
+		公家 = 編修.objects.filter(狀況=猶未檢查, 校對__isnull=True).\
 			filter(文字__腔口__startswith=腔)
 		要求 = Q(文字__來源=來源[0])
 		for 源 in 來源[1:]:
@@ -26,7 +26,7 @@ class 資料分類:
 		標準資料 = 公家.filter(要求)
 		return 標準資料
 	def 揣出檢查字音的資料(self, 腔):
-		愛檢查的資料 = 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True).\
+		愛檢查的資料 = 編修.objects.filter(狀況=猶未檢查, 校對__isnull=True).\
 			filter(文字__腔口__startswith=腔).filter(文字__組合='')
 		return 愛檢查的資料
 	def 揣出愛改的資料(self):
@@ -48,9 +48,9 @@ class 資料分類:
 			關係乙__乙對甲的關係類型=近義,關係乙__關係性質=會當替換)\
 			.filter(文字__腔口__startswith=腔口)
 	def 揣國語猶未檢查(self):
-		return 編修.objects.filter(狀況=猶未檢查, 結果__isnull=True)\
+		return 編修.objects.filter(狀況=猶未檢查, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=國語)
 	def 揣出上尾一个改的(self):
-		return 編修.objects.filter(狀況__in=會使提來用, 結果__isnull=True)\
+		return 編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=閩南語)\
 				.order_by('-修改時間').first()
