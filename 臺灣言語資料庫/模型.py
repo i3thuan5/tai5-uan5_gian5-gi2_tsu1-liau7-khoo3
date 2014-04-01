@@ -36,9 +36,9 @@ class 編修(models.Model):
 		if 上尾校對.種類 == '文字':
 			return 上尾校對
 		if 上尾校對.種類 == '關係':
-			return 上尾校對.關係.甲流水號.揣文字編修()
+			return 上尾校對.關係.甲編修.揣文字編修()
 		if 上尾校對.種類 == '演化':
-			return 上尾校對.演化.甲流水號.揣文字編修()
+			return 上尾校對.演化.甲編修.揣文字編修()
 		return None
 	def __str__(self):
 		return ' '.join([
@@ -70,15 +70,15 @@ class 資料(models.Model):
 	objects = 資料管理(資料控制)
 	def save(self, *args, **kwargs):
 		if self.pk == None:
-			self.流水號 = 編修.objects.create(種類=self.__class__.__name__)
-# 		if self.流水號.有對著資料無() == False:
+			self.編修 = 編修.objects.create(種類=self.__class__.__name__)
+# 		if self.編修.有對著資料無() == False:
 		super(資料, self).save(*args, **kwargs)
 	def 改過閣加校對(self):
-		資料物件 = self.__class__.objects.get(流水號=self.pk)
+		資料物件 = self.__class__.objects.get(編修=self.pk)
 		資料物件.pk = None
 		資料物件.save()
-		新編修資料 = 資料物件.流水號
-		原來編修資料 = self.流水號
+		新編修資料 = 資料物件.編修
+		原來編修資料 = self.編修
 		原來編修資料.狀況 = 改過
 		原來編修資料.校對 = 新編修資料
 		原來編修資料.save()
@@ -102,7 +102,7 @@ class 文字(資料):
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
 	def 組合文字(self):
-		上尾校對=self.流水號.揣上尾校對().文字
+		上尾校對=self.編修.揣上尾校對().文字
 		if 上尾校對.組合.startswith('#,') and 上尾校對.組合.endswith(',#'):
 			型體 = []
 			音標 = []
@@ -122,7 +122,7 @@ class 文字(資料):
 			[上尾校對.調變], [上尾校對.音變]]
 	def __str__(self):
 		return ' '.join([
-			str(self.流水號) , self.來源 , self.型體])
+			str(self.編修) , self.來源 , self.型體])
 	class Meta():
 		db_table = '文字'
 
@@ -134,8 +134,8 @@ class 關係(資料):
 	'''
 	編修 = models.OneToOneField('編修', related_name='關係',
 		primary_key=True,)
-	甲流水號 = models.ForeignKey('編修', related_name='關係甲')
-	乙流水號 = models.ForeignKey('編修', related_name='關係乙')
+	甲編修 = models.ForeignKey('編修', related_name='關係甲')
+	乙編修 = models.ForeignKey('編修', related_name='關係乙')
 	乙對甲的關係類型 = models.CharField(max_length=100, choices=關係種類,)
 	關係性質 = models.CharField(max_length=100)
 	詞性 = models.CharField(max_length=100, blank=True)
@@ -143,7 +143,7 @@ class 關係(資料):
 	修改時間 = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return ' '.join(
-			[str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
+			[str(self.編修) , str(self.甲編修) , str(self.乙編修)
 			, self.乙對甲的關係類型
 			])
 	class Meta():
@@ -152,16 +152,16 @@ class 關係(資料):
 class 演化(資料):
 	編修 = models.OneToOneField('編修', related_name='演化',
 		primary_key=True)
-	甲流水號 = models.ForeignKey('編修', related_name='演化甲')
-	乙流水號 = models.ForeignKey('編修', related_name='演化乙')
+	甲編修 = models.ForeignKey('編修', related_name='演化甲')
+	乙編修 = models.ForeignKey('編修', related_name='演化乙')
 	乙對甲的演化類型 = models.CharField(max_length=100, choices=演化種類,)
-	解釋流水號 = models.ForeignKey('編修', related_name='解釋',
+	解釋編修 = models.ForeignKey('編修', related_name='解釋',
 		null=True, default=None)
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	修改時間 = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return ' '.join([
-			str(self.流水號) , str(self.甲流水號) , str(self.乙流水號)
+			str(self.編修) , str(self.甲編修) , str(self.乙編修)
 			, self.乙對甲的演化類型])
 	class Meta():
 		db_table = '演化'

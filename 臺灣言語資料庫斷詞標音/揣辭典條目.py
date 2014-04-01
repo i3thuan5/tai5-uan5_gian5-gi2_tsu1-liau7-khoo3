@@ -37,13 +37,13 @@ class 揣辭典條目():
 		for 用 in 會使提來用[1:]:
 			self.要求 = self.要求 | Q(狀況=用)
 	def 揣言語層的字詞(self, 腔口, 語言層):
-		乙流水號 = '乙流水號'
-		資料 = 關係.objects.values(乙流水號).distinct()\
+		乙編修 = '乙編修'
+		資料 = 關係.objects.values(乙編修).distinct()\
 			.filter(乙對甲的關係類型=無仝言語層, 關係性質=語言層)\
-			.order_by(乙流水號)
+			.order_by(乙編修)
 		流水號集 = set()
 		for 關 in 資料:
-			流水號集.add(關[乙流水號])
+			流水號集.add(關[乙編修])
 		return 流水號集
 	def 揣腔口資料(self, 腔口):
 # 	文字.objects.values_list('型體', '音標')\
