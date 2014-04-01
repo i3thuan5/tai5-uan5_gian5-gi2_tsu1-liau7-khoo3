@@ -60,7 +60,7 @@ class 主動校對:
 		for 會使 in 會使提來用[1:]:
 			self.會使用 = self.會使用 | Q(狀況=會使)
 	def 鬥校對仝音的資料(self, 編修資料):
-		音標 = 編修資料.文字.first().音標
+		音標 = 編修資料.文字.音標
 		標準資料 = 編修.objects.values_list('文字__型體', '文字__音標').distinct()\
 			.filter(self.會使用, 結果__isnull=True).filter(文字__音標=音標)
 		無正確的 = 編修.objects.filter(結果__isnull=False).filter(文字__音標=音標)
