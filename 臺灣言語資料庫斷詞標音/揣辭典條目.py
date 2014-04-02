@@ -47,9 +47,9 @@ class 揣辭典條目():
 		return 流水號集
 	def 揣腔口資料(self, 腔口):
 # 	文字.objects.values_list('型體', '音標')\
-		return 編修.objects.filter(self.要求).filter(結果__isnull=True)\
+		return 編修.objects.filter(self.要求).filter(校對__isnull=True)\
 			.filter(文字__腔口__startswith=腔口)
 	def 揣腔口字詞資料(self, 腔口):
 # 		return 文字.objects.values_list('型體', '音標')\
-		return 編修.objects.filter(self.要求).filter(結果__isnull=True)\
+		return 編修.objects.filter(self.要求).filter(校對__isnull=True)\
 			.filter(文字__腔口__startswith=腔口, 文字__種類=字詞)
