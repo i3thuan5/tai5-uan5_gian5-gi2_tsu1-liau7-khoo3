@@ -26,18 +26,38 @@ from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 標�
 from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
 import Pyro4
+import os.path
 from 臺灣言語資料庫斷詞標音.閩南語標音整合 import 閩南語標音整合
 from time import sleep
 from 臺灣言語資料庫斷詞標音.自動標音 import 自動標音
+import pickle
 '''
 from 臺灣言語資料庫斷詞標音.斷詞標音服務 import 斷詞標音服務
 斷詞標音服務()
 '''
 __資料分類 = 資料分類()
 def 斷詞標音服務():
+	斷詞標音檔名='斷詞標音.pickle'
+	if os.path.isfile(斷詞標音檔名):
+		斷詞標音檔案=open(斷詞標音檔名,'rb')
+		斷詞標音 = pickle.load(斷詞標音檔案)
+		斷詞標音檔案.close()
+	else:
+		斷詞標音 = 自動標音()
+		斷詞標音檔案=open(斷詞標音檔名,'wb')
+		pickle.dump(斷詞標音, 斷詞標音檔案, protocol=pickle.HIGHEST_PROTOCOL)
+		斷詞標音檔案.close()
+	閩南語標音檔名='閩南語標音.pickle'
+	if os.path.isfile(閩南語標音檔名):
+		閩南語標音檔案=open(閩南語標音檔名,'rb')
+		閩南語標音 = pickle.load(閩南語標音檔案)
+		閩南語標音檔案.close()
+	else:
+		閩南語標音 = 閩南語標音整合(閩南語,型音辭典)
+		閩南語標音檔案=open(閩南語標音檔名,'wb')
+		pickle.dump(閩南語標音, 閩南語標音檔案, protocol=pickle.HIGHEST_PROTOCOL)
+		閩南語標音檔案.close()
 	Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
-	斷詞標音 = 自動標音()
-	閩南語標音 = 閩南語標音整合(閩南語,型音辭典)
 	while True:
 		try:
 			Pyro4.Daemon.serveSimple(
