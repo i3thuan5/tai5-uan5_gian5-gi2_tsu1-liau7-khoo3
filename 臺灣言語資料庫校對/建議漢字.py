@@ -122,6 +122,12 @@ class 建議漢字:
 	def 改定毋著的音標(self,文字資料):
 		if 文字資料.音標.startswith('m1'):
 			文字資料.音標='m7'+文字資料.音標[2:]
-		文字資料.音標=文字資料.音標.replace('-m1','-m7')
-		文字資料.音標=文字資料.音標.replace('jiat4','jiat8')
-		文字資料.音標=文字資料.音標.replace('juah4','juah8')
+		文字資料.音標=文字資料.音標.replace('-m1','-m7')#毋
+		文字資料.音標=文字資料.音標.replace('jiat4','jiat8')#熱
+		文字資料.音標=文字資料.音標.replace('juah4','juah8')#熱
+		文字資料.音標=文字資料.音標.replace('lat4','lat8')#力
+		文字資料.音標=文字資料.音標.replace('kah8', 'kah4')#甲
+		文字資料.音標=文字資料.音標.replace('uah4', 'uah8')#活
+		文字資料.音標=文字資料.音標.replace('jit4', 'jit8')#日
+		文字資料.音標=文字資料.音標.replace('mue2', 'mui2')#每
+		文字資料.音標=文字資料.音標.replace('gak4', 'gak8')#樂
