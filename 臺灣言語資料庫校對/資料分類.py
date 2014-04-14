@@ -51,6 +51,7 @@ class 資料分類:
 		return 編修.objects.filter(狀況=猶未檢查, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=國語)
 	def 揣出上尾一个改的(self):
-		return 編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
+		上尾=編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=閩南語)\
 				.order_by('-修改時間').first()
+		return 編修.objects.filter(校對=上尾).first()

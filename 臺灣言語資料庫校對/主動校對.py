@@ -64,10 +64,13 @@ class 主動校對:
 		標準資料 = 編修.objects.values_list('文字__型體', '文字__音標').distinct()\
 			.filter(self.會使用, 校對__isnull=True).filter(文字__音標=音標)
 		無正確的 = 編修.objects.filter(校對__isnull=False).filter(文字__音標=音標)
+		狀況 = None
 		print ('無正確的', 無正確的.count())
 		上尾校對流水號 = set()
 		for 無著 in 無正確的:
-			上尾校對流水號.add(無著.揣上尾校對().流水號)
+			上尾校對 = 無著.揣上尾校對()
+			上尾校對流水號.add(上尾校對.流水號)
+			狀況 = 上尾校對.狀況
 		參考資料 = set(標準資料)
 		print(上尾校對流水號)
 		if len(上尾校對流水號) > 0:
@@ -80,10 +83,11 @@ class 主動校對:
 		print(參考資料)
 		if len(參考資料) != 1:
 			print('{}有遮濟可能：{}'.format(音標, set(參考資料)))
-			return None, None, None
+			return None, None, None, None
 		標準漢字 = 參考資料.pop()[0]
 		愛改的資料 = 編修.objects.filter(狀況=愛改)\
 			.filter(文字__音標=音標)
+		print('有幾筆會當改',愛改的資料.count())
 # 		print('愛改的資料, 標準漢字, 音標',愛改的資料, 標準漢字, 音標)
-		return 愛改的資料, 標準漢字, 音標
+		return 愛改的資料, 標準漢字, 音標, 狀況
 		
