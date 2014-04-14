@@ -47,6 +47,8 @@ from 臺灣言語資料庫校對.主動校對 import 主動校對
 from 臺灣言語資料庫.欄位資訊 import 猶未檢查
 from 臺灣言語資料庫.欄位資訊 import 無效資料
 from 臺灣言語資料庫.欄位資訊 import 電腦算的結果
+from curses.ascii import isupper
+from 臺灣言語資料庫.欄位資訊 import 電腦校對
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -197,3 +199,16 @@ def 清掉無路用的關係演化(request):
 		'全部資料': 全部編修[:10],
 	})
 	return HttpResponse(版.render(文))
+
+def 共大寫揣無字的當作外來詞(request):
+	全部 = 0
+	改幾个 = 0
+	for 愛改資料 in __資料分類.揣出愛改的資料()[:]:
+		文字資料 = 愛改資料.文字
+		if 文字資料.型體 == 文字資料.音標 and isupper(文字資料.音標[0]):
+			__校對資料整理.加校對資料(愛改資料, 外來詞, 電腦校對,
+				None, None)
+			改幾个 += 1
+		全部 += 1
+		print('{} {}'.format(全部, 改幾个))
+	return HttpResponse('{}攏總改{}个'.format(全部, 改幾个))
