@@ -54,4 +54,7 @@ class 資料分類:
 		上尾=編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=閩南語)\
 				.order_by('-修改時間').first()
-		return 編修.objects.filter(校對=上尾).first()
+		毋著的=編修.objects.filter(校對=上尾).first()
+		if 毋著的!=None:
+			return 毋著的
+		return 上尾
