@@ -27,6 +27,7 @@ from 臺灣言語資料庫.腔口資訊 import 國語
 from 臺灣言語資料庫.欄位資訊 import 字典無收著
 from 臺灣言語資料庫校對.建議漢字 import 建議漢字
 from 臺灣言語資料庫.欄位資訊 import 電腦校對
+from 臺灣言語資料庫.欄位資訊 import 電腦算的結果
 
 Pyro4.config.SERIALIZER = 'pickle'
 
@@ -48,9 +49,9 @@ class 校對資料整理:
 					 標準漢字, 仝款音標)
 		return
 	def 加校對資料(self, 編修資料, 動作, 來源, 型體, 音標):
-		if 動作 not in [人工校對, 愛查, 外來詞, 字典無收著, 電腦校對]:
+		if 動作 not in [人工校對, 愛查, 外來詞, 字典無收著, 電腦校對, 電腦算的結果]:
 			return "動作有問題"
-		if 來源 not in [人工校對, 電腦校對]:
+		if 來源 not in [人工校對, 電腦校對, 電腦算的結果]:
 			return "來源有問題"
 		愛處理的物件 = 編修.objects.get(流水號=編修資料.流水號)
 		if 愛處理的物件.狀況 != 愛改:
