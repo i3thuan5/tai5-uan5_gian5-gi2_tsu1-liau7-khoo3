@@ -131,3 +131,10 @@ class 建議漢字:
 		文字資料.音標=文字資料.音標.replace('jit4', 'jit8')#日
 		文字資料.音標=文字資料.音標.replace('mue2', 'mui2')#每
 		文字資料.音標=文字資料.音標.replace('gak4', 'gak8')#樂
+		文字資料.音標=文字資料.音標.replace('liok4', 'liok8')#六陸
+		文字資料.音標=文字資料.音標.replace('kuh4', 'koh4')#毋「過」
+		文字資料.音標=文字資料.音標.replace('bit4', 'bit8')#密
+		文字資料.音標=文字資料.音標.replace('geh4', 'geh8')#月
+		文字資料.音標=文字資料.音標.replace('gueh4', 'gueh8')#月
+		文字資料.音標=文字資料.音標.replace('liat4', 'liat8')#烈
+
