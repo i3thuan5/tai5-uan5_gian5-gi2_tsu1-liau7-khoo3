@@ -55,13 +55,6 @@ Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
 def 最近改的資料(request):
-# 	 編修.objects.create().save()
-# 	 文字a=文字(年代=22)
-# 	 文字a.save()
-# 	 print(文字a.流水號)
-# 	 關係.objects.create(甲流水號=文字a.流水號,
-# 					 乙流水號=文字a.流水號,)
-# 	全部資料 = 編修.objects.order_by('-流水號')[:10]
 	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:20]
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {
