@@ -35,6 +35,11 @@ class 資料分類:
 		return 編修.objects.filter(種類='文字', 狀況=愛改)\
 			.values_list('文字__音標').distinct()
 	def 揣出有這文字的語句(self, 腔口, 流水號):
+		while True:
+			原來的=編修.objects.filter(校對=流水號).first()
+			if 原來的==None:
+				break
+			流水號=原來的.流水號
 		文字資料=文字.objects.filter(種類=語句, 腔口__startswith=腔口,
 			組合__contains=文字組合符號 + str(流水號) + 文字組合符號)
 		if 文字資料.first()!=None:
