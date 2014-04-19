@@ -89,7 +89,7 @@ def 檢查改的資料(request, pk):
 
 class 有問題愛改(View):
 	無確定 = [免改, 電腦校對 , 電腦算的結果, 愛查, 外來詞]
-	資料=編修.objects.filter(種類=字詞)
+	資料=編修.objects.filter(文字__種類=字詞)
 	def get(self, request, *args, **kwargs):
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
