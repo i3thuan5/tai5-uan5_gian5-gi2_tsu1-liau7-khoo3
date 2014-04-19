@@ -45,6 +45,7 @@ from 臺灣言語資料庫校對.檢查校對資料 import 校對資料整理
 from 臺灣言語資料庫.欄位資訊 import 電腦校對
 from 臺灣言語資料庫.欄位資訊 import 電腦算的結果
 from django.views.generic.base import View
+from 臺灣言語資料庫.欄位資訊 import 字詞
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -88,6 +89,7 @@ def 檢查改的資料(request, pk):
 
 class 有問題愛改(View):
 	無確定 = [免改, 電腦校對 , 電腦算的結果, 愛查, 外來詞]
+	資料=編修.objects.filter(種類=字詞)
 	def get(self, request, *args, **kwargs):
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
@@ -96,12 +98,12 @@ class 有問題愛改(View):
 	def post(self, request, *args, **kwargs):
 		if request.POST['動作'] == '這愛改':
 			if request.POST['型體'].strip() != '' and request.POST['音標'].strip() != '':
-				甲 = 編修.objects.filter(文字__型體__contains = request.POST['型體'],
+				甲 = self.資料.filter(文字__型體__contains = request.POST['型體'],
 					文字__音標__contains = request.POST['音標'])
 			elif request.POST['型體'].strip() != '':
-				甲 = 編修.objects.filter(文字__型體__contains = request.POST['型體'])
+				甲 = self.資料.filter(文字__型體__contains = request.POST['型體'])
 			elif request.POST['音標'].strip() != '':
-				甲 = 編修.objects.filter(文字__音標__contains = request.POST['音標'])
+				甲 = self.資料.filter(文字__音標__contains = request.POST['音標'])
 			else:
 				甲 = []
 			for 資料 in 甲:
@@ -111,9 +113,9 @@ class 有問題愛改(View):
 				print(資料.狀況, 資料)
 		elif request.POST['動作'] == '這愛改做':
 			if request.POST['型體'].strip() != '' and request.POST['音標'].strip() != '':
-				甲 = 編修.objects.filter(
-					文字__型體 = request.POST['型體'],
-					文字__音標 = request.POST['音標'])
+				甲 = self.資料.filter(
+					文字__型體__contains = request.POST['型體'],
+					文字__音標__contains = request.POST['音標'])
 			else:
 				甲 = []
 			if request.POST['改做型體'].strip() != '' and \
@@ -128,7 +130,7 @@ class 有問題愛改(View):
 							request.POST['音標'].strip()
 							, request.POST['改做音標'].strip())
 						print(文字資料.型體, 文字資料.音標)
-# 						文字資料.save()
+						文字資料.save()
 					print(資料.狀況, 資料)
 			else:
 				return
