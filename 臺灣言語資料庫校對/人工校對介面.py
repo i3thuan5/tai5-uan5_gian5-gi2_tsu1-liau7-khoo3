@@ -43,6 +43,8 @@ from 臺灣言語資料庫.欄位資訊 import 字典無收著
 from 臺灣言語資料庫校對.建議漢字 import 建議漢字
 from 臺灣言語資料庫校對.檢查校對資料 import 校對資料整理
 from 臺灣言語資料庫.欄位資訊 import 電腦校對
+from 臺灣言語資料庫.欄位資訊 import 電腦算的結果
+from django.views.generic.base import View
 
 __資料分類 = 資料分類()
 __分析器 = 拆文分析器()
@@ -83,3 +85,19 @@ def 檢查改的資料(request, pk):
 		if 插入結果 != None:
 			return HttpResponse(插入結果)
 	return redirect('改愛改的資料')
+
+class 有問題愛改(View):
+	def get(self, request, *args, **kwargs):
+		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
+		文 = RequestContext(request, {
+		})
+		return HttpResponse(版.render(文))
+	def post(self, request, *args, **kwargs):
+		甲=編修.objects.filter(文字__型體=request.POST['型體'])
+		for 資料 in 甲:
+			if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
+				or 資料.狀況==愛查 or 資料.狀況==外來詞:
+				資料.狀況=愛改
+				資料.save()
+			print(資料.狀況,資料)
+		return self.get(request, *args, **kwargs)
