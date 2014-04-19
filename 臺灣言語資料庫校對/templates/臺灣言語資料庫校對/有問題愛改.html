@@ -3,6 +3,14 @@
 {% block 內容 %}
 	<form action="{% url '有問題愛改' %}" method="post">{% csrf_token %}
 	型體：<input type="text" name='型體' value="" />
+	音標：<input type="text" name='音標' value="" />
+	<br/>
 	<input type="submit" name='動作' value="這愛改" />
+	<br/>
+	<br/>
+	改做型體：<input type="text" name='改做型體' value="" />
+	改做音標：<input type="text" name='改做音標' value="" />
+	<br/>
+	<input type="submit" name='動作' value="這愛改做" />
 	</form>
 {% endblock %}

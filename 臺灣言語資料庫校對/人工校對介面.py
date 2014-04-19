@@ -93,11 +93,32 @@ class 有問題愛改(View):
 		})
 		return HttpResponse(版.render(文))
 	def post(self, request, *args, **kwargs):
-		甲=編修.objects.filter(文字__型體=request.POST['型體'])
-		for 資料 in 甲:
-			if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
-				or 資料.狀況==愛查 or 資料.狀況==外來詞:
-				資料.狀況=愛改
-				資料.save()
-			print(資料.狀況,資料)
+		if request.POST['型體'].strip()!='':
+			甲=編修.objects.filter(文字__型體=request.POST['型體'])
+		elif request.POST['音標'].strip()!='':
+			甲=編修.objects.filter(文字__音標=request.POST['音標'])
+		else:
+			甲=[]
+		if request.POST['動作']=='這愛改':
+			for 資料 in 甲:
+				if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
+					or 資料.狀況==愛查 or 資料.狀況==外來詞:
+					資料.狀況=愛改
+					資料.save()
+				print(資料.狀況,資料)
+		elif request.POST['動作']=='這愛改做':
+			if request.POST['改做型體'].strip()!='' and \
+				request.POST['改做音標'].strip()!='':
+				for 資料 in 甲:
+					if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
+						or 資料.狀況==愛查 or 資料.狀況==外來詞:
+						文字資料=資料.文字
+						文字資料.型體=request.POST['改做型體'].strip()
+						文字資料.音標=request.POST['改做音標'].strip()
+						文字資料.save()
+					print(資料.狀況,資料)
+			else:
+				return
+		else:
+			return
 		return self.get(request, *args, **kwargs)
