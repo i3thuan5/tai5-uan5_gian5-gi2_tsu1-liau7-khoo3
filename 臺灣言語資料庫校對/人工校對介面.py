@@ -87,7 +87,7 @@ def 檢查改的資料(request, pk):
 	return redirect('改愛改的資料')
 
 class 有問題愛改(View):
-	無確定 = [電腦校對 , 電腦算的結果, 愛查, 外來詞]
+	無確定 = [免改, 電腦校對 , 電腦算的結果, 愛查, 外來詞]
 	def get(self, request, *args, **kwargs):
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
@@ -95,7 +95,10 @@ class 有問題愛改(View):
 		return HttpResponse(版.render(文))
 	def post(self, request, *args, **kwargs):
 		if request.POST['動作'] == '這愛改':
-			if request.POST['型體'].strip() != '':
+			if request.POST['型體'].strip() != '' and request.POST['音標'].strip() != '':
+				甲 = 編修.objects.filter(文字__型體__contains = request.POST['型體'],
+					文字__音標__contains = request.POST['音標'])
+			elif request.POST['型體'].strip() != '':
 				甲 = 編修.objects.filter(文字__型體__contains = request.POST['型體'])
 			elif request.POST['音標'].strip() != '':
 				甲 = 編修.objects.filter(文字__音標__contains = request.POST['音標'])
@@ -107,10 +110,10 @@ class 有問題愛改(View):
 					資料.save()
 				print(資料.狀況, 資料)
 		elif request.POST['動作'] == '這愛改做':
-			if request.POST['型體'].strip() != '':
-				甲 = 編修.objects.filter(文字__型體 = request.POST['型體'])
-			elif request.POST['音標'].strip() != '':
-				甲 = 編修.objects.filter(文字__音標 = request.POST['音標'])
+			if request.POST['型體'].strip() != '' and request.POST['音標'].strip() != '':
+				甲 = 編修.objects.filter(
+					文字__型體 = request.POST['型體'],
+					文字__音標 = request.POST['音標'])
 			else:
 				甲 = []
 			if request.POST['改做型體'].strip() != '' and \
@@ -118,9 +121,14 @@ class 有問題愛改(View):
 				for 資料 in 甲:
 					if 資料.狀況 in self.無確定:
 						文字資料 = 資料.文字
-						文字資料.型體 = request.POST['改做型體'].strip()
-						文字資料.音標 = request.POST['改做音標'].strip()
-						文字資料.save()
+						文字資料.型體 = 文字資料.型體.replace(
+							request.POST['型體'].strip(),
+							request.POST['改做型體'].strip())
+						文字資料.音標 = 文字資料.音標.replace(
+							request.POST['音標'].strip()
+							, request.POST['改做音標'].strip())
+						print(文字資料.型體, 文字資料.音標)
+# 						文字資料.save()
 					print(資料.狀況, 資料)
 			else:
 				return
