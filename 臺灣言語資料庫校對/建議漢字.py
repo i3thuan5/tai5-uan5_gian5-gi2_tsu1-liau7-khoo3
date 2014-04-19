@@ -144,5 +144,7 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('͘', '')
 		文字資料.音標 = 文字資料.音標.replace('giann5', 'ngia5')  # 迎
 		文字資料.音標 = 文字資料.音標.replace('ken', 'king1')  # 間
+		文字資料.音標 = 文字資料.音標.replace('nng1', 'nng7')  # 兩
+		文字資料.音標 = 文字資料.音標.replace('jim7-ui5', 'jin7-ui5')  # 認為
 
 

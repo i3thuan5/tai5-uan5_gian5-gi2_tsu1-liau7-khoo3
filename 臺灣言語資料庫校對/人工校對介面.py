@@ -59,11 +59,11 @@ __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
 def 改愛改的資料(request):
 	愛改資料 = __資料分類.揣出愛改的資料().first()
-	if 愛改資料!=None:
+	if 愛改資料 != None:
 		(愛改文字資料, 參考語句, 參考語句音轉漢字, \
 			參考國語文字, 閩南語唸參考國語文字, 建議結果, 建議結果來源) = __建議漢字.問建議(愛改資料)
 		校對表格 = 文字校對表格(
-			initial={'型體':建議結果}, instance=愛改文字資料)
+			initial = {'型體':建議結果}, instance = 愛改文字資料)
 		文 = RequestContext(request, {
 			'愛改資料': 愛改資料,
 			'參考語句':參考語句,
@@ -74,49 +74,54 @@ def 改愛改的資料(request):
 			'動作':[人工校對, 愛查, 外來詞, 字典無收著],
 			})
 	else:
-		文 = RequestContext(request,{})
+		文 = RequestContext(request, {})
 	版 = loader.get_template('臺灣言語資料庫校對/改愛改的資料.html')
 	return HttpResponse(版.render(文))
 
 def 檢查改的資料(request, pk):
 	if request.method == 'POST':
-		插入結果 = __校對資料整理.加校對資料(編修.objects.get(流水號=pk),
+		插入結果 = __校對資料整理.加校對資料(編修.objects.get(流水號 = pk),
 			request.POST['動作'], 人工校對, request.POST['型體'], request.POST['音標'])
 		if 插入結果 != None:
 			return HttpResponse(插入結果)
 	return redirect('改愛改的資料')
 
 class 有問題愛改(View):
+	無確定 = [電腦校對 , 電腦算的結果, 愛查, 外來詞]
 	def get(self, request, *args, **kwargs):
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
 		})
 		return HttpResponse(版.render(文))
 	def post(self, request, *args, **kwargs):
-		if request.POST['型體'].strip()!='':
-			甲=編修.objects.filter(文字__型體=request.POST['型體'])
-		elif request.POST['音標'].strip()!='':
-			甲=編修.objects.filter(文字__音標=request.POST['音標'])
-		else:
-			甲=[]
-		if request.POST['動作']=='這愛改':
+		if request.POST['動作'] == '這愛改':
+			if request.POST['型體'].strip() != '':
+				甲 = 編修.objects.filter(文字__型體__contains = request.POST['型體'])
+			elif request.POST['音標'].strip() != '':
+				甲 = 編修.objects.filter(文字__音標__contains = request.POST['音標'])
+			else:
+				甲 = []
 			for 資料 in 甲:
-				if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
-					or 資料.狀況==愛查 or 資料.狀況==外來詞:
-					資料.狀況=愛改
+				if 資料.狀況 in self.無確定:
+					資料.狀況 = 愛改
 					資料.save()
-				print(資料.狀況,資料)
-		elif request.POST['動作']=='這愛改做':
-			if request.POST['改做型體'].strip()!='' and \
-				request.POST['改做音標'].strip()!='':
+				print(資料.狀況, 資料)
+		elif request.POST['動作'] == '這愛改做':
+			if request.POST['型體'].strip() != '':
+				甲 = 編修.objects.filter(文字__型體 = request.POST['型體'])
+			elif request.POST['音標'].strip() != '':
+				甲 = 編修.objects.filter(文字__音標 = request.POST['音標'])
+			else:
+				甲 = []
+			if request.POST['改做型體'].strip() != '' and \
+				request.POST['改做音標'].strip() != '':
 				for 資料 in 甲:
-					if 資料.狀況==電腦校對 or 資料.狀況==電腦算的結果\
-						or 資料.狀況==愛查 or 資料.狀況==外來詞:
-						文字資料=資料.文字
-						文字資料.型體=request.POST['改做型體'].strip()
-						文字資料.音標=request.POST['改做音標'].strip()
+					if 資料.狀況 in self.無確定:
+						文字資料 = 資料.文字
+						文字資料.型體 = request.POST['改做型體'].strip()
+						文字資料.音標 = request.POST['改做音標'].strip()
 						文字資料.save()
-					print(資料.狀況,資料)
+					print(資料.狀況, 資料)
 			else:
 				return
 		else:
