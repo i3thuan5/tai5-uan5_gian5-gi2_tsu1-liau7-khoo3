@@ -146,5 +146,11 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('ken', 'king1')  # 間
 		文字資料.音標 = 文字資料.音標.replace('nng1', 'nng7')  # 兩
 		文字資料.音標 = 文字資料.音標.replace('jim7-ui5', 'jin7-ui5')  # 認為
+		文字資料.音標 = 文字資料.音標.replace('goo5', 'goo7')  # 五
+		文字資料.音標 = 文字資料.音標.replace('go7', 'goo7')  # 五
+		文字資料.音標 = 文字資料.音標.replace('tsap4', 'tsap8')  # 十
+		文字資料.音標 = 文字資料.音標.replace('jip8-pun2', 'jit8-pun2')  # 日本
+		文字資料.音標 = 文字資料.音標.replace('king2-jian5', 'king3-jian5')  # 竟然
+		
 
 
