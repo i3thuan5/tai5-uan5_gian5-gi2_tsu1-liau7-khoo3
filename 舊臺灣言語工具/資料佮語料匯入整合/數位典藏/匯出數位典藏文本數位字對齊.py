@@ -54,8 +54,10 @@ class 匯出數位典藏文本數位字對齊:
 					譀鏡.看型(標準章物件,
 						物件分字符號=分詞符號, 物件分詞符號=分詞符號)
 					.split('\n'))
-				print(資料[-1])
-			except:
+# 				print(資料[-1])
+			except Exception as 問題:
+# 				print(全羅文)
+				print(問題)
 				有問題 += 1
 		檔案 = open('台語文數位典藏全羅文.txt', 'w')
 		for 逝 in 資料:
