@@ -114,7 +114,12 @@ class 建議漢字:
 		for 參考字物件所在 in range(len(建議字陣列) - len(字陣列) + 1):
 			對著 = True
 			for 字物件所在 in range(len(字陣列)):
-				if 建議字陣列[參考字物件所在 + 字物件所在].音 != 字陣列[字物件所在].音:
+				if 建議字陣列[參考字物件所在 + 字物件所在].音 == 字陣列[字物件所在].音:
+					pass
+				elif 建議字陣列[參考字物件所在 + 字物件所在].音 \
+					== 字陣列[字物件所在].音.replace('o','oo'):
+					字陣列[字物件所在]=字陣列[字物件所在].音.replace('o','oo')
+				else:
 					對著 = False
 			if 對著:
 				return 參考字物件所在
@@ -151,6 +156,9 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('tsap4', 'tsap8')  # 十
 		文字資料.音標 = 文字資料.音標.replace('jip8-pun2', 'jit8-pun2')  # 日本
 		文字資料.音標 = 文字資料.音標.replace('king2-jian5', 'king3-jian5')  # 竟然
+		文字資料.音標 = 文字資料.音標.replace('tsit8-tso2', 'tsit8-tso7')  # 一座
+		文字資料.音標 = 文字資料.音標.replace('beh4-ho7', 'beh4-hoo7')  # 欲予
+		文字資料.音標 = 文字資料.音標.replace('hu3-tsoo7', 'hu2-tsoo7')  # 輔助
 		
 
 
