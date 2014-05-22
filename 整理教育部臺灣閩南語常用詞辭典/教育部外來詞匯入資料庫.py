@@ -3,8 +3,8 @@
 import urllib.request
 import json
 from html.parser import HTMLParser
-from 臺灣言語工具.字詞組集句章.解析整理.文章粗胚 import 文章粗胚
-from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.解析整理.文章粗胚 import 文章粗胚
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 
 class 教育部外來詞匯入資料庫:
 	class 網頁剖析工具(HTMLParser):

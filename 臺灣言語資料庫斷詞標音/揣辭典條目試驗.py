@@ -17,8 +17,8 @@
 感謝您的使用與推廣～～勞力！承蒙！
 """
 from unittest.case import TestCase
-from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.字詞組集句章.基本元素.集 import 集
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.基本元素.集 import 集
 from 臺灣言語資料庫斷詞標音.排標音結果 import 排標音結果
 from django.db.models import Q
 from 臺灣言語資料庫.模型 import 編修
