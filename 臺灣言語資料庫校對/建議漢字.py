@@ -160,3 +160,8 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('beh4-ho7', 'beh4-hoo7')  # 欲予
 		文字資料.音標 = 文字資料.音標.replace('hu3-tsoo7', 'hu2-tsoo7')  # 輔助
 		文字資料.音標 = 文字資料.音標.replace('ham3-ko2', 'ham3-koo2')  # 譀古
+		文字資料.音標 = 文字資料.音標.replace('bueh4-ho7', 'bueh4-hoo7')  # 欲予
+		文字資料.音標 = 文字資料.音標.replace('beh4-ho7', 'beh4-hoo7')  # 欲予
+		文字資料.音標 = 文字資料.音標.replace('e5-po1', 'e5-poo1')  # 下晡
+		文字資料.音標 = 文字資料.音標.replace('pan7-an2', 'pan7-an3')  # 辦案
+		文字資料.音標 = 文字資料.音標.replace('hio2-jim7', 'honn2-jin7')  # 否認
