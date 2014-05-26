@@ -165,3 +165,8 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('e5-po1', 'e5-poo1')  # 下晡
 		文字資料.音標 = 文字資料.音標.replace('pan7-an2', 'pan7-an3')  # 辦案
 		文字資料.音標 = 文字資料.音標.replace('hio2-jim7', 'honn2-jin7')  # 否認
+		文字資料.音標 = 文字資料.音標.replace('kan1-na7', 'kan1-na1')  # 干焦
+		文字資料.音標 = 文字資料.音標.replace('tit4-beh4', 'tih4-beh4')  # 咧欲
+		文字資料.音標 = 文字資料.音標.replace('it4-to2', 'it4-too7')  # 一度
+		文字資料.音標 = 文字資料.音標.replace('tang5-tshiu2', 'tang7-tshiu2')  # 動手
+		文字資料.音標 = 文字資料.音標.replace('he1-hok8', 'khue1-hok8')  # 恢復
