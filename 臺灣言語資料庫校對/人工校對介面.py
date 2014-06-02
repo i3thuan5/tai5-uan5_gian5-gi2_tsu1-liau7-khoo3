@@ -91,7 +91,14 @@ class 有問題愛改(View):
 	無確定 = [人工校對, 免改, 電腦校對 , 電腦算的結果, 愛查, 外來詞]
 	資料 = 編修.objects.filter(文字__種類 = 字詞)
 	def get(self, request, *args, **kwargs):
-		print(request.POST)
+		request.POST={}
+		request.POST['動作'] = '這愛改'
+		request.POST['音標']=''
+		a=[]
+		for b in a:
+			request.POST['型體']=b
+			print(request.POST)
+			self.改(request, *args, **kwargs)
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
 		})

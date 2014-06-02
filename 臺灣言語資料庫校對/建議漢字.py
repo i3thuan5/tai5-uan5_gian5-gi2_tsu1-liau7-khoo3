@@ -165,8 +165,28 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('e5-po1', 'e5-poo1')  # 下晡
 		文字資料.音標 = 文字資料.音標.replace('pan7-an2', 'pan7-an3')  # 辦案
 		文字資料.音標 = 文字資料.音標.replace('hio2-jim7', 'honn2-jin7')  # 否認
+		文字資料.音標 = 文字資料.音標.replace('hoo2-jim7', 'honn2-jin7')  # 否認
 		文字資料.音標 = 文字資料.音標.replace('kan1-na7', 'kan1-na1')  # 干焦
 		文字資料.音標 = 文字資料.音標.replace('tit4-beh4', 'tih4-beh4')  # 咧欲
 		文字資料.音標 = 文字資料.音標.replace('it4-to2', 'it4-too7')  # 一度
 		文字資料.音標 = 文字資料.音標.replace('tang5-tshiu2', 'tang7-tshiu2')  # 動手
 		文字資料.音標 = 文字資料.音標.replace('he1-hok8', 'khue1-hok8')  # 恢復
+		文字資料.音標 = 文字資料.音標.replace('an1-tsuann2', 'an2-tsuann2')  # 按怎
+		文字資料.音標 = 文字資料.音標.replace('an3-tsuann2', 'an2-tsuann2')  # 按怎
+		文字資料.音標 = 文字資料.音標.replace('tsap8-kho3', 'tsap8-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('pah4-kho3', 'pah4-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('tshing1-kho3', 'tshing1-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('ban7-kho3', 'ban7-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('kui2-kho3', 'kui2-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('tsap8-khoo3', 'tsap8-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('pah4-khoo3', 'pah4-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('tshing1-khoo3', 'tshing1-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('ban7-khoo3', 'ban7-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('kui2-khoo3', 'kui2-khoo1')  # 箍
+		文字資料.音標 = 文字資料.音標.replace('go5-tsap8', 'goo7-tsap8')  # 五
+		文字資料.音標 = 文字資料.音標.replace('go5-pah4', 'goo7-pah4')  # 五
+		文字資料.音標 = 文字資料.音標.replace('go5-tshing1-', 'goo7-tshing1')  # 五
+		文字資料.音標 = 文字資料.音標.replace('go5-ban7', 'goo7-ban7')  # 五
+		文字資料.音標 = 文字資料.音標.replace('iu5-guan5', 'iu1-guan5')  # 猶原
+		
+		
