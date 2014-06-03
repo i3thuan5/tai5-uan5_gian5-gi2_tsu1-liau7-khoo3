@@ -188,5 +188,8 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('go5-tshing1-', 'goo7-tshing1')  # 五
 		文字資料.音標 = 文字資料.音標.replace('go5-ban7', 'goo7-ban7')  # 五
 		文字資料.音標 = 文字資料.音標.replace('iu5-guan5', 'iu1-guan5')  # 猶原
-		
-		
+		文字資料.音標 = 文字資料.音標.replace('iau3-si7', 'iah4-si7')  # 猶是
+		文字資料.音標 = 文字資料.音標.replace('phok8-huat4', 'pok8-huat4')  # 爆發
+		文字資料.音標 = 文字資料.音標.replace('kan1-kho2', 'kan1-khoo2')  # 艱苦
+		文字資料.音標 = 文字資料.音標.replace('si2-the2', 'si1-the2')  # 屍體
+		文字資料.音標 = 文字資料.音標.replace('tshin1-tshiu7', 'tshin1-tshiunn7')  # 親像
