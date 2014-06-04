@@ -100,6 +100,17 @@ class 有問題愛改(View):
 			request.POST['型體'] = b
 			print(request.POST)
 			self.改(request, *args, **kwargs)
+		request.POST['動作'] = '這愛改做'
+		request.POST['音標'] = 'z'
+		request.POST['改做音標']=request.POST['音標']
+		愛改做的 = []
+		對='台'
+		到='臺'
+		for 愛改的型 in 愛改做的:
+			request.POST['型體'] = 愛改的型
+			request.POST['改做型體']=request.POST['型體'].replace(對,到)
+			print(request.POST)
+			self.改(request, *args, **kwargs)
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
 		文 = RequestContext(request, {
 		})
