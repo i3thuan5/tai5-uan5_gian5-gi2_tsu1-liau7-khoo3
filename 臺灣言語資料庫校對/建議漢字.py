@@ -200,7 +200,8 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('san2-giap4', 'san2-giap8')  # 產業
 		文字資料.音標 = 文字資料.音標.replace('som1-lim5', 'sim1-lim5')  # 森林
 		文字資料.音標 = 文字資料.音標.replace('hak4-sing1', 'hak8-sing1')  # 學生
-		
-		
+		文字資料.音標 = 文字資料.音標.replace('an3-ni1', 'an2-ni1')  # 按呢
+		文字資料.音標 = 文字資料.音標.replace('pak4-to2', 'pak4-too2')  # 腹肚
+
 		文字資料.音標 = 文字資料.音標.replace('go5', 'goo7')  # 五 暫時用
 		
