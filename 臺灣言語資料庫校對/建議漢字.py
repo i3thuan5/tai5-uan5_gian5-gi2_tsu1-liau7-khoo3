@@ -134,7 +134,7 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('juah4', 'juah8')  # 熱
 		文字資料.音標 = 文字資料.音標.replace('lat4', 'lat8')  # 力
 		文字資料.音標 = 文字資料.音標.replace('kah8', 'kah4')  # 甲
-		文字資料.音標 = 文字資料.音標.replace('uah4', 'uah8')  # 活
+#		文字資料.音標 = 文字資料.音標.replace('uah4', 'uah8')  # 活
 		文字資料.音標 = 文字資料.音標.replace('jit4', 'jit8')  # 日
 		文字資料.音標 = 文字資料.音標.replace('mue2', 'mui2')  # 每
 		文字資料.音標 = 文字資料.音標.replace('gak4', 'gak8')  # 樂
@@ -187,7 +187,7 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('kui2-khoo3', 'kui2-khoo1')  # 箍
 		文字資料.音標 = 文字資料.音標.replace('go5-tsap8', 'goo7-tsap8')  # 五
 		文字資料.音標 = 文字資料.音標.replace('go5-pah4', 'goo7-pah4')  # 五
-		文字資料.音標 = 文字資料.音標.replace('go5-tshing1-', 'goo7-tshing1')  # 五
+		文字資料.音標 = 文字資料.音標.replace('go5-tshing1', 'goo7-tshing1')  # 五
 		文字資料.音標 = 文字資料.音標.replace('go5-ban7', 'goo7-ban7')  # 五
 		文字資料.音標 = 文字資料.音標.replace('iu5-guan5', 'iu1-guan5')  # 猶原
 		文字資料.音標 = 文字資料.音標.replace('iau3-si7', 'iah4-si7')  # 猶是
@@ -203,5 +203,6 @@ class 建議漢字:
 		文字資料.音標 = 文字資料.音標.replace('an3-ni1', 'an2-ni1')  # 按呢
 		文字資料.音標 = 文字資料.音標.replace('pak4-to2', 'pak4-too2')  # 腹肚
 
-		文字資料.音標 = 文字資料.音標.replace('go5', 'goo7')  # 五 暫時用
+	#	文字資料.音標 = 文字資料.音標.replace('go5', 'goo7')  # 五 暫時用
+	#	文字資料.音標 = 文字資料.音標.replace('ham1', 'ham5')  # 和 暫時用
 		

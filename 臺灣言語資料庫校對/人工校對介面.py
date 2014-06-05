@@ -95,20 +95,24 @@ class 有問題愛改(View):
 		request.POST = {}
 		request.POST['動作'] = '這愛改'
 		request.POST['音標'] = ''
-		a = []
+		a = [
+		]
 		for b in a:
 			request.POST['型體'] = b
 			print(request.POST)
 			self.改(request, *args, **kwargs)
+			
 		request.POST['動作'] = '這愛改做'
-		request.POST['音標'] = 'z'
+		request.POST['音標'] = 'tsiah4'
 		request.POST['改做音標']=request.POST['音標']
-		愛改做的 = []
-		對='台'
-		到='臺'
+		愛改做的 = [
+
+		]
+		對='才'
+		到='食'
 		for 愛改的型 in 愛改做的:
 			request.POST['型體'] = 愛改的型
-			request.POST['改做型體']=request.POST['型體'].replace(對,到)
+			request.POST['改做型體']= request.POST['型體'].replace(對,到)
 			print(request.POST)
 			self.改(request, *args, **kwargs)
 		版 = loader.get_template('臺灣言語資料庫校對/有問題愛改.html')
@@ -121,12 +125,12 @@ class 有問題愛改(View):
 	def 改(self, request, *args, **kwargs):
 		if request.POST['動作'] == '這愛改':
 			if request.POST['型體'].strip() != '' and request.POST['音標'].strip() != '':
-				甲 = self.資料.filter(文字__型體__contains = request.POST['型體'],
-					文字__音標__contains = request.POST['音標'])
+				甲 = self.資料.filter(文字__型體__contains = request.POST['型體'].strip(),
+					文字__音標__contains = request.POST['音標'].strip())
 			elif request.POST['型體'].strip() != '':
-				甲 = self.資料.filter(文字__型體__contains = request.POST['型體'])
+				甲 = self.資料.filter(文字__型體 = request.POST['型體'].strip())
 			elif request.POST['音標'].strip() != '':
-				甲 = self.資料.filter(文字__音標__contains = request.POST['音標'])
+				甲 = self.資料.filter(文字__音標__contains = request.POST['音標'].strip())
 			else:
 				甲 = []
 			for 資料 in 甲:
