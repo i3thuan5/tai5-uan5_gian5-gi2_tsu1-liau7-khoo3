@@ -16,12 +16,12 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 """
-from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.字詞組集句章.解析整理.轉物件音家私 import 轉物件音家私
-from 臺灣言語工具.字詞組集句章.解析整理.文章粗胚 import 文章粗胚
-from 臺灣言語工具.字詞組集句章.解析整理.物件譀鏡 import 物件譀鏡
-from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 分字符號
-from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 分詞符號
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.解析整理.轉物件音家私 import 轉物件音家私
+from 臺灣言語工具.解析整理.文章粗胚 import 文章粗胚
+from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
+from 臺灣言語工具.基本元素.公用變數 import 分字符號
+from 臺灣言語工具.基本元素.公用變數 import 分詞符號
 from 整理華語臺語雙語語料庫系統.對語料庫網站掠資料落來 import 對語料庫網站掠資料落來
 from 整理華語臺語雙語語料庫系統.何澤政教會羅馬字音標 import 何澤政教會羅馬字音標
 from 臺灣言語資料庫.欄位資訊 import 文字組合符號
@@ -37,7 +37,7 @@ from 臺灣言語資料庫.模型 import 文字
 from 臺灣言語資料庫.模型 import 關係
 from 臺灣言語工具.斷詞.中研院工具.官方斷詞剖析工具 import 官方斷詞剖析工具
 from 臺灣言語工具.斷詞.中研院工具.斷詞結構化工具 import 斷詞結構化工具
-from 臺灣言語工具.字詞組集句章.解析整理.字物件篩仔 import 字物件篩仔
+from 臺灣言語工具.解析整理.字物件篩仔 import 字物件篩仔
 from 整理華語臺語雙語語料庫系統.模型 import 存入來的文章
 from django.http.response import HttpResponse
 from time import sleep
