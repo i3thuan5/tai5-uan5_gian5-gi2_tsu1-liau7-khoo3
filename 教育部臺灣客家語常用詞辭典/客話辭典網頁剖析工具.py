@@ -16,6 +16,8 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 """
+import os
+from 教育部臺灣客家語常用詞辭典.客語辭典輸出合成標仔 import 客語辭典整理腔調資料
 '''
 Created on 2013/7/31
 
@@ -23,7 +25,7 @@ Created on 2013/7/31
 '''
 
 from html.parser import HTMLParser
-造字組字表={
+造字組字表 = {
 '2430':'⿰火',
 '2A61':'⿰齒含',
 '35F1':'⿰口集',
@@ -100,68 +102,81 @@ from html.parser import HTMLParser
 'F457':'⿰⿰⿰Ｆ４５７',
 }
 class 客話辭典網頁剖析工具(HTMLParser):
-	剖析結果=[]
-	字體內量=0
-	表格內=0
-	def 剖析客話辭典檔案(self,檔名):
-		檔案=open(檔名)
-		資料=檔案.read()
+	剖析結果 = []
+	字體內量 = 0
+	表格內 = 0
+	def 剖析客話辭典檔案(self, 檔名):
+		檔案 = open(檔名)
+		資料 = 檔案.read()
 		檔案.close()
 		return self.剖析客話辭典網頁(資料)
-	def 剖析客話辭典網頁(self,資料):
+	def 剖析客話辭典網頁(self, 資料):
 		self.初始化剖析結果()
 		self.feed(資料)
 		return self.目前剖析結果()
 	def 初始化剖析結果(self):
-		self.剖析結果=[]
-		self.字體內量=0
-		self.表格內=0
+		self.剖析結果 = []
+		self.字體內量 = 0
+		self.表格內 = 0
 	def 目前剖析結果(self):
 		return self.剖析結果
 	def handle_starttag(self, tag, attrs):
-		if self.字體內量>0 and self.表格內>0:
-			if tag=="td":
+		if self.字體內量 > 0 and self.表格內 > 0:
+			if tag == "td":
 				self.剖析結果.append('')
-			elif tag=='img':
-				src=dict(attrs)['src']
+			elif tag == 'img':
+				src = dict(attrs)['src']
 				if src.startswith('koupng'):
-					tsoo2zi7too5=src.split('/')[-1].split('.')[0]
+					tsoo2zi7too5 = src.split('/')[-1].split('.')[0]
 # 					print(tsoo2zi7too5)
 					if tsoo2zi7too5 not in 造字組字表:
-						print(tsoo2zi7too5,'無佇組字表')
-						self.剖析結果[-1]+=tsoo2zi7too5
+						print(tsoo2zi7too5, '無佇組字表')
+						self.剖析結果[-1] += tsoo2zi7too5
 					else:
-						self.剖析結果[-1]+=造字組字表[tsoo2zi7too5]
-		if tag=="font":
-			self.字體內量+=1
-		elif tag=="table":
-			self.表格內+=1
+						self.剖析結果[-1] += 造字組字表[tsoo2zi7too5]
+		if tag == "font":
+			self.字體內量 += 1
+		elif tag == "table":
+			self.表格內 += 1
 	def handle_endtag(self, tag):
-#		 if self.字體內量>0 and self.表格內>0:
-#			 if tag=="td":
-#				 print()
-		if tag=="font":
-			self.字體內量-=1
-		elif tag=="table":
-			self.表格內-=1
+# 		 if self.字體內量>0 and self.表格內>0:
+# 			 if tag=="td":
+# 				 print()
+		if tag == "font":
+			self.字體內量 -= 1
+		elif tag == "table":
+			self.表格內 -= 1
 	def handle_data(self, data):
-		if self.字體內量>0 and self.表格內>0:
-			if len(self.剖析結果)>0:
-				self.剖析結果[-1]+=data.strip()
-#				 print('', data.strip(),'',end='',sep='')
+		if self.字體內量 > 0 and self.表格內 > 0:
+			if len(self.剖析結果) > 0:
+				self.剖析結果[-1] += data.strip()
+# 				 print('', data.strip(),'',end='',sep='')
+	def 欄位值(self, 剖析結果):
+		if '詞性' in 剖析結果[2]:
+			詞性 = 剖析結果[2].split(':')[1].strip()
+		else:
+			詞性 = ''
+		return (剖析結果[1][1:-1], 詞性, 剖析結果[5], 剖析結果[8],
+			剖析結果[11], 剖析結果[14], 剖析結果[17],
+			剖析結果[20], 剖析結果[22], 剖析結果[24], 剖析結果[26], 剖析結果[28], 剖析結果[30], 剖析結果[32],)
 
 if __name__ == "__main__":
+	資料目錄 = '/home/Ihc/意傳/機構資料/臺灣客家語常用詞辭典網路版/download/hakka.dict.edu.tw/hakkadict'
 	網頁剖析工具 = 客話辭典網頁剖析工具(strict=False)
-	網頁剖析工具.feed('<html><head><title>Test</title></head>'
-				'<body><h1>  Parse me!  </h1></body></html>')
-	網頁剖析工具.feed('<html><head><title>Test</title></head>'
-				'<body><h1>  Parse me!  </h1></body></html>')
-	su=open('/home/chhsueh/su.html').read()
-#	 print(su)
-	a=網頁剖析工具.剖析客話辭典網頁(su)
-	print(a)
-	word=open('/home/chhsueh/word.html').read()
-#	 print(word)
-	a=網頁剖析工具.剖析客話辭典網頁(word)
-	print(a)
-	
+	整理腔調資料 = 客語辭典整理腔調資料()
+	音標格式 = '{0:05}///{1}'
+	資料 = []
+	for 檔名 in os.listdir(資料目錄)[:]:
+		if 檔名.startswith('result_detail.jsp?'):
+			編號 = 檔名.split('=')[-1]
+			剖析了欄位 = 網頁剖析工具.剖析客話辭典檔案(os.path.join(資料目錄, 檔名))
+			if 剖析了欄位 == []:
+				print('無法匯入=', 檔名.split('=')[-1])
+				continue
+			詞目, 詞性, 四縣音, 海陸音, 大埔音, 饒平音, 詔安音, 釋義, 近義詞, 反義詞, \
+				文白讀, 又音, 多音字, 對應華語 = 網頁剖析工具.欄位值(剖析了欄位)
+# 			print(詞目, 四縣音, 海陸音, 大埔音, 饒平音, 詔安音)
+			正規資料 = 整理腔調資料.轉(詞目, 四縣音, 海陸音, 大埔音, 饒平音, 詔安音)
+			if '四縣腔音' in 正規資料:
+				資料.append(音標格式.format(int(編號), 正規資料['四縣腔音']))
+		print('\n'.join(資料), file=open('拼音句', 'w'))
