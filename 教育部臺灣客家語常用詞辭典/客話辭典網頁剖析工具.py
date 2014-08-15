@@ -18,6 +18,7 @@
 """
 import os
 from 教育部臺灣客家語常用詞辭典.客語辭典輸出合成標仔 import 客語辭典整理腔調資料
+import io
 '''
 Created on 2013/7/31
 
@@ -165,7 +166,7 @@ if __name__ == "__main__":
 	網頁剖析工具 = 客話辭典網頁剖析工具(strict=False)
 	整理腔調資料 = 客語辭典整理腔調資料()
 	音標格式 = '{0:05}///{1}'
-	資料 = []
+	資料 = {}
 	for 檔名 in os.listdir(資料目錄)[:]:
 		if 檔名.startswith('result_detail.jsp?'):
 			編號 = 檔名.split('=')[-1]
@@ -177,6 +178,10 @@ if __name__ == "__main__":
 				文白讀, 又音, 多音字, 對應華語 = 網頁剖析工具.欄位值(剖析了欄位)
 # 			print(詞目, 四縣音, 海陸音, 大埔音, 饒平音, 詔安音)
 			正規資料 = 整理腔調資料.轉(詞目, 四縣音, 海陸音, 大埔音, 饒平音, 詔安音)
-			if '四縣腔音' in 正規資料:
-				資料.append(音標格式.format(int(編號), 正規資料['四縣腔音']))
-		print('\n'.join(資料), file=open('拼音句', 'w'))
+			for 類, 內容 in 正規資料.items():
+				if 類 not in 資料:
+					資料[類] = io.StringIO()
+				print(音標格式.format(int(編號), 內容), file=資料[類])
+		for 類, 內容 in 資料.items():
+			if 類.endswith('音'):
+				print(內容.getvalue(), file=open(類, 'w'))
