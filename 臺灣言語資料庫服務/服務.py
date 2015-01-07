@@ -20,7 +20,7 @@ from django.http.response import HttpResponse
 import Pyro4
 from 臺灣言語工具.語音合成.合音檔.舊閩南語句物件轉合成標籤 import 舊閩南語句物件轉合成標籤
 from 臺灣言語工具.語音合成.合音檔.句物件轉合成標籤 import 句物件轉合成標籤
-from 臺灣言語工具.字詞組集句章.音標系統.客話.臺灣客家話拼音 import 臺灣客家話拼音
+from 臺灣言語工具.音標系統.客話.臺灣客家話拼音 import 臺灣客家話拼音
 from 臺灣言語工具.語音合成.合音檔.標仔轉音檔 import 標仔轉音檔
 from 臺灣言語工具.翻譯.翻譯者 import 翻譯者
 from 臺灣言語工具.語音合成.合音檔.調音盒 import 調音盒
@@ -33,7 +33,7 @@ from 臺灣言語資料庫.腔口資訊 import 大埔腔
 from 臺灣言語資料庫.腔口資訊 import 饒平腔
 from 臺灣言語資料庫.腔口資訊 import 詔安腔
 from 臺灣言語資料庫.腔口資訊 import 國語
-from 臺灣言語工具.字詞組集句章.解析整理.揀集內組 import 揀集內組
+from 臺灣言語工具.解析整理.揀集內組 import 揀集內組
 from 臺灣言語資料庫.腔口資訊 import 閩南語
 from 臺灣言語資料庫.腔口資訊 import 客話
 from 臺灣言語資料庫服務.揣辭典條目 import 揣辭典條目

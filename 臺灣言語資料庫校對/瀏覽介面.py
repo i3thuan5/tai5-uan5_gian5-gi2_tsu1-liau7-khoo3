@@ -18,21 +18,21 @@ from 臺灣言語資料庫校對.資料分類 import 資料分類
 from 臺灣言語資料庫.腔口資訊 import 閩南語
 from itertools import chain
 from 臺灣言語工具.斷詞.型音辭典 import 型音辭典
-from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.字詞組集句章.解析整理.字物件篩仔 import 字物件篩仔
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.解析整理.字物件篩仔 import 字物件篩仔
 from 臺灣言語資料庫.欄位資訊 import 免改
 from 臺灣言語資料庫.欄位資訊 import 愛改
-from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 標點符號
+from 臺灣言語工具.基本元素.公用變數 import 標點符號
 from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
 from django.db.models import Count
 import Pyro4
-from 臺灣言語工具.字詞組集句章.解析整理.物件譀鏡 import 物件譀鏡
+from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
 import sys
 import traceback
-from 臺灣言語工具.字詞組集句章.解析整理.轉物件音家私 import 轉物件音家私
-from 臺灣言語工具.字詞組集句章.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
-from 臺灣言語工具.字詞組集句章.解析整理.詞物件網仔 import 詞物件網仔
+from 臺灣言語工具.解析整理.轉物件音家私 import 轉物件音家私
+from 臺灣言語工具.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
+from 臺灣言語工具.解析整理.詞物件網仔 import 詞物件網仔
 from 臺灣言語資料庫校對.表格 import 文字校對表格
 from 臺灣言語資料庫.欄位資訊 import 改過
 from 臺灣言語資料庫.欄位資訊 import 愛查
@@ -55,13 +55,6 @@ Pyro4.config.SERIALIZER = 'pickle'
 __閩南語標音 = Pyro4.Proxy("PYRONAME:閩南語標音")
 
 def 最近改的資料(request):
-# 	 編修.objects.create().save()
-# 	 文字a=文字(年代=22)
-# 	 文字a.save()
-# 	 print(文字a.流水號)
-# 	 關係.objects.create(甲流水號=文字a.流水號,
-# 					 乙流水號=文字a.流水號,)
-# 	全部資料 = 編修.objects.order_by('-流水號')[:10]
 	全部資料 = 編修.objects.exclude(狀況='正常').order_by('-修改時間')[:20]
 	版 = loader.get_template('臺灣言語資料庫校對/最近改的資料.html')
 	文 = RequestContext(request, {

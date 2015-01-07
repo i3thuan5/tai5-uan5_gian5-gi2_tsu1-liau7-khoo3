@@ -18,11 +18,11 @@ from 臺灣言語資料庫校對.資料分類 import 資料分類
 from 臺灣言語資料庫.腔口資訊 import 閩南語
 from itertools import chain
 from 臺灣言語工具.斷詞.型音辭典 import 型音辭典
-from 臺灣言語工具.字詞組集句章.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.字詞組集句章.解析整理.字物件篩仔 import 字物件篩仔
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.解析整理.字物件篩仔 import 字物件篩仔
 from 臺灣言語資料庫.欄位資訊 import 免改
 from 臺灣言語資料庫.欄位資訊 import 愛改
-from 臺灣言語工具.字詞組集句章.基本元素.公用變數 import 標點符號
+from 臺灣言語工具.基本元素.公用變數 import 標點符號
 from 臺灣言語資料庫.欄位資訊 import 標準
 from 臺灣言語資料庫.欄位資訊 import 免檢查
 import Pyro4

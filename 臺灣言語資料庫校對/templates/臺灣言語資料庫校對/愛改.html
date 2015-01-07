@@ -5,7 +5,8 @@
 	{% elif 愛改資料.結果%}
 		<p>這筆資料有改過矣！！</p>
 	{% endif %}
-	<form action="{% url '檢查改的資料' 愛改資料.流水號 %}" method="post">{% csrf_token %}
+	<form action="{% url '檢查改的資料' 愛改資料.流水號 %}" method="post" target='_blank'>
+	{% csrf_token %}
 	<table>
 		<tr><td>流水號</td><td>
 		{{ 愛改資料.流水號 }}
@@ -16,8 +17,8 @@
 		<tr><td>腔口</td><td>
 		{{ 愛改資料.文字.腔口 }}
 		</td></tr>
-		<tr><td>組合</td><td>
-		{{ 愛改資料.文字.組合 }}
+		<tr><td>拍袂出的字</td><td>
+		𤆬𤶃𤲍躼䆀⿳⿳ㄨㄢˊ也𪁎捙⿰𧾷百𥍉⿳ㄨㄢ⿳⿳ㄋㄚˋ
 		</td></tr>
 		<tr><td>型體</td><td>
 		{{ 愛改資料.文字.型體 }}

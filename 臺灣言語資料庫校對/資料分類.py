@@ -35,6 +35,11 @@ class 資料分類:
 		return 編修.objects.filter(種類='文字', 狀況=愛改)\
 			.values_list('文字__音標').distinct()
 	def 揣出有這文字的語句(self, 腔口, 流水號):
+		while True:
+			原來的=編修.objects.filter(校對=流水號).first()
+			if 原來的==None:
+				break
+			流水號=原來的.流水號
 		文字資料=文字.objects.filter(種類=語句, 腔口__startswith=腔口,
 			組合__contains=文字組合符號 + str(流水號) + 文字組合符號)
 		if 文字資料.first()!=None:
@@ -51,6 +56,10 @@ class 資料分類:
 		return 編修.objects.filter(狀況=猶未檢查, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=國語)
 	def 揣出上尾一个改的(self):
-		return 編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
+		上尾=編修.objects.filter(狀況__in=會使提來用, 校對__isnull=True)\
 				.filter(文字__腔口__startswith=閩南語)\
 				.order_by('-修改時間').first()
+		毋著的=編修.objects.filter(校對=上尾).first()
+		if 毋著的!=None:
+			return 毋著的
+		return 上尾
