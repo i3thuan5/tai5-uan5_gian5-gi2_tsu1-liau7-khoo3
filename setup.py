@@ -9,7 +9,7 @@ setup(
 	# 臺灣言語資料庫 tai5_uan5_gian5_gi2_tsu1_liau7_khoo3
 	name='tai5_uan5_gian5_gi2_tsu1_liau7_khoo3',
 	packages=['臺灣言語資料庫'],
-	version='2.0.0',
+	version='2.1.0',
 	description='臺灣語言資訊系統（Toolkit for Languages in Taiwan）',
 	long_description=讀('README'),
 	author='薛丞宏',
