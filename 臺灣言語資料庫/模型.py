@@ -17,8 +17,6 @@ class 編修(models.Model):
 	狀況 = models.CharField(max_length = 100, choices = 狀況種類, default = 猶未檢查)
 	校對 = models.ForeignKey('self', related_name = '+',
 		null = True, default = None)
-	收錄時間 = models.DateTimeField(auto_now_add = True)
-	修改時間 = models.DateTimeField(auto_now = True)
 	def 有對著資料無(self):
 		return self.對著幾个資料() == 1
 	def 對著幾个資料(self):
@@ -72,6 +70,9 @@ class 資料管理(models.Manager):
 		return getattr(self.get_query_set(), name, *args)
 
 class 資料(models.Model):
+	收錄時間 = models.DateTimeField(auto_now_add = True)
+# 	修改時間 = models.DateTimeField(auto_now = True)
+	
 	objects = 資料管理(資料控制)
 	def save(self, *args, **kwargs):
 		if self.pk == None:
@@ -99,13 +100,7 @@ class 文字(資料):
 	腔口 = models.CharField(max_length = 100)
 	地區 = models.CharField(max_length = 100)
 	年代 = models.IntegerField()
-	組合 = models.TextField(blank = True)
-	型體 = models.TextField()
-	音標 = models.TextField(blank = True)
-	調變 = models.TextField(blank = True)
-	音變 = models.TextField(blank = True)
-	收錄時間 = models.DateTimeField(auto_now_add = True)
-	修改時間 = models.DateTimeField(auto_now = True)
+	資料 = models.TextField()
 	def 組合文字(self):
 		上尾校對 = self.編修.揣上尾校對().文字
 		if 上尾校對.組合.startswith('#,') and 上尾校對.組合.endswith(',#'):
@@ -139,8 +134,6 @@ class 關係(資料):
 	乙對甲的關係類型 = models.CharField(max_length = 100, choices = 關係種類,)
 	關係性質 = models.CharField(max_length = 100, choices = 關係性質種類,)
 	詞性 = models.CharField(max_length = 100, blank = True)
-	收錄時間 = models.DateTimeField(auto_now_add = True)
-	修改時間 = models.DateTimeField(auto_now = True)
 	def __str__(self):
 		return ' '.join(
 			[str(self.編修) , str(self.甲編修) , str(self.乙編修)
@@ -157,8 +150,6 @@ class 演化(資料):
 	乙對甲的演化類型 = models.CharField(max_length = 100, choices = 演化種類,)
 	解釋編修 = models.ForeignKey('編修', related_name = '解釋',
 		null = True, default = None)
-	收錄時間 = models.DateTimeField(auto_now_add = True)
-	修改時間 = models.DateTimeField(auto_now = True)
 	def __str__(self):
 		return ' '.join([
 			str(self.編修) , str(self.甲編修) , str(self.乙編修)
