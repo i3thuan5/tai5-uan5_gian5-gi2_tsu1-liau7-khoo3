@@ -1,158 +1,29 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.db.models.query import QuerySet
-from 臺灣言語資料庫.欄位資訊 import 編修種類
-from 臺灣言語資料庫.欄位資訊 import 狀況種類
-from 臺灣言語資料庫.欄位資訊 import 猶未檢查
 from 臺灣言語資料庫.欄位資訊 import 文字種類
-from 臺灣言語資料庫.欄位資訊 import 關係種類
-from 臺灣言語資料庫.欄位資訊 import 演化種類
-from 臺灣言語資料庫.欄位資訊 import 改過
-from 臺灣言語資料庫.欄位資訊 import 關係性質種類
-
-
-class 編修(models.Model):
-	流水號 = models.AutoField(primary_key = True)
-	種類 = models.CharField(max_length = 10, choices = 編修種類)
-	狀況 = models.CharField(max_length = 100, choices = 狀況種類, default = 猶未檢查)
-	校對 = models.ForeignKey('self', related_name = '+',
-		null = True, default = None)
-	def 有對著資料無(self):
-		return self.對著幾个資料() == 1
-	def 對著幾个資料(self):
-		數量 = 0
-		for 項, 目 in 編修種類:
-			try:
-				hasattr(self,項)
-			except:
-				pass
-			else:
-				數量 += 1
-		return 數量
-	def 揣上尾校對(self):
-		這馬校對 = self
-		while 這馬校對.校對 != None:
-			這馬校對 = 這馬校對.校對
-		return 這馬校對
-	def 揣文字編修(self):
-		上尾校對 = self.揣上尾校對()
-		if 上尾校對.種類 == '文字':
-			return 上尾校對
-		if 上尾校對.種類 == '關係':
-			return 上尾校對.關係.甲編修.揣文字編修()
-		if 上尾校對.種類 == '演化':
-			return 上尾校對.演化.甲編修.揣文字編修()
-		return None
-	def __str__(self):
-		return ' '.join([
-			str(self.流水號) , self.種類
-			])
-	class Meta():
-		db_table = '編修'
-
-class 資料控制(QuerySet):
-	def filter_one_or_create(self, **參數):
-		資 = self.filter(**參數)
-		if 資.exists():
-			return 資.first()
-		return self.create(**參數)
-
-class 資料管理(models.Manager):
-	use_for_related_fields = True
-	def __init__(self, 控制方式 = models.query.QuerySet):
-		self.控制方式 = 控制方式
-		super(資料管理, self).__init__()
-	def get_query_set(self):
-		return self.控制方式(self.model)
-	def __getattr__(self, name, *args):
-		if name.startswith("_"):
-			raise AttributeError
-		return getattr(self.get_query_set(), name, *args)
 
 class 資料(models.Model):
+	作者 = models.CharField(max_length = 100)
+	腔口 = models.CharField(max_length = 100)
+	地區 = models.CharField(max_length = 100)
+	年代 = models.IntegerField()#char ?
 	收錄時間 = models.DateTimeField(auto_now_add = True)
-# 	修改時間 = models.DateTimeField(auto_now = True)
-	
-	objects = 資料管理(資料控制)
-	def save(self, *args, **kwargs):
-		if self.pk == None:
-			self.編修 = 編修.objects.create(種類 = self.__class__.__name__)
-# 		if self.編修.有對著資料無() == False:
-		super(資料, self).save(*args, **kwargs)
-	def 加校對結果條目(self):
-		資料物件 = self.__class__.objects.get(編修 = self.pk)
-		資料物件.pk = None
-		資料物件.save()
-		新編修資料 = 資料物件.編修
-		原來編修資料 = self.編修
-		原來編修資料.狀況 = 改過
-		原來編修資料.校對 = 新編修資料
-		原來編修資料.save()
-		return 資料物件
 	class Meta:
 		abstract = True
 
-class 文字(資料):
-	編修 = models.OneToOneField('編修', related_name = '文字',
-		primary_key = True)
-	來源 = models.CharField(max_length = 100)
+class 文本(資料):
+	文本資料 = models.TextField()
 	種類 = models.CharField(max_length = 10, choices = 文字種類)
-	腔口 = models.CharField(max_length = 100)
-	地區 = models.CharField(max_length = 100)
-	年代 = models.IntegerField()
-	資料 = models.TextField()
-	def 組合文字(self):
-		上尾校對 = self.編修.揣上尾校對().文字
-		if 上尾校對.組合.startswith('#,') and 上尾校對.組合.endswith(',#'):
-			型體 = []
-			音標 = []
-			調變 = []
-			音變 = []
-			for 流水號 in 上尾校對.組合.split(',')[1:-1]:
-				文字編修 = 編修.objects.get(流水號 = 流水號).揣文字編修()
-				資料 = 文字編修.文字.組合文字()
-				型體.extend(資料[0])
-				音標.extend(資料[1])
-				調變.extend(資料[2])
-				音變.extend(資料[3])
-			return [型體, 音標, 調變, 音變]
-# 			return [' '.join(型體), ' '.join(音標),
-# 				' '.join(調變), ' '.join(音變)]
-		return [[上尾校對.型體], [上尾校對.音標],
-			[上尾校對.調變], [上尾校對.音變]]
 	def __str__(self):
-		return ' '.join([
-			str(self.編修) , self.來源 , self.型體])
-	class Meta():
-		db_table = '文字'
+		return self.文本資料
 
-class 關係(資料):
-	編修 = models.OneToOneField('編修', related_name = '關係',
-		primary_key = True,)
-	甲編修 = models.ForeignKey('編修', related_name = '關係甲')
-	乙編修 = models.ForeignKey('編修', related_name = '關係乙')
-	乙對甲的關係類型 = models.CharField(max_length = 100, choices = 關係種類,)
-	關係性質 = models.CharField(max_length = 100, choices = 關係性質種類,)
-	詞性 = models.CharField(max_length = 100, blank = True)
+class 影音(資料):
+	原始資料=models.FileField()
+	網頁資料=models.FileField()
 	def __str__(self):
-		return ' '.join(
-			[str(self.編修) , str(self.甲編修) , str(self.乙編修)
-			, self.乙對甲的關係類型
-			])
-	class Meta():
-		db_table = '關係'
+		return str(self.原始資料)
 
-class 演化(資料):
-	編修 = models.OneToOneField('編修', related_name = '演化',
-		primary_key = True)
-	甲編修 = models.ForeignKey('編修', related_name = '演化甲')
-	乙編修 = models.ForeignKey('編修', related_name = '演化乙')
-	乙對甲的演化類型 = models.CharField(max_length = 100, choices = 演化種類,)
-	解釋編修 = models.ForeignKey('編修', related_name = '解釋',
-		null = True, default = None)
+class 聽拍(資料):
+	聽拍資料=models.TextField()
 	def __str__(self):
-		return ' '.join([
-			str(self.編修) , str(self.甲編修) , str(self.乙編修)
-			, self.乙對甲的演化類型])
-	class Meta():
-		db_table = '演化'
+		return self.聽拍資料
