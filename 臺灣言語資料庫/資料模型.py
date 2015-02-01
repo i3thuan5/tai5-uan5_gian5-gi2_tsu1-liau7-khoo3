@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from 臺灣言語語料庫.欄位資訊 import 文字種類
+from 臺灣言語資料庫.欄位資訊 import 文字種類
 
 class 款(models.Model):
 # 	字詞 = '字詞'
@@ -16,11 +16,11 @@ class 權(models.Model):
 # 	會使公開，袂使公開
 	版權 = models.CharField(max_length=20)
 	
-class 語料(models.Model):
-	款 = models.ForeignKey(款, related_name='全部語料')
-	收錄者 = models.ForeignKey(作者, related_name='收的語料')
+class 資料(models.Model):
+	款 = models.ForeignKey(款, related_name='全部資料')
+	收錄者 = models.ForeignKey(作者, related_name='收的資料')
 	收錄時間 = models.DateTimeField(auto_now_add=True)
-	作者 = models.ForeignKey(作者, related_name='做的語料')
+	作者 = models.ForeignKey(作者, related_name='做的資料')
 	腔口 = models.CharField(max_length=100)
 	地區 = models.CharField(max_length=100)
 	年代 = models.CharField(max_length=10)
@@ -29,18 +29,18 @@ class 語料(models.Model):
 	class Meta:
 		abstract = True
 
-class 文本(語料):
-	文本語料 = models.TextField()
+class 文本(資料):
+	文本資料 = models.TextField()
 	def __str__(self):
-		return self.文本語料
+		return self.文本資料
 
-class 影音(語料):
-	原始語料 = models.FileField()
-	網頁語料 = models.FileField()
+class 影音(資料):
+	原始資料 = models.FileField()
+	網頁資料 = models.FileField()
 	def __str__(self):
-		return str(self.原始語料)
+		return str(self.原始資料)
 
-class 聽拍(語料):
-	聽拍語料 = models.TextField()
+class 聽拍(資料):
+	聽拍資料 = models.TextField()
 	def __str__(self):
-		return self.聽拍語料
+		return self.聽拍資料
