@@ -29,6 +29,11 @@ class 資料(models.Model):
 	class Meta:
 		abstract = True
 
+class 外語(資料):
+	外語資料 = models.TextField()
+	def __str__(self):
+		return self.外語資料
+
 class 文本(資料):
 	文本資料 = models.TextField()
 	def __str__(self):
