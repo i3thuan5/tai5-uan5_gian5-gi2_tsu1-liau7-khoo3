@@ -40,6 +40,11 @@ class 影音(資料):
 	def __str__(self):
 		return str(self.原始資料)
 
+class 聽拍規範(models.Model):
+	規範名 = models.CharField(max_length=20, unique=True)
+	範例 = models.TextField()
+	說明 = models.TextField()
+
 class 聽拍(資料):
 	聽拍資料 = models.TextField()
 	def __str__(self):
