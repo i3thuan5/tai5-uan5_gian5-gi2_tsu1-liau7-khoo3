@@ -43,6 +43,7 @@ class 資料表(models.Model):
 		abstract = True
 
 class 外語表(資料表):
+	外語語言 = models.ForeignKey(話表, related_name='+')
 	外語資料 = models.TextField()
 	def __str__(self):
 		return self.外語資料
@@ -53,8 +54,8 @@ class 文本表(資料表):
 		return self.文本資料
 
 class 影音表(資料表):
-	原始資料 = models.FileField()
-	網頁資料 = models.FileField()
+	原始影音資料 = models.FileField()
+	網頁影音資料 = models.FileField()
 	def __str__(self):
 		return str(self.原始資料)
 
@@ -64,6 +65,7 @@ class 聽拍規範表(models.Model):
 	說明 = models.TextField()
 
 class 聽拍表(資料表):
+	規範 = models.ForeignKey(聽拍規範表, related_name='全部資料')
 	聽拍資料 = models.TextField()
 	def __str__(self):
 		return self.聽拍資料
