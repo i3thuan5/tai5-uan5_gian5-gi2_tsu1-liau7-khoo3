@@ -24,6 +24,10 @@ class 所在(models.Model):
 # 	臺灣、員林、…
 	地區 = models.CharField(max_length=50)
 
+class 語料著作時間(models.Model):
+# 	臺灣、員林、…
+	年 = models.CharField(max_length=50)
+
 class 資料(models.Model):
 	收錄者 = models.ForeignKey(作者, related_name='收的資料')
 	收錄時間 = models.DateTimeField(auto_now_add=True)
@@ -31,8 +35,8 @@ class 資料(models.Model):
 	權 = models.ForeignKey(權, related_name='+')
 	款 = models.ForeignKey(款, related_name='全部資料')
 	話 = models.ForeignKey(話, related_name='全部資料')
-	年 = models.CharField(max_length=10)
 	所在 = models.ForeignKey(所在, related_name='全部資料')
+	著作時間 = models.ForeignKey(語料著作時間, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	class Meta:
 		abstract = True
