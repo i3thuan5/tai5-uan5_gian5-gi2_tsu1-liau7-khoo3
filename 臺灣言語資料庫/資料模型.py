@@ -37,6 +37,8 @@ class 資料表(models.Model):
 	所在 = models.ForeignKey(所在表, related_name='全部資料')
 	著作時間 = models.ForeignKey(語料著作時間表, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
+	def 編號(self):
+		return self.pk
 	class Meta:
 		abstract = True
 
