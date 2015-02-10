@@ -31,10 +31,10 @@ class 資料表(models.Model):
 	收錄者 = models.ForeignKey(作者表, related_name='收的資料')
 	收錄時間 = models.DateTimeField(auto_now_add=True)
 	作者 = models.ForeignKey(作者表, related_name='做的資料')
-	權 = models.ForeignKey(權表, related_name='+')
-	款 = models.ForeignKey(款表, related_name='全部資料')
-	話 = models.ForeignKey(話表, related_name='全部資料')
-	所在 = models.ForeignKey(所在表, related_name='全部資料')
+	版權 = models.ForeignKey(權表, related_name='+')
+	種類 = models.ForeignKey(款表, related_name='全部資料')
+	語言腔口 = models.ForeignKey(話表, related_name='全部資料')
+	語料所在地 = models.ForeignKey(所在表, related_name='全部資料')
 	著作時間 = models.ForeignKey(語料著作時間表, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	def 編號(self):
