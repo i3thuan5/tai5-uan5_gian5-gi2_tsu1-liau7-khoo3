@@ -20,7 +20,7 @@ class 語言腔口表(models.Model):
 
 class 語料所在地表(models.Model):
 # 	臺灣、員林、…
-	地區 = models.CharField(max_length=50)
+	語料所在地 = models.CharField(max_length=50)
 
 class 語料著作時間表(models.Model):
 # 	1952、19xx、…
