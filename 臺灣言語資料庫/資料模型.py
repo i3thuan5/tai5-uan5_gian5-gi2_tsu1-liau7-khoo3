@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-
-class 地區表(models.Model):
-# 	臺灣、員林、…
-	地區 = models.CharField(max_length=50)
 	
-class 作者表(models.Model):
-	作者名 = models.CharField(max_length=100)
-	出世年= models.CharField(max_length=10)
-	出世地 = models.ForeignKey(地區表, related_name='+')
+class 來源表(models.Model):
+	名 = models.CharField(max_length=100)
+	屬性 = models.TextField() #出世年、出世地、…
 
 class 版權表(models.Model):
 # 	會使公開，袂使公開
@@ -23,18 +18,22 @@ class 語言腔口表(models.Model):
 # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
 	語言腔口 = models.CharField(max_length=50)
 
-class 語料著作時間表(models.Model):
+class 語料所在地表(models.Model):
 # 	臺灣、員林、…
+	地區 = models.CharField(max_length=50)
+
+class 語料著作時間表(models.Model):
+# 	1952、19xx、…
 	年 = models.CharField(max_length=20)
 
 class 資料表(models.Model):
-	收錄者 = models.ForeignKey(作者表, related_name='收的資料')
+	收錄者 = models.ForeignKey(來源表, related_name='收的資料')
 	收錄時間 = models.DateTimeField(auto_now_add=True)
-	作者 = models.ForeignKey(作者表, related_name='做的資料')
+	來源 = models.ForeignKey(來源表, related_name='做的資料')
 	版權 = models.ForeignKey(版權表, related_name='+')
-	種類 = models.ForeignKey(版權表, related_name='全部資料')
+	種類 = models.ForeignKey(種類表, related_name='全部資料')
 	語言腔口 = models.ForeignKey(語言腔口表, related_name='全部資料')
-	語料所在地 = models.ForeignKey(地區表, related_name='全部資料')
+	語料所在地 = models.ForeignKey(語料所在地表, related_name='全部資料')
 	著作時間 = models.ForeignKey(語料著作時間表, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	def 編號(self):
@@ -47,7 +46,7 @@ class 資料類型表(models.Model):
 	類型 = models.CharField(max_length=20)
 
 class 外語表(資料表):
-	外語語言 = models.ForeignKey(話表, related_name='+')
+	外語語言 = models.ForeignKey(語言腔口表, related_name='+')
 	外語資料 = models.TextField()
 	def __str__(self):
 		return self.外語資料
