@@ -18,11 +18,11 @@ class 語言腔口表(models.Model):
 # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
 	語言腔口 = models.CharField(max_length=50)
 
-class 語料所在地表(models.Model):
+class 著作所在地表(models.Model):
 # 	臺灣、員林、…
-	語料所在地 = models.CharField(max_length=50)
+	著作所在地 = models.CharField(max_length=50)
 
-class 語料著作時間表(models.Model):
+class 著作時間表(models.Model):
 # 	1952、19xx、…
 	年 = models.CharField(max_length=20)
 
@@ -33,8 +33,8 @@ class 資料表(models.Model):
 	版權 = models.ForeignKey(版權表, related_name='+')
 	種類 = models.ForeignKey(種類表, related_name='全部資料')
 	語言腔口 = models.ForeignKey(語言腔口表, related_name='全部資料')
-	語料所在地 = models.ForeignKey(語料所在地表, related_name='全部資料')
-	著作時間 = models.ForeignKey(語料著作時間表, related_name='全部資料')
+	著作所在地 = models.ForeignKey(著作所在地表, related_name='全部資料')
+	著作時間 = models.ForeignKey(著作時間表, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	def 編號(self):
 		return self.pk
