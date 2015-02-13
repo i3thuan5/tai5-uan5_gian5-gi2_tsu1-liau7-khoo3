@@ -30,7 +30,7 @@ class 資料庫試驗(TestCase):
 		self.華語 = 語言腔口表.objects.create(語言腔口='華語')
 		self.英語 = 語言腔口表.objects.create(語言腔口='英語')
 		self.二空一四=著作時間表.objects.create(語料著作時間='2014')
-		self.二千年代=著作時間表.objects.create(語料著作時間='')
+		self.一九五空年代=著作時間表.objects.create(語料著作時間='195x')
 
 	def tearDown(self):
 		pass
