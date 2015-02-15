@@ -22,3 +22,9 @@ class 加外語資料試驗(加資料試驗):
 		super(加外語資料試驗, self).test_加句()
 		self.assertEqual(self.資料.外語語言,self.英語)
 		self.assertEqual(self.資料.外語資料,'She is beautiful.')
+	def test_無語言(self):
+		self.句內容.pop('外語語言')
+		self.assertRaise(KeyError,super(加外語資料試驗, self).test_加句)
+	def test_無資料(self):
+		self.句內容.pop('外語資料')
+		self.assertRaise(KeyError,super(加外語資料試驗, self).test_加句)
