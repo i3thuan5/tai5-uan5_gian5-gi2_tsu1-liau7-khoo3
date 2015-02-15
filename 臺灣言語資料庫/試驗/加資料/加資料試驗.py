@@ -17,7 +17,7 @@ class 加資料試驗(資料庫試驗):
 			'種類':字詞,
 			'語言腔口':'閩南語',
 			'語料所在地':'花蓮',
-			'著作時間':'2014',
+			'著作年':'2014',
 			'屬性':self.詞屬性,
 			}
 		self.句屬性=json.dumps({'性質':'例句'})
@@ -28,7 +28,7 @@ class 加資料試驗(資料庫試驗):
 			'種類':語句,
 			'語言腔口':'四縣話',
 			'語料所在地':'臺灣',
-			'著作時間':'195x',
+			'著作年':'195x',
 			'屬性':self.句屬性,
 			}
 	def test_加詞(self):
@@ -41,7 +41,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料.種類,self.字詞)
 		self.assertEqual(self.資料.語言腔口,self.閩南語)
 		self.assertEqual(self.資料.語料所在地,self.花蓮)
-		self.assertEqual(self.資料.著作時間.著作時間,self.二空一四)
+		self.assertEqual(self.資料.著作年.著作年,self.二空一四)
 		self.assertEqual(self.資料.屬性,self.詞屬性)
 	def test_加句(self):
 		原來資料數=self.資料表.objects.all().count()
@@ -53,7 +53,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料.種類,self.語句)
 		self.assertEqual(self.資料.語言腔口,self.四縣話)
 		self.assertEqual(self.資料.語料所在地,self.臺灣)
-		self.assertEqual(self.資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(self.資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(self.資料.屬性,self.句屬性)
 	def test_濟个正常語料(self):
 		self.test_加詞()
@@ -74,7 +74,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_收錄者新字串(self):
 		self.句內容['收錄者']=json.dumps({'名':'Dr. Pigu','出世年':'1990', '出世地':'花蓮人'})
@@ -93,7 +93,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_來源新字串(self):
 		self.句內容['來源']=
@@ -106,7 +106,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_來源新編號(self):
 		self.句內容['來源']=
@@ -119,7 +119,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_版權舊編號(self):
 		self.句內容['版權']=self.袂使公開.pk
@@ -132,7 +132,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_版權新字串(self):
 		self.句內容['版權']=
@@ -151,7 +151,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_種類新字串(self)
 		self.句內容['種類']=
@@ -170,7 +170,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_語言腔口新字串(self):
 		self.句內容['語言腔口']=
@@ -183,7 +183,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_語言腔口新編號(self):
 		self.句內容['語言腔口']=
@@ -196,7 +196,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_著作所在地舊編號(self):
 		self.句內容['著作所在地']=self.臺灣.pk
@@ -209,7 +209,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_著作所在地新字串(self):
 		self.句內容['著作所在地']=
@@ -222,7 +222,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_著作所在地新編號(self):
 		self.句內容['著作所在地']=
@@ -235,10 +235,10 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
-	def test_著作時間舊編號(self):
-		self.句內容['著作時間']=self.一九五空年代.pk
+	def test_著作年舊編號(self):
+		self.句內容['著作年']=self.一九五空年代.pk
 		原來資料數=self.資料表.objects.all().count()
 		資料=self.資料表.加一筆(self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(),原來資料數+1)
@@ -248,9 +248,9 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
-	def test_著作時間新字串(self):
+	def test_著作年新字串(self):
 		self.句內容['著作所在地']=
 		原來資料數=self.資料表.objects.all().count()
 		資料=self.資料表.加一筆(self.句內容)
@@ -261,9 +261,9 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
-	def test_著作時間新編號(self):
+	def test_著作年新編號(self):
 		self.句內容['著作所在地']=
 		原來資料數=self.資料表.objects.all().count()
 		資料=self.資料表.加一筆(self.句內容)
@@ -274,7 +274,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_屬性無合法的json(self):
 		self.句內容['屬性']=
@@ -296,5 +296,5 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.語料所在地,self.臺灣)
-		self.assertEqual(資料.著作時間.著作時間,self.一九五空年代)
+		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)

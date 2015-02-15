@@ -22,9 +22,9 @@ class 著作所在地表(models.Model):
 # 	臺灣、員林、…
 	著作所在地 = models.CharField(max_length=50)
 
-class 著作時間表(models.Model):
+class 著作年表(models.Model):
 # 	1952、19xx、…
-	年 = models.CharField(max_length=20)
+	著作年 = models.CharField(max_length=20)
 
 class 資料表(models.Model):
 	收錄者 = models.ForeignKey(來源表, related_name='收的資料')
@@ -34,7 +34,7 @@ class 資料表(models.Model):
 	種類 = models.ForeignKey(種類表, related_name='全部資料')
 	語言腔口 = models.ForeignKey(語言腔口表, related_name='全部資料')
 	著作所在地 = models.ForeignKey(著作所在地表, related_name='全部資料')
-	著作時間 = models.ForeignKey(著作時間表, related_name='全部資料')
+	著作年 = models.ForeignKey(著作年表, related_name='全部資料')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	def 編號(self):
 		return self.pk

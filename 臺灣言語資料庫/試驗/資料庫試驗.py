@@ -10,7 +10,7 @@ from 臺灣言語資料庫.欄位資訊 import 會使公開
 from 臺灣言語資料庫.欄位資訊 import 袂使公開
 from 臺灣言語資料庫.欄位資訊 import 字詞
 from 臺灣言語資料庫.欄位資訊 import 語句
-from 臺灣言語資料庫.資料模型 import 著作時間表
+from 臺灣言語資料庫.資料模型 import 著作年表
 
 class 資料庫試驗(TestCase):
 	def setUp(self):
@@ -29,8 +29,8 @@ class 資料庫試驗(TestCase):
 		self.噶哈巫 = 語言腔口表.objects.create(語言腔口='噶哈巫')
 		self.華語 = 語言腔口表.objects.create(語言腔口='華語')
 		self.英語 = 語言腔口表.objects.create(語言腔口='英語')
-		self.二空一四=著作時間表.objects.create(語料著作時間='2014')
-		self.一九五空年代=著作時間表.objects.create(語料著作時間='195x')
+		self.二空一四=著作年表.objects.create(年='2014')
+		self.一九五空年代=著作年表.objects.create(年='195x')
 
 	def tearDown(self):
 		pass
