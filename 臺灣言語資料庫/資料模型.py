@@ -68,6 +68,7 @@ class 聽拍規範表(models.Model):
 	說明 = models.TextField()
 
 class 聽拍表(資料表):
+# 	語者詳細資料記佇屬性內底，逐句話記是佗一个語者
 	規範 = models.ForeignKey(聽拍規範表, related_name='全部資料')
 	聽拍資料 = models.TextField()
 	def __str__(self):
