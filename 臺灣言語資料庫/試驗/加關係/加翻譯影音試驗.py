@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-from 臺灣言語資料庫.試驗.資料庫試驗 import 資料庫試驗
+from 臺灣言語資料庫.試驗.加關係.加關係試驗 import 加關係試驗
 import json
 from 臺灣言語資料庫.資料模型 import 外語表
 from 臺灣言語資料庫.資料模型 import 影音表
 from 臺灣言語資料庫.關係模型 import 翻譯影音表
 
-class 加翻譯影音試驗(資料庫試驗):
+class 加翻譯影音試驗(加關係試驗):
 	def setUp(self):
 		super(加翻譯影音試驗, self).setUp()
-		self.外語內容一 = {
+		self.原本資料表 = 外語表
+		self.原本資料內容一 = {
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
 			'來源':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
 			'版權':'會使公開',
@@ -19,7 +20,7 @@ class 加翻譯影音試驗(資料庫試驗):
 			'外語語言':'華語',
 			'外語資料':'漂亮',
 			}
-		self.外語內容二 = {
+		self.原本資料內容二 = {
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
 			'來源':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
 			'版權':'會使公開',
@@ -30,7 +31,7 @@ class 加翻譯影音試驗(資料庫試驗):
 			'外語語言':'英語',
 			'外語資料':'She is beautiful.',
 			}
-		self.影音內容一 = {
+		self.對應資料內容一 = {
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
 			'來源':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
 			'版權':'會使公開',
@@ -40,7 +41,7 @@ class 加翻譯影音試驗(資料庫試驗):
 			'著作年':'2014',
 			'原始影音資料':b'華語',
 			}
-		self.影音內容二 = {
+		self.對應資料內容二 = {
 			'收錄者':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
 			'來源':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
 			'版權':'袂使公開',
@@ -84,53 +85,3 @@ class 加翻譯影音試驗(資料庫試驗):
 		self.assertEqual(影音.著作所在地, self.臺灣)
 		self.assertEqual(影音.著作年.著作年, self.一九五空年代)
 		self.assertEqual(影音.屬性, self.句屬性)
-	def test_加詞(self):
-		外語 = 外語表.加一筆(self.外語內容一)
-		self.加詞(外語)
-	def test_加句(self):
-		外語 = 外語表.加一筆(self.外語內容二)
-		self.加句(外語)
-	def test_濟个正常語料(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		self.加詞(外語詞)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.加句(外語句)
-		self.加句(外語句)
-		self.加詞(外語詞)
-		self.加詞(外語詞)
-		self.加句(外語句)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.加句(外語句)
-	def test_無仝種類(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.影音內容一['種類'] = '語句'
-		self.影音內容二['種類'] = '字詞'
-		self.assertRaise(ValueError, self.加詞, 外語詞)
-		self.assertRaise(ValueError, self.加句, 外語句)
-	def test_無種類(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.影音內容一.pop('種類')
-		self.影音內容二.pop('種類')
-		self.assertRaise(KeyError, self.加詞, 外語詞)
-		self.assertRaise(KeyError, self.加句, 外語句)
-	def test_無仝語言腔口(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.影音內容一['語言腔口'] = '泰雅話'
-		self.影音內容二['語言腔口'] = '泰雅話'
-		self.assertRaise(ValueError, self.加詞, 外語詞)
-		self.assertRaise(ValueError, self.加句, 外語句)
-	def test_無語言腔口(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.影音內容一.pop('語言腔口')
-		self.影音內容二.pop('語言腔口')
-		self.assertRaise(KeyError, self.加詞, 外語詞)
-		self.assertRaise(KeyError, self.加句, 外語句)
-	def test_無仝種類佮語言腔品(self):
-		外語詞 = 外語表.加一筆(self.外語內容一)
-		外語句 = 外語表.加一筆(self.外語內容二)
-		self.assertRaise(ValueError, self.加詞, 外語句)
-		self.assertRaise(ValueError, self.加句, 外語詞)
