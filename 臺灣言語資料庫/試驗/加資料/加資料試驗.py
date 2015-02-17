@@ -43,7 +43,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料.種類,self.字詞)
 		self.assertEqual(self.資料.語言腔口,self.閩南語)
 		self.assertEqual(self.資料.著作所在地,self.花蓮)
-		self.assertEqual(self.資料.著作年.著作年,self.二空一四)
+		self.assertEqual(self.資料.著作年,self.二空一四)
 		self.assertEqual(self.資料.屬性,self.詞屬性)
 	def test_加句(self):
 		原來資料數=self.資料表.objects.all().count()
@@ -55,7 +55,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料.種類,self.語句)
 		self.assertEqual(self.資料.語言腔口,self.四縣話)
 		self.assertEqual(self.資料.著作所在地,self.臺灣)
-		self.assertEqual(self.資料.著作年.著作年,self.一九五空年代)
+		self.assertEqual(self.資料.著作年,self.一九五空年代)
 		self.assertEqual(self.資料.屬性,self.句屬性)
 	def test_濟个正常語料(self):
 		self.test_加詞()
@@ -76,7 +76,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.著作所在地,self.臺灣)
-		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
+		self.assertEqual(資料.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_收錄者新字串(self):
 		self.句內容['收錄者']=json.dumps({'名':'Dr. Pigu','出世年':'1990', '出世地':'花蓮人'})
@@ -98,7 +98,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.著作所在地,self.臺灣)
-		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
+		self.assertEqual(資料.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_來源新字串(self):
 		self.句內容['來源']=json.dumps({'名':'阿媠','職業':'學生'})
@@ -178,7 +178,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.著作所在地,self.臺灣)
-		self.assertEqual(資料.著作年.著作年,self.一九五空年代)
+		self.assertEqual(資料.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_語言腔口新字串(self):
 		self.句內容['語言腔口']='豬豬語'
@@ -280,7 +280,7 @@ class 加資料試驗(資料庫試驗):
 		self.句內容['屬性']=33
 		self.assertRaise(TypeError,self.資料表.加一筆,self.句內容)
 	def test_屬性無(self):
-		self.句內容.pop('著作年')
+		self.句內容.pop('屬性')
 		原來資料數=self.資料表.objects.all().count()
 		資料=self.資料表.加一筆(self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(),原來資料數+1)
@@ -290,7 +290,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.種類,self.語句)
 		self.assertEqual(資料.語言腔口,self.四縣話)
 		self.assertEqual(資料.著作所在地,self.臺灣)
-		self.assertEqual(資料.著作年.著作年,'19xx')
+		self.assertEqual(資料.著作年,'19xx')
 		self.assertEqual(資料.屬性,'{}')
 	def test_濟个綜合語料(self):
 		self.句內容['來源']=json.dumps({'名':'阿媠','職業':'學生'})
