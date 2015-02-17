@@ -8,11 +8,11 @@ class 加外語資料試驗(加資料試驗):
 		self.資料表=外語表
 		self.詞內容.update({
 			'外語語言':'華語',
-			'外語資料':'漂亮'
+			'外語資料':'漂亮',
 		})
 		self.句內容.update({
 			'外語語言':'英語',
-			'外語資料':'She is beautiful.'
+			'外語資料':'She is beautiful.',
 		})
 	def test_加詞(self):
 		super(加外語資料試驗, self).test_加詞()

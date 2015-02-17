@@ -7,10 +7,10 @@ class 加文本資料試驗(加資料試驗):
 		super(加文本資料試驗, self).setUp()
 		self.資料表=文本表
 		self.詞內容.update({
-			'文本資料':'媠'
+			'文本資料':'媠',
 		})
 		self.句內容.update({
-			'文本資料':'伊誠媠。'
+			'文本資料':'伊誠媠。',
 		})
 	def test_加詞(self):
 		super(加文本資料試驗, self).test_加詞()
