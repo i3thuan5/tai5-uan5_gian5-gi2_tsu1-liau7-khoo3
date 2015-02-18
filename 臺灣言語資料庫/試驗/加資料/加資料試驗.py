@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 from 臺灣言語資料庫.試驗.資料庫試驗 import 資料庫試驗
 import json
-from 臺灣言語資料庫.欄位資訊 import 字詞
-from 臺灣言語資料庫.欄位資訊 import 會使公開
-from 臺灣言語資料庫.欄位資訊 import 袂使公開
-from 臺灣言語資料庫.欄位資訊 import 語句
 from 臺灣言語資料庫.資料模型 import 語言腔口表
 from 臺灣言語資料庫.資料模型 import 著作所在地表
+from django.core.exceptions import ObjectDoesNotExist
 
 class 加資料試驗(資料庫試驗):
 	def setUp(self):
@@ -158,7 +155,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.著作所在地,self.臺灣)
 		self.assertEqual(資料.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
-	def test_種類新字串(self)
+	def test_種類新字串(self):
 		self.句內容['種類']='課本'
 		self.assertRaise(ObjectDoesNotExist,self.資料表.加一筆,self.句內容)
 	def test_種類新編號(self):
