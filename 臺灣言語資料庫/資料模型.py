@@ -27,14 +27,14 @@ class 著作年表(models.Model):
 	著作年 = models.CharField(max_length=20)
 
 class 資料表(models.Model):
-	收錄者 = models.ForeignKey(來源表, related_name='收的資料')
+	收錄者 = models.ForeignKey(來源表, related_name='+')
 	收錄時間 = models.DateTimeField(auto_now_add=True)
-	來源 = models.ForeignKey(來源表, related_name='做的資料')
+	來源 = models.ForeignKey(來源表, related_name='+')
 	版權 = models.ForeignKey(版權表, related_name='+')
-	種類 = models.ForeignKey(種類表, related_name='全部資料')
-	語言腔口 = models.ForeignKey(語言腔口表, related_name='全部資料')
-	著作所在地 = models.ForeignKey(著作所在地表, related_name='全部資料')
-	著作年 = models.ForeignKey(著作年表, related_name='全部資料')
+	種類 = models.ForeignKey(種類表, related_name='+')
+	語言腔口 = models.ForeignKey(語言腔口表, related_name='+')
+	著作所在地 = models.ForeignKey(著作所在地表, related_name='+')
+	著作年 = models.ForeignKey(著作年表, related_name='+')
 	屬性 = models.TextField() #冊名,詞性,分類,…
 	def 編號(self):
 		return self.pk
