@@ -223,7 +223,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.著作年,self.一九五空年代)
 		self.assertEqual(資料.屬性,self.句屬性)
 	def test_著作所在地新編號(self):
-		self.句內容['著作所在地']=著作所在地表.objects.order('-pk').first().pk+1
+		self.句內容['著作所在地']=著作所在地表.objects.order_by('-pk').first().pk+1
 		原來資料數=self.資料表.objects.all().count()
 		資料=self.資料表.加一筆(self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(),原來資料數+1)
