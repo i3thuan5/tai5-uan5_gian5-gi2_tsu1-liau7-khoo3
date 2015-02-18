@@ -2,6 +2,7 @@
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 聽拍表
 from 臺灣言語資料庫.資料模型 import 聽拍規範表
+import json
 
 class 加聽拍資料試驗(加資料試驗):
 	def setUp(self):
@@ -68,21 +69,21 @@ class 加聽拍資料試驗(加資料試驗):
 		})
 	def test_規範新字串(self):
 		self.句內容['規範'] = '新聽拍方法'
-		self.assertRaise(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
+		self.assertRaises(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
 	def test_規範新編號(self):
 		self.句內容['規範'] = 109
-		self.assertRaise(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
+		self.assertRaises(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
 	def test_無資料(self):
 		self.詞內容.pop('聽拍資料')
-		self.assertRaise(KeyError, super(加聽拍資料試驗, self).test_加詞)
+		self.assertRaises(KeyError, super(加聽拍資料試驗, self).test_加詞)
 		self.句內容.pop('聽拍資料')
-		self.assertRaise(KeyError, super(加聽拍資料試驗, self).test_加句)
+		self.assertRaises(KeyError, super(加聽拍資料試驗, self).test_加句)
 	def test_有資料無內容(self):
 		self.詞內容['聽拍資料']=[
 			{'語者':'阿宏','開始時間':0.0,'結束時間':1.2},
 			{'語者':'阿莉','開始時間':1.2,'結束時間':2.0},
 		]
-		self.assertRaise(KeyError, super(加聽拍資料試驗, self).test_加詞)
+		self.assertRaises(KeyError, super(加聽拍資料試驗, self).test_加詞)
 	def test_空的資料(self):
 		self.詞內容['聽拍資料']=[]
 		self.資料=self.資料表.加一筆(self.詞內容)

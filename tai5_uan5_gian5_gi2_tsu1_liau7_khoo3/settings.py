@@ -37,7 +37,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-# 	'臺灣言語資料庫',
+	'臺灣言語資料庫',
 # 	'臺灣言語資料庫校對',
 # 	'整理教育部臺灣閩南語常用詞辭典',
 # 	'整理華語臺語雙語語料庫系統',

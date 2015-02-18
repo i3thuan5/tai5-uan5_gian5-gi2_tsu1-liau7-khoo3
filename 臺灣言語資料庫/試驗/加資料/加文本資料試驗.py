@@ -20,6 +20,6 @@ class 加文本資料試驗(加資料試驗):
 		self.assertEqual(self.資料.文本資料,'伊誠媠。')
 	def test_無資料(self):
 		self.詞內容.pop('文本資料')
-		self.assertRaise(KeyError,super(加文本資料試驗, self).test_加詞)
+		self.assertRaises(KeyError,super(加文本資料試驗, self).test_加詞)
 		self.句內容.pop('文本資料')
-		self.assertRaise(KeyError,super(加文本資料試驗, self).test_加句)
+		self.assertRaises(KeyError,super(加文本資料試驗, self).test_加句)
