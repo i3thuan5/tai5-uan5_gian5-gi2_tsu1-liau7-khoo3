@@ -134,7 +134,10 @@ class 外語表(資料表):
 	@classmethod
 	def 加一筆(self, 內容):
 		外語 = self()
-		外語.外語語言 = 內容['外語語言']
+		if isinstance(內容['外語語言'], int):
+			外語.外語語言 = 語言腔口表.objects.get(pk=內容['外語語言'])
+		else:
+			外語.外語語言 = 語言腔口表.objects.get_or_create(語言腔口=內容['外語語言'])[0]
 		外語.外語資料 = 內容['外語資料']
 		外語._加基本內容而且儲存(內容)
 		return 外語
@@ -159,7 +162,7 @@ class 影音表(資料表):
 	def 加一筆(self, 內容):
 		影音 = self()
 		影音._加基本內容而且儲存(內容)
-		影音.原始影音資料.save(name='影音檔案',content=File(內容['原始影音資料']),save=True)
+		影音.原始影音資料.save(name='影音檔案', content=File(內容['原始影音資料']), save=True)
 # 		影音.網頁影音資料 = 
 		return 影音
 
