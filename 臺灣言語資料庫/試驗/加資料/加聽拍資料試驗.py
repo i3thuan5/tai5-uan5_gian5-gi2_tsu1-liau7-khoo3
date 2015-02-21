@@ -79,7 +79,7 @@ class 加聽拍資料試驗(加資料試驗):
 		self.assertRaises(KeyError, super(加聽拍資料試驗, self).test_加詞)
 		self.句內容.pop('聽拍資料')
 		self.assertRaises(KeyError, super(加聽拍資料試驗, self).test_加句)
-	def test_有資料無內容(self):
+	def test_有資料無內容欄位(self):
 		self.詞內容['聽拍資料']=[
 			{'語者':'阿宏','開始時間':0.0,'結束時間':1.2},
 			{'語者':'阿莉','開始時間':1.2,'結束時間':2.0},
