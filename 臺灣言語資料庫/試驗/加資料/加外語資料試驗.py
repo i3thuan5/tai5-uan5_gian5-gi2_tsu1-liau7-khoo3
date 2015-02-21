@@ -46,7 +46,7 @@ class 加外語資料試驗(加資料試驗):
 		self.assertRaises(ObjectDoesNotExist, super(加外語資料試驗, self).test_加詞)
 		self.句內容['外語語言'] = 1231
 		self.assertRaises(ObjectDoesNotExist, super(加外語資料試驗, self).test_加句)
-	def test_外語語言毋是數字佮字串編號(self):
+	def test_外語語言毋是數字佮字串(self):
 		self.詞內容['外語語言'] = [1115]
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
 		self.句內容['外語語言'] = 1231.23
@@ -61,8 +61,12 @@ class 加外語資料試驗(加資料試驗):
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加詞)
 		self.句內容.pop('外語資料')
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加句)
-	def test_資料毋是字串(self):
+	def test_毋是字串(self):
 		self.詞內容['外語資料'] = 1228
-		self.assertRaises(ValueError, super(加外語資料試驗, self).test_加詞)
+		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
 		self.句內容['外語資料'] = ['沒辦法']
-		self.assertRaises(ValueError, super(加外語資料試驗, self).test_加句)
+		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+		self.詞內容['外語資料'] = None
+		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+		self.句內容['外語資料'] = {}
+		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)

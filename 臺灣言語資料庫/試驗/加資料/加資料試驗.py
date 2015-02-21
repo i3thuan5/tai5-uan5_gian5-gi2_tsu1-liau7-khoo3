@@ -100,6 +100,14 @@ class 加資料試驗(資料庫試驗):
 	def test_收錄者無(self):
 		self.句內容.pop('收錄者')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	# 會當傳物件的攏用AttributeError
+	def test_收錄者毋是字典字串佮編號(self):
+		self.句內容['收錄者'] = 1990.0830
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.句內容['收錄者'] = None
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.句內容['收錄者'] = ['阿媠']
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
 	def test_來源舊字串(self):
 		self.句內容['來源'] = json.dumps(self.句內容['來源'])
 		原來資料數 = self.資料表.objects.all().count()
@@ -164,12 +172,20 @@ class 加資料試驗(資料庫試驗):
 	def test_來源新字串無名(self):
 		self.句內容['來源'] = json.dumps({'姓名':'阿媠', '職業':'學生'})
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
-	def test_來源無(self):
-		self.句內容.pop('來源')
-		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
 	def test_來源新編號(self):
 		self.句內容['來源'] = 200
 		self.assertRaises(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
+	def test_來源無(self):
+		self.句內容.pop('來源')
+		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	# 會當傳物件的攏用AttributeError
+	def test_來源毋是字典字串佮編號(self):
+		self.句內容['來源'] = 1990.0328
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.句內容['來源'] = None
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.句內容['來源'] = ['阿緣']
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
 	def test_版權舊編號(self):
 		self.句內容['版權'] = self.袂使公開.pk
 		原來資料數 = self.資料表.objects.all().count()
@@ -192,6 +208,13 @@ class 加資料試驗(資料庫試驗):
 	def test_版權無(self):
 		self.句內容.pop('版權')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	def test_版權毋是字串佮編號(self):
+		self.句內容['版權'] = 1990.0328
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['版權'] = None
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['版權'] = ['阿投']
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
 	def test_種類舊編號(self):
 		self.句內容['種類'] = self.語句.pk
 		原來資料數 = self.資料表.objects.all().count()
@@ -214,6 +237,13 @@ class 加資料試驗(資料庫試驗):
 	def test_種類無(self):
 		self.句內容.pop('種類')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	def test_種類毋是字串佮編號(self):
+		self.句內容['種類'] = 1115.12
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['種類'] = None
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['種類'] = ['過年']
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
 	def test_語言腔口舊編號(self):
 		self.句內容['語言腔口'] = self.四縣話.pk
 		原來資料數 = self.資料表.objects.all().count()
@@ -246,6 +276,13 @@ class 加資料試驗(資料庫試驗):
 	def test_語言腔口無(self):
 		self.句內容.pop('語言腔口')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	def test_語言腔口毋是字串佮編號(self):
+		self.句內容['語言腔口'] = 1115.12
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['語言腔口'] = None
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['語言腔口'] = ['噶哈巫', '四庄番']
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
 	def test_著作所在地舊編號(self):
 		self.句內容['著作所在地'] = self.臺灣.pk
 		原來資料數 = self.資料表.objects.all().count()
@@ -278,6 +315,13 @@ class 加資料試驗(資料庫試驗):
 	def test_著作所在地無(self):
 		self.句內容.pop('著作所在地')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	def test_著作所在地毋是字串佮編號(self):
+		self.句內容['著作所在地'] = 1115.12
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['著作所在地'] = None
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['著作所在地'] = {'守城份', '牛眠山', '大湳', '蜈蚣崙'}
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
 	def test_著作年舊編號(self):
 		self.句內容['著作年'] = self.一九五空年代.pk
 		原來資料數 = self.資料表.objects.all().count()
@@ -310,8 +354,15 @@ class 加資料試驗(資料庫試驗):
 	def test_著作年無(self):
 		self.句內容.pop('著作年')
 		self.assertRaises(KeyError, self.資料表.加一筆, self.句內容)
+	def test_著作年毋是字串佮編號(self):
+		self.句內容['著作年'] = 180.55
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['著作年'] = None
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.句內容['著作年'] = {'苗栗縣', '台中縣', '彰化縣'}
+		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
 	def test_屬性是字串(self):
-		self.句內容['屬性'] =json.dumps(self.句內容['屬性'] )
+		self.句內容['屬性'] = json.dumps(self.句內容['屬性'])
 		原來資料數 = self.資料表.objects.all().count()
 		self.資料 = self.資料表.加一筆(self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
@@ -326,6 +377,7 @@ class 加資料試驗(資料庫試驗):
 	def test_屬性無合法的json字串(self):
 		self.句內容['屬性'] = '{[}'
 		self.assertRaises(ValueError, self.資料表.加一筆, self.句內容)
+	# 會當傳物件的攏用AttributeError
 	def test_屬性是數字(self):
 		self.句內容['屬性'] = 33
 		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
@@ -367,6 +419,11 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.著作所在地.著作所在地, '員林')
 		self.assertEqual(資料.著作年, self.一九五空年代)
 		self.比較屬性(資料, self.句屬性)
+	def test_規個內容用字串(self):
+		self.詞內容 = json.dumps(self.詞內容)
+		self.test_加詞()
+		self.句內容 = json.dumps(self.句內容)
+		self.test_加句()
 	def 比較屬性(self, 資料, 屬性欄位內容):
 		try:
 			內容 = json.loads(屬性欄位內容)
