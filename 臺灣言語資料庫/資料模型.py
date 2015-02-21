@@ -107,6 +107,7 @@ class 資料表(models.Model):
 				來源屬性陣列.append(來源屬性)
 				if 新的物件:
 					一定是新來源 = True
+			來源內容['名'] = 來源名
 			if 一定是新來源:
 				結果 = None
 			else:
@@ -116,9 +117,9 @@ class 資料表(models.Model):
 				結果 = 選擇.get()
 			return 結果, 來源名, 來源屬性陣列
 	def _內容轉物件(self, 內容):
-			if isinstance(內容, str):
-				return json.loads(內容)
-			return 內容
+		if isinstance(內容, str):
+			return json.loads(內容)
+		return 內容
 
 class 資料類型表(models.Model):
 # 	外語、文本、影音、聽拍
@@ -182,7 +183,7 @@ class 聽拍表(資料表):
 		聽拍資料內容 = 聽拍._內容轉物件(內容['聽拍資料'])
 		for 一句 in 聽拍資料內容:
 			if '內容' not in 一句:
-				raise ValueError('逐句聽拍資料攏愛有「內容」欄位')
+				raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
 		聽拍.聽拍資料 = json.dumps(聽拍資料內容)
 		聽拍._加基本內容而且儲存(內容)
 		return 聽拍

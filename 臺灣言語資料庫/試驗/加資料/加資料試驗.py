@@ -8,10 +8,10 @@ from django.core.exceptions import ObjectDoesNotExist
 class 加資料試驗(資料庫試驗):
 	def setUp(self):
 		super(加資料試驗, self).setUp()
-		self.詞屬性 = json.dumps({'詞性':'形容詞'})
+		self.詞屬性 = {'詞性':'形容詞'}
 		self.詞內容 = {
-			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
-			'來源':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
+			'收錄者':{'名':'鄉民', '出世年':'1950', '出世地':'臺灣'},
+			'來源':{'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'},
 			'版權':'會使公開',
 			'種類':'字詞',
 			'語言腔口':'閩南語',
@@ -19,10 +19,10 @@ class 加資料試驗(資料庫試驗):
 			'著作年':'2014',
 			'屬性':self.詞屬性,
 			}
-		self.句屬性 = json.dumps({'性質':'例句'})
+		self.句屬性 = {'性質':'例句'}
 		self.句內容 = {
-			'收錄者':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
-			'來源':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
+			'收錄者':{'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'},
+			'來源':{'名':'鄉民', '出世年':'1950', '出世地':'臺灣'},
 			'版權':'袂使公開',
 			'種類':'語句',
 			'語言腔口':'四縣話',
@@ -133,7 +133,9 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
 		self.assertEqual(資料.收錄者, self.花蓮人)
 		self.assertEqual(資料.來源.名, '阿媠')
-		self.assertEqual(json.dumps(資料.來源.屬性), {'職業':'學生'})
+		self.assertEqual(資料.來源.屬性.count(), 1)
+		self.assertEqual(資料.來源.屬性.first().分類, '職業')
+		self.assertEqual(資料.來源.屬性.first().性質, '學生')
 		self.assertEqual(資料.版權, self.袂使公開)
 		self.assertEqual(資料.種類, self.語句)
 		self.assertEqual(資料.語言腔口, self.四縣話)
@@ -147,7 +149,9 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
 		self.assertEqual(資料.收錄者, self.花蓮人)
 		self.assertEqual(資料.來源.名, '阿媠')
-		self.assertEqual(json.dumps(資料.來源.屬性), {'職業':'學生'})
+		self.assertEqual(資料.來源.屬性.count(), 1)
+		self.assertEqual(資料.來源.屬性.first().分類, '職業')
+		self.assertEqual(資料.來源.屬性.first().性質, '學生')
 		self.assertEqual(資料.版權, self.袂使公開)
 		self.assertEqual(資料.種類, self.語句)
 		self.assertEqual(資料.語言腔口, self.四縣話)
@@ -321,16 +325,16 @@ class 加資料試驗(資料庫試驗):
 		self.比較屬性(self.資料, self.句屬性)
 	def test_屬性無合法的json字串(self):
 		self.句內容['屬性'] = '{[}'
-		self.assertRaises(ObjectDoesNotExist, self.資料表.加一筆, self.句內容)
+		self.assertRaises(ValueError, self.資料表.加一筆, self.句內容)
 	def test_屬性是數字(self):
 		self.句內容['屬性'] = 33
-		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
 	def test_屬性是字典(self):
 		self.句內容['屬性'] = {'詞性'}
-		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
 	def test_屬性是陣列(self):
 		self.句內容['屬性'] = ['詞性']
-		self.assertRaises(TypeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
 	def test_無屬性(self):
 		self.句內容.pop('屬性')
 		原來資料數 = self.資料表.objects.all().count()
