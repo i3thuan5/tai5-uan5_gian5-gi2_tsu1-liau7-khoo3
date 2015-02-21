@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 import json
+from django.core.files.base import File
 
 class 來源屬性表(models.Model):
 	分類 = models.CharField(max_length=20)  # 出世地
@@ -157,9 +158,9 @@ class 影音表(資料表):
 	@classmethod
 	def 加一筆(self, 內容):
 		影音 = self()
-		影音.原始影音資料 = 內容['原始影音資料']
-# 		影音.網頁影音資料 = 
 		影音._加基本內容而且儲存(內容)
+		影音.原始影音資料.save(name='影音檔案',content=File(內容['原始影音資料']),save=True)
+# 		影音.網頁影音資料 = 
 		return 影音
 
 class 聽拍規範表(models.Model):
