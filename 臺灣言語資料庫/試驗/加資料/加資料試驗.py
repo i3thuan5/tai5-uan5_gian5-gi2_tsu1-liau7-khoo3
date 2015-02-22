@@ -4,6 +4,8 @@ import json
 from 臺灣言語資料庫.資料模型 import 語言腔口表
 from 臺灣言語資料庫.資料模型 import 著作所在地表
 from django.core.exceptions import ObjectDoesNotExist
+from 臺灣言語資料庫.資料模型 import 來源表
+from 臺灣言語資料庫.資料模型 import 來源屬性表
 
 class 加資料試驗(資料庫試驗):
 	def setUp(self):
@@ -89,7 +91,7 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.著作年, self.一九五空年代)
 		self.比較屬性(資料, self.句屬性)
 	def test_收錄者新物件(self):
-		self.句內容['收錄者'] = json.dumps({'名':'阿媠', '職業':'學生'})
+		self.句內容['收錄者'] = {'名':'阿媠', '職業':'學生'}
 		self.assertRaises(ObjectDoesNotExist, self.資料表.加資料, self.句內容)
 	def test_收錄者新字串(self):
 		self.句內容['收錄者'] = json.dumps({'名':'阿媠', '職業':'學生'})
@@ -151,15 +153,37 @@ class 加資料試驗(資料庫試驗):
 		self.assertEqual(資料.著作年, self.一九五空年代)
 		self.比較屬性(資料, self.句屬性)
 	def test_來源新字串(self):
-		self.句內容['來源'] = json.dumps({'名':'阿媠', '職業':'學生'})
+		self.句內容['來源'] = json.dumps({'名':'阿媠', '職業':'暴民', '興趣':'日語'})
 		原來資料數 = self.資料表.objects.all().count()
 		資料 = self.資料表.加資料(self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
 		self.assertEqual(資料.收錄者, self.花蓮人)
 		self.assertEqual(資料.來源.名, '阿媠')
-		self.assertEqual(資料.來源.屬性.count(), 1)
-		self.assertEqual(資料.來源.屬性.first().分類, '職業')
-		self.assertEqual(資料.來源.屬性.first().性質, '學生')
+		self.assertEqual(資料.來源.屬性.count(), 2)
+		self.assertEqual(資料.來源.屬性.filter(分類='職業').count(), 1)
+		self.assertIsInstance(資料.來源.屬性.get(分類='職業'), 來源屬性表)
+		self.assertEqual(資料.來源.屬性.filter(分類='職業').first().性質, '暴民')
+		self.assertEqual(資料.來源.屬性.get(分類='興趣').分類, '興趣')
+		self.assertEqual(資料.來源.屬性.get(分類='興趣').性質, '日語')
+		self.assertEqual(資料.版權, self.袂使公開)
+		self.assertEqual(資料.種類, self.語句)
+		self.assertEqual(資料.語言腔口, self.四縣話)
+		self.assertEqual(資料.著作所在地, self.臺灣)
+		self.assertEqual(資料.著作年, self.一九五空年代)
+		self.比較屬性(資料, self.句屬性)
+	def test_來源物件有仝款欄位(self):
+		self.句內容['來源'] = {'名':'阿媠', '職業':'學生', '職業':'暴民', '興趣':'日語'}
+		原來資料數 = self.資料表.objects.all().count()
+		資料 = self.資料表.加資料(self.句內容)
+		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
+		self.assertEqual(資料.收錄者, self.花蓮人)
+		self.assertEqual(資料.來源.名, '阿媠')
+		self.assertEqual(資料.來源.屬性.count(), 2)
+		self.assertEqual(資料.來源.屬性.filter(分類='職業').count(), 1)
+		self.assertIsInstance(資料.來源.屬性.filter(分類='職業').get(), 來源屬性表)
+		self.assertIn(資料.來源.屬性.filter(分類='職業').get().性質, ['學生', '暴民'])
+		self.assertEqual(資料.來源.屬性.get(分類='興趣').分類, '興趣')
+		self.assertEqual(資料.來源.屬性.get(分類='興趣').性質, '日語')
 		self.assertEqual(資料.版權, self.袂使公開)
 		self.assertEqual(資料.種類, self.語句)
 		self.assertEqual(資料.語言腔口, self.四縣話)
@@ -430,3 +454,31 @@ class 加資料試驗(資料庫試驗):
 		except:
 			內容 = 屬性欄位內容
 		self.assertEqual(資料.屬性內容(), 內容)
+	def test_仝名無仝屬性試驗(self):
+		無屬性花蓮人 = 來源表.objects.create(名='Dr. Pigu')
+		學生花蓮人 = 來源表.objects.create(名='Dr. Pigu')
+		學生花蓮人.屬性.add(
+			來源屬性表.objects.create(分類='職業', 性質='學生'),
+			)
+		
+		self.詞內容['收錄者'] = {'名':'Dr. Pigu', '出世地':'花蓮人'}
+		self.assertRaises(ObjectDoesNotExist, self.資料表.加資料, self.詞內容)
+
+		self.句內容['來源'] = {'名':'Dr. Pigu', '出世地':'花蓮人'}
+		原來資料數 = self.資料表.objects.all().count()
+		self.資料 = self.資料表.加資料(self.句內容)
+		self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
+		self.assertEqual(self.資料.收錄者, self.花蓮人)
+		self.assertNotEqual(self.資料.來源, self.花蓮人)
+		self.assertNotEqual(self.資料.來源, 無屬性花蓮人)
+		self.assertNotEqual(self.資料.來源, 學生花蓮人)
+		self.assertEqual(self.資料.來源.名, 'Dr. Pigu')
+		self.assertEqual(self.資料.來源.屬性.count(), 1)
+		self.assertEqual(self.資料.來源.屬性.first().分類, '出世地')
+		self.assertEqual(self.資料.來源.屬性.first().性質, '花蓮人')
+		self.assertEqual(self.資料.版權, self.袂使公開)
+		self.assertEqual(self.資料.種類, self.語句)
+		self.assertEqual(self.資料.語言腔口, self.四縣話)
+		self.assertEqual(self.資料.著作所在地, self.臺灣)
+		self.assertEqual(self.資料.著作年, self.一九五空年代)
+		self.比較屬性(self.資料, self.句屬性)

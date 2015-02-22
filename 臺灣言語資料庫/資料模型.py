@@ -2,6 +2,7 @@
 from django.db import models
 import json
 from django.core.files.base import File
+from django.db.models import Count
 
 class 來源屬性表(models.Model):
 	分類 = models.CharField(max_length=20)  # 出世地
@@ -61,15 +62,15 @@ class 資料表(models.Model):
 		else:
 			收錄者 = self._用內容揣來源(self._內容轉物件(內容['收錄者']))[0]
 			if 收錄者:
-				self.收錄者 = 收錄者
+				self.收錄者 = 收錄者.get()
 			else:
 				raise 來源表.DoesNotExist('收錄者愛是編號')
 		if isinstance(內容['來源'], int):
 			self.來源 = 來源表.objects.get(pk=內容['來源'])
 		else:
 			來源, 來源名, 來源屬性陣列 = self._用內容揣來源(self._內容轉物件(內容['來源']))
-			if 來源:
-				self.來源 = 來源
+			if 來源 and 來源.count()>0:
+				self.來源 = 來源.get()
 			else:
 				self.來源 = 來源表.objects.create(名=來源名)
 				for 來源屬性 in 來源屬性陣列:
@@ -123,10 +124,10 @@ class 資料表(models.Model):
 		if 一定是新來源:
 			結果 = None
 		else:
-			選擇 = 來源表.objects.filter(名=來源名)
+			選擇 = 來源表.objects.filter(名=來源名).annotate(屬性數量=Count('屬性'))
 			for 來源屬性 in 來源屬性陣列:
 				選擇 = 選擇.filter(屬性=來源屬性)
-			結果 = 選擇.get()
+			結果 = 選擇.filter(屬性數量=len(來源屬性陣列))
 		return 結果, 來源名, 來源屬性陣列
 	def _內容轉物件(self, 內容):
 		if isinstance(內容, str):
