@@ -6,7 +6,6 @@ from 臺灣言語資料庫.資料模型 import 來源屬性表
 from 臺灣言語資料庫.資料模型 import 來源表
 from 臺灣言語資料庫.資料模型 import 著作所在地表
 from 臺灣言語資料庫.資料模型 import 語言腔口表
-import json
 from 臺灣言語資料庫.欄位資訊 import 會使公開
 from 臺灣言語資料庫.欄位資訊 import 袂使公開
 from 臺灣言語資料庫.欄位資訊 import 字詞
