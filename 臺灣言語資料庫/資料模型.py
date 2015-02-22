@@ -132,6 +132,12 @@ class 資料表(models.Model):
 		if isinstance(內容, str):
 			return json.loads(內容)
 		return 內容
+	def _加關係的內容檢查(self, 內容):
+		if 內容['種類'] != self.種類.種類:
+			raise ValueError('新資料的種類「{}」愛佮原本資料的種類「{}」仝款！！'.format(內容['種類'], self.種類.種類))
+		if 內容['語言腔口'] != self.語言腔口.語言腔口:
+			raise ValueError('新資料的語言腔口「{}」愛佮原本資料的語言腔口「{}」仝款！！'
+							.format(內容['語言腔口'], self.語言腔口.語言腔口))
 
 class 資料類型表(models.Model):
 # 	外語、文本、影音、聽拍
@@ -158,20 +164,17 @@ class 外語表(資料表):
 			raise TypeError('外語資料必須愛是字串型態')
 		外語._加基本內容而且儲存(內容)
 		return 外語
-
-class 文本表(資料表):
-	文本資料 = models.TextField()
-	def __str__(self):
-		return self.文本資料
-	@classmethod
-	def 加資料(self, 輸入內容):
-		文本 = self()
-		內容 = 文本._內容轉物件(輸入內容)
-		if isinstance(內容['文本資料'], str):
-			文本.文本資料 = 內容['文本資料']
-		else:
-			raise TypeError('文本資料必須愛是字串型態')
-		文本._加基本內容而且儲存(內容)
+	def 錄母語(self, 輸入影音內容):
+		影音內容 = self._內容轉物件(輸入影音內容)
+		self._加關係的內容檢查(影音內容)
+		影音 = 影音表.加資料(影音內容)
+		self.翻譯影音.create(影音=影音)
+		return 影音
+	def 翻母語(self, 輸入文本內容):
+		文本內容 = self._內容轉物件(輸入文本內容)
+		self._加關係的內容檢查(文本內容)
+		文本 = 文本表.加資料(文本內容)
+		self.翻譯文本.create(文本=文本)
 		return 文本
 
 class 影音表(資料表):
@@ -187,6 +190,27 @@ class 影音表(資料表):
 		影音.原始影音資料.save(name='影音檔案{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
 # 		影音.網頁影音資料 = 
 		return 影音
+	def 寫文本(self, 輸入文本內容):
+		文本內容 = self._內容轉物件(輸入文本內容)
+		self._加關係的內容檢查(文本內容)
+		文本 = 文本表.加資料(文本內容)
+		self.影音文本.create(文本=文本)
+		return 文本
+
+class 文本表(資料表):
+	文本資料 = models.TextField()
+	def __str__(self):
+		return self.文本資料
+	@classmethod
+	def 加資料(self, 輸入內容):
+		文本 = self()
+		內容 = 文本._內容轉物件(輸入內容)
+		if isinstance(內容['文本資料'], str):
+			文本.文本資料 = 內容['文本資料']
+		else:
+			raise TypeError('文本資料必須愛是字串型態')
+		文本._加基本內容而且儲存(內容)
+		return 文本
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)

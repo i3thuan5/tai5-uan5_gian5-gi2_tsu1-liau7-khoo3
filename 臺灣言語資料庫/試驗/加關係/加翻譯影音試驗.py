@@ -24,8 +24,8 @@ class 加翻譯影音試驗(加關係試驗):
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
 			'來源':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
 			'版權':'會使公開',
-			'種類':'字詞',
-			'語言腔口':'閩南語',
+			'種類':'語句',
+			'語言腔口':'四縣話',
 			'著作所在地':'花蓮',
 			'著作年':'2014',
 			'外語語言':'英語',
@@ -56,9 +56,9 @@ class 加翻譯影音試驗(加關係試驗):
 		原來影音資料數 = 影音表.objects.all().count()
 		原來翻譯影音數 = 翻譯影音表.objects.all().count()
 		影音 = 外語.錄母語(self.對應資料詞內容)
-		self.assertEqual(self.外語表.objects.all().count(), 原來外語資料數)
-		self.assertEqual(self.影音表.objects.all().count(), 原來影音資料數 + 1)
-		self.assertEqual(self.翻譯影音表.objects.all().count(), 原來翻譯影音數 + 1)
+		self.assertEqual(外語表.objects.all().count(), 原來外語資料數)
+		self.assertEqual(影音表.objects.all().count(), 原來影音資料數 + 1)
+		self.assertEqual(翻譯影音表.objects.all().count(), 原來翻譯影音數 + 1)
 		self.assertEqual(外語.翻譯影音.影音.get(pk=影音.pk), 影音)
 		self.assertEqual(影音.收錄者, self.臺灣人)
 		self.assertEqual(影音.來源, self.花蓮人)
@@ -74,9 +74,9 @@ class 加翻譯影音試驗(加關係試驗):
 		原來影音資料數 = 影音表.objects.all().count()
 		原來翻譯影音數 = 翻譯影音表.objects.all().count()
 		影音 = 外語.錄母語(self.對應資料句內容)
-		self.assertEqual(self.外語表.objects.all().count(), 原來外語資料數)
-		self.assertEqual(self.影音表.objects.all().count(), 原來影音資料數 + 1)
-		self.assertEqual(self.翻譯影音表.objects.all().count(), 原來翻譯影音數 + 1)
+		self.assertEqual(外語表.objects.all().count(), 原來外語資料數)
+		self.assertEqual(影音表.objects.all().count(), 原來影音資料數 + 1)
+		self.assertEqual(翻譯影音表.objects.all().count(), 原來翻譯影音數 + 1)
 		self.assertEqual(外語.翻譯影音.影音.get(pk=影音.pk), 影音)
 		self.assertEqual(影音.收錄者, self.花蓮人)
 		self.assertEqual(影音.來源, self.臺灣人)
