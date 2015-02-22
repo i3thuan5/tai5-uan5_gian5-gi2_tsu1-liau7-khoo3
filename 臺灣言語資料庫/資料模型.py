@@ -143,7 +143,7 @@ class 外語表(資料表):
 	def __str__(self):
 		return self.外語資料
 	@classmethod
-	def 加一筆(self, 輸入內容):
+	def 加資料(self, 輸入內容):
 		外語 = self()
 		內容 = 外語._內容轉物件(輸入內容)
 		if isinstance(內容['外語語言'], int):
@@ -164,7 +164,7 @@ class 文本表(資料表):
 	def __str__(self):
 		return self.文本資料
 	@classmethod
-	def 加一筆(self, 輸入內容):
+	def 加資料(self, 輸入內容):
 		文本 = self()
 		內容 = 文本._內容轉物件(輸入內容)
 		if isinstance(內容['文本資料'], str):
@@ -180,7 +180,7 @@ class 影音表(資料表):
 	def __str__(self):
 		return str(self.原始資料)
 	@classmethod
-	def 加一筆(self, 輸入內容):
+	def 加資料(self, 輸入內容):
 		影音 = self()
 		內容 = 影音._內容轉物件(輸入內容)
 		影音._加基本內容而且儲存(內容)
@@ -200,7 +200,7 @@ class 聽拍表(資料表):
 	def __str__(self):
 		return self.聽拍資料
 	@classmethod
-	def 加一筆(self, 輸入內容):
+	def 加資料(self, 輸入內容):
 		聽拍 = self()
 		內容 = 聽拍._內容轉物件(輸入內容)
 		if isinstance(內容['規範'], int):

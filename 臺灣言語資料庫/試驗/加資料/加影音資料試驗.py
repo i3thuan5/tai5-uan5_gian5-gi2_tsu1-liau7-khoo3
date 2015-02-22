@@ -46,13 +46,13 @@ class 加影音資料試驗(加資料試驗):
 	# 	照django.File傳AttributeError
 	def test_影音資料毋是檔案(self):
 		self.句內容['原始影音資料'] = 2015
-		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 		self.句內容['原始影音資料'] = None
-		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 		self.句內容['原始影音資料'] = codecs.encode('牛睏山部落的織布機課程、守城社區的母語課程')
-		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 		self.句內容['原始影音資料'] = '牛睏山部落的織布機課程、守城社區的母語課程'
-		self.assertRaises(AttributeError, self.資料表.加一筆, self.句內容)
+		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 	# 檔案無法度轉json字串，所以這愛改做無檔案的error
 	def test_規個內容用字串(self):
 		self.詞內容.pop('原始影音資料')
