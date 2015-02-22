@@ -184,7 +184,7 @@ class 影音表(資料表):
 		影音 = self()
 		內容 = 影音._內容轉物件(輸入內容)
 		影音._加基本內容而且儲存(內容)
-		影音.原始影音資料.save(name='影音檔案', content=File(內容['原始影音資料']), save=True)
+		影音.原始影音資料.save(name='影音檔案{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
 # 		影音.網頁影音資料 = 
 		return 影音
 
