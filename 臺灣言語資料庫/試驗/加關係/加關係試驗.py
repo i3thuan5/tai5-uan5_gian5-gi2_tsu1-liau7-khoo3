@@ -1,9 +1,25 @@
 # -*- coding: utf-8 -*-
 from 臺灣言語資料庫.試驗.資料庫試驗 import 資料庫試驗
+import io
+import wave
 
 class 加關係試驗(資料庫試驗):
 	def setUp(self):
 		super(加關係試驗, self).setUp()
+		self.詞檔案 = io.BytesIO()
+		音檔 = wave.open(self.詞檔案, 'wb')
+		音檔.setnchannels(1)
+		音檔.setframerate(16000)
+		音檔.setsampwidth(2)
+		音檔.writeframesraw(b'0' * 100)
+		音檔.close()
+		self.句檔案 = io.BytesIO()
+		音檔 = wave.open(self.句檔案, 'wb')
+		音檔.setnchannels(1)
+		音檔.setframerate(16000)
+		音檔.setsampwidth(2)
+		音檔.writeframesraw(b'0' * 100)
+		音檔.close()
 	def test_加詞(self):
 		原本資料 = self.原本資料表.加一筆(self.原本資料內容一)
 		self.加詞(原本資料)

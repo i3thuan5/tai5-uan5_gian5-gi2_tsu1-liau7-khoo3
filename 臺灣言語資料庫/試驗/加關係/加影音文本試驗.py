@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from 臺灣言語資料庫.試驗.加關係.加關係試驗 import 加關係試驗
 import json
-from 臺灣言語資料庫.資料模型 import 外語表
 from 臺灣言語資料庫.資料模型 import 影音表
-from 臺灣言語資料庫.關係模型 import 翻譯影音表
+from 臺灣言語資料庫.資料模型 import 文本表
+from 臺灣言語資料庫.關係模型 import 影音文本表
 
-class 加翻譯影音試驗(加關係試驗):
+class 加影音文本試驗(加關係試驗):
 	def setUp(self):
-		super(加翻譯影音試驗, self).setUp()
+		super(加影音文本試驗, self).setUp()
 		self.原本資料表 = 影音表
 		self.原本資料內容一 = {
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
@@ -17,7 +17,7 @@ class 加翻譯影音試驗(加關係試驗):
 			'語言腔口':'閩南語',
 			'著作所在地':'花蓮',
 			'著作年':'2014',
-			'原始影音資料':b'華語',
+			'原始影音資料':self.詞檔案,
 			}
 		self.原本資料內容二 = {
 			'收錄者':json.dumps({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮人'}),
@@ -27,7 +27,7 @@ class 加翻譯影音試驗(加關係試驗):
 			'語言腔口':'四縣話',
 			'著作所在地':'臺灣',
 			'著作年':'195x',
-			'原始影音資料':b'華語',
+			'原始影音資料':self.句檔案,
 			}
 		self.對應資料內容一 = {
 			'收錄者':json.dumps({'名':'鄉民', '出世年':'1950', '出世地':'臺灣'}),
@@ -67,7 +67,7 @@ class 加翻譯影音試驗(加關係試驗):
 		self.assertEqual(文本.著作年, self.二空一四)
 		self.assertEqual(文本.屬性, '{}')
 		self.assertEqual(文本.文本資料, '媠')
-	def 加句(self, 外語):
+	def 加句(self, 影音):
 		原來影音資料數 = 影音表.objects.all().count()
 		原來文本資料數 = 文本表.objects.all().count()
 		原來影音文本數 = 影音文本表.objects.all().count()
