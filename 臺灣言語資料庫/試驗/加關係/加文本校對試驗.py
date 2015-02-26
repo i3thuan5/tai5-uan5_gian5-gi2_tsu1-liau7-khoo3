@@ -51,7 +51,7 @@ class 加文本校對試驗(加關係試驗):
 	def 加詞(self, 原本文本):
 		原來文本資料數 = 文本表.objects.all().count()
 		原來翻譯文本數 = 文本校對表.objects.all().count()
-		文本 = 原本文本.翻母語(self.對應資料詞內容)
+		文本 = 原本文本.校對做(self.對應資料詞內容)
 		self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 1)
 		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數 + 1)
 		self.assertIsInstance(原本文本.文本校對.get(新文本=文本),文本校對表)
@@ -68,7 +68,7 @@ class 加文本校對試驗(加關係試驗):
 	def 加句(self, 原本文本):
 		原來文本資料數 = 文本表.objects.all().count()
 		原來翻譯文本數 = 文本校對表.objects.all().count()
-		文本 = 原本文本.翻母語(self.對應資料句內容)
+		文本 = 原本文本.校對做(self.對應資料句內容)
 		self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 1)
 		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數 + 1)
 		self.assertIsInstance(原本文本.文本校對.get(新文本=文本),文本校對表)

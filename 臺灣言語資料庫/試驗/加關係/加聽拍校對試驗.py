@@ -3,6 +3,7 @@ from 臺灣言語資料庫.試驗.加關係.加關係試驗 import 加關係試�
 import json
 from 臺灣言語資料庫.資料模型 import 聽拍表
 from 臺灣言語資料庫.關係模型 import 聽拍校對表
+from 臺灣言語資料庫.資料模型 import 聽拍規範表
 
 class 加聽拍校對試驗(加關係試驗):
 	def setUp(self):
@@ -72,7 +73,7 @@ class 加聽拍校對試驗(加關係試驗):
 	def 加詞(self, 原本聽拍):
 		原來聽拍資料數 = 聽拍表.objects.all().count()
 		原來翻譯聽拍數 = 聽拍校對表.objects.all().count()
-		聽拍 = 原本聽拍.翻母語(self.對應資料詞內容)
+		聽拍 = 原本聽拍.校對做(self.對應資料詞內容)
 		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數 + 1)
 		self.assertEqual(聽拍校對表.objects.all().count(), 原來翻譯聽拍數 + 1)
 		self.assertIsInstance(原本聽拍.聽拍校對.get(新聽拍=聽拍),聽拍校對表)
@@ -93,7 +94,7 @@ class 加聽拍校對試驗(加關係試驗):
 	def 加句(self, 原本聽拍):
 		原來聽拍資料數 = 聽拍表.objects.all().count()
 		原來翻譯聽拍數 = 聽拍校對表.objects.all().count()
-		聽拍 = 原本聽拍.翻母語(self.對應資料句內容)
+		聽拍 = 原本聽拍.校對做(self.對應資料句內容)
 		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數 + 1)
 		self.assertEqual(聽拍校對表.objects.all().count(), 原來翻譯聽拍數 + 1)
 		self.assertIsInstance(原本聽拍.聽拍校對.get(新聽拍=聽拍),聽拍校對表)
