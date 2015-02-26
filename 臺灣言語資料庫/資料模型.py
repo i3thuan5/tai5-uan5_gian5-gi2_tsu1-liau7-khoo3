@@ -197,6 +197,12 @@ class 影音表(資料表):
 		文本 = 文本表.加資料(文本內容)
 		self.影音文本.create(文本=文本)
 		return 文本
+	def 寫聽拍(self, 輸入聽拍內容):
+		聽拍內容 = self._內容轉物件(輸入聽拍內容)
+		self._加關係的內容檢查(聽拍內容)
+		聽拍 = 聽拍表.加資料(聽拍內容)
+		self.影音聽拍.create(聽拍=聽拍)
+		return 聽拍
 
 class 文本表(資料表):
 	文本資料 = models.TextField()
@@ -211,6 +217,12 @@ class 文本表(資料表):
 		else:
 			raise TypeError('文本資料必須愛是字串型態')
 		文本._加基本內容而且儲存(內容)
+		return 文本
+	def 校對做(self, 輸入文本內容):
+		文本內容 = self._內容轉物件(輸入文本內容)
+		self._加關係的內容檢查(文本內容)
+		文本 = 文本表.加資料(文本內容)
+		self.文本校對.create(新文本=文本)
 		return 文本
 
 class 聽拍規範表(models.Model):
@@ -242,4 +254,10 @@ class 聽拍表(資料表):
 				raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
 		聽拍.聽拍資料 = json.dumps(聽拍資料內容)
 		聽拍._加基本內容而且儲存(內容)
+		return 聽拍
+	def 校對做(self, 輸入聽拍內容):
+		聽拍內容 = self._內容轉物件(輸入聽拍內容)
+		self._加關係的內容檢查(聽拍內容)
+		聽拍 = 聽拍表.加資料(聽拍內容)
+		self.聽拍校對.create(新聽拍=聽拍)
 		return 聽拍
