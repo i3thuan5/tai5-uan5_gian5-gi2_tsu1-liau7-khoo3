@@ -20,12 +20,12 @@ class 資料庫試驗(TestCase):
 		self.語句 = 種類表.objects.create(種類=語句)
 		self.臺灣 = 著作所在地表.objects.create(著作所在地='臺灣')
 		self.花蓮 = 著作所在地表.objects.create(著作所在地='花蓮')
-		self.臺灣人 = 來源表.objects.create(名='鄉民')
+		self.鄉民 = 來源表.objects.create(名='鄉民')
 		出世年一九五空 = 來源屬性表.objects.create(分類='出世年', 性質='1950')
 		出世地臺灣 = 來源屬性表.objects.create(分類='出世地', 性質='臺灣')
-		self.臺灣人.屬性.add(出世年一九五空, 出世地臺灣)
-		self.花蓮人 = 來源表.objects.create(名='Dr. Pigu')
-		self.花蓮人.屬性.add(
+		self.鄉民.屬性.add(出世年一九五空, 出世地臺灣)
+		self.Pigu = 來源表.objects.create(名='Dr. Pigu')
+		self.Pigu.屬性.add(
 			來源屬性表.objects.create(分類='出世年', 性質='1990'),
 			來源屬性表.objects.create(分類='出世地', 性質='花蓮人'),
 			)
