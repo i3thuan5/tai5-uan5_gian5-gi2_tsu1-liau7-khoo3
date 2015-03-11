@@ -219,11 +219,15 @@ class 文本表(資料表):
 		文本._加基本內容而且儲存(內容)
 		return 文本
 	def 校對做(self, 輸入文本內容):
+		if self.是校對後的資料():
+			raise ValueError('校對的資料袂使閣校對，必須對原來的資料校對')
 		文本內容 = self._內容轉物件(輸入文本內容)
 		self._加關係的內容檢查(文本內容)
 		文本 = 文本表.加資料(文本內容)
 		self.文本校對.create(新文本=文本)
 		return 文本
+	def 是校對後的資料(self):
+		return self.校對資料來源.all().count()>0
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)
@@ -256,8 +260,12 @@ class 聽拍表(資料表):
 		聽拍._加基本內容而且儲存(內容)
 		return 聽拍
 	def 校對做(self, 輸入聽拍內容):
+		if self.是校對後的資料():
+			raise ValueError('校對的資料袂使閣校對，必須對原來的資料校對')
 		聽拍內容 = self._內容轉物件(輸入聽拍內容)
 		self._加關係的內容檢查(聽拍內容)
 		聽拍 = 聽拍表.加資料(聽拍內容)
 		self.聽拍校對.create(新聽拍=聽拍)
 		return 聽拍
+	def 是校對後的資料(self):
+		return self.校對資料來源.all().count()>0

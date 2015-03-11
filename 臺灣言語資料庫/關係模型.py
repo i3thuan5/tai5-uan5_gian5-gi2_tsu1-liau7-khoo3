@@ -22,9 +22,9 @@ class 影音聽拍表(models.Model):
 	聽拍 = models.ForeignKey(聽拍表, related_name = '+', unique=True)
 
 class 文本校對表(models.Model):
-	舊文本 = models.ForeignKey(文本表, related_name = '文本校對', unique=True)
-	新文本 = models.ForeignKey(文本表, related_name = '+', unique=True)
+	舊文本 = models.ForeignKey(文本表, related_name = '文本校對')
+	新文本 = models.ForeignKey(文本表, related_name = '校對資料來源', unique=True)
 
 class 聽拍校對表(models.Model):
-	舊聽拍 = models.ForeignKey(聽拍表, related_name = '聽拍校對', unique=True)
-	新聽拍 = models.ForeignKey(聽拍表, related_name = '+', unique=True)
+	舊聽拍 = models.ForeignKey(聽拍表, related_name = '聽拍校對')
+	新聽拍 = models.ForeignKey(聽拍表, related_name = '校對資料來源', unique=True)
