@@ -88,12 +88,12 @@ class 加文本校對試驗(加關係試驗):
 		
 		第一層詞 = self.原本資料表.加資料(self.原本資料詞內容)
 		第二層詞 = 第一層詞.校對做(self.對應資料詞內容)
-		self.assertRaises(ValueError, 第二層詞.校對做, self.對應資料句內容)
-		self.assertEqual(文本表.objects.all().count(), 原來文本資料數)
-		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數)
+		self.assertRaises(ValueError, 第二層詞.校對做, self.對應資料詞內容)
+		self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 1)
+		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數 + 1)
 		
 		第一層句 = self.原本資料表.加資料(self.原本資料句內容)
 		第二層句 = 第一層句.校對做(self.對應資料句內容)
 		self.assertRaises(ValueError, 第二層句.校對做, self.對應資料句內容)		
-		self.assertEqual(文本表.objects.all().count(), 原來文本資料數)
-		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數)
+		self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 2)
+		self.assertEqual(文本校對表.objects.all().count(), 原來翻譯文本數 + 2)
