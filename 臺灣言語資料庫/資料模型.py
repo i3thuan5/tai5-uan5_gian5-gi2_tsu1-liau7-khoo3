@@ -6,7 +6,9 @@ from django.db.models import Count
 
 class 來源屬性表(models.Model):
 	分類 = models.CharField(max_length=20)  # 出世地
-	性質 = models.TextField()  # 臺灣
+	性質 = models.TextField()  #json字串格式。 臺灣、…
+	def 內容(self):
+		return {self.分類:json.loads(self.性質)}
 	
 class 來源表(models.Model):
 	名 = models.CharField(max_length=100)  # 人名、冊名、…
@@ -35,7 +37,9 @@ class 著作年表(models.Model):
 
 class 資料屬性表(models.Model):
 	分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
-	性質 = models.TextField()  # 名詞、…
+	性質 = models.TextField()  # json字串格式。名詞、…
+	def 內容(self):
+		return {self.分類:json.loads(self.性質)}
 
 class 資料表(models.Model):
 	class Meta:
@@ -116,7 +120,7 @@ class 資料表(models.Model):
 		來源屬性陣列 = []
 		一定是新來源 = False
 		for 分類, 性質 in 來源內容.items():
-			來源屬性, 新的物件 = 來源屬性表.objects.get_or_create(分類=分類, 性質=性質)
+			來源屬性, 新的物件 = 來源屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))
 			來源屬性陣列.append(來源屬性)
 			if 新的物件:
 				一定是新來源 = True
