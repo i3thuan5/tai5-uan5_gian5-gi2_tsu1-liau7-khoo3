@@ -2,6 +2,7 @@
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 外語表
 from django.core.exceptions import ObjectDoesNotExist
+import json
 
 class 加外語資料試驗(加資料試驗):
 	def setUp(self):
@@ -98,5 +99,5 @@ class 加外語資料試驗(加資料試驗):
 			 '來源': '{"\\u8077\\u696d": "\\u5b78\\u751f", "\\u540d": "\\u963f\\u5aa0"}'
 			})
 		self.assertEqual(外語.屬性.count(), 2)
-		self.assertEqual(外語.屬性.get(分類='詞性').性質, '形容詞')
-		self.assertEqual(外語.屬性.get(分類='字數').性質, '2')
+		self.assertEqual(json.loads(外語.屬性.get(分類='詞性').性質), '形容詞')
+		self.assertEqual(json.loads(外語.屬性.get(分類='字數').性質), '2')
