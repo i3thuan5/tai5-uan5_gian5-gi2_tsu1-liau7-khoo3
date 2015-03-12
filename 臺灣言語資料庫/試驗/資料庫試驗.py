@@ -11,6 +11,7 @@ from 臺灣言語資料庫.欄位資訊 import 袂使公開
 from 臺灣言語資料庫.欄位資訊 import 字詞
 from 臺灣言語資料庫.欄位資訊 import 語句
 from 臺灣言語資料庫.資料模型 import 著作年表
+import json
 
 class 資料庫試驗(TestCase):
 	def setUp(self):
@@ -21,13 +22,13 @@ class 資料庫試驗(TestCase):
 		self.臺灣 = 著作所在地表.objects.create(著作所在地='臺灣')
 		self.花蓮 = 著作所在地表.objects.create(著作所在地='花蓮')
 		self.鄉民 = 來源表.objects.create(名='鄉民')
-		出世年一九五空 = 來源屬性表.objects.create(分類='出世年', 性質='1950')
-		出世地臺灣 = 來源屬性表.objects.create(分類='出世地', 性質='臺灣')
+		出世年一九五空 = 來源屬性表.objects.create(分類='出世年', 性質=json.dumps('1950'))
+		出世地臺灣 = 來源屬性表.objects.create(分類='出世地', 性質=json.dumps('臺灣'))
 		self.鄉民.屬性.add(出世年一九五空, 出世地臺灣)
 		self.Pigu = 來源表.objects.create(名='Dr. Pigu')
 		self.Pigu.屬性.add(
-			來源屬性表.objects.create(分類='出世年', 性質='1990'),
-			來源屬性表.objects.create(分類='出世地', 性質='花蓮人'),
+			來源屬性表.objects.create(分類='出世年', 性質=json.dumps('1990')),
+			來源屬性表.objects.create(分類='出世地', 性質=json.dumps('花蓮人')),
 			)
 		self.閩南語 = 語言腔口表.objects.create(語言腔口='閩南語')
 		self.四縣話 = 語言腔口表.objects.create(語言腔口='四縣話')
