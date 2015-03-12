@@ -34,8 +34,8 @@ class 著作年表(models.Model):
 	著作年 = models.CharField(max_length=20)
 
 class 資料屬性表(models.Model):
-	分類 = models.CharField(max_length=20, db_index=True)  # 詞性
-	性質 = models.TextField()  # 名詞
+	分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
+	性質 = models.TextField()  # 名詞、…
 
 class 資料表(models.Model):
 	class Meta:
@@ -69,7 +69,7 @@ class 資料表(models.Model):
 			self.來源 = 來源表.objects.get(pk=內容['來源'])
 		else:
 			來源, 來源名, 來源屬性陣列 = self._用內容揣來源(self._內容轉物件(內容['來源']))
-			if 來源 and 來源.count()>0:
+			if 來源 and 來源.count() > 0:
 				self.來源 = 來源.get()
 			else:
 				self.來源 = 來源表.objects.create(名=來源名)
@@ -130,6 +130,10 @@ class 資料表(models.Model):
 			結果 = 選擇.filter(屬性數量=len(來源屬性陣列))
 		return 結果, 來源名, 來源屬性陣列
 	def _內容轉物件(self, 內容):
+# 		try:
+# 			return json.loads(內容)
+# 		except:
+# 			return 內容
 		if isinstance(內容, str):
 			return json.loads(內容)
 		return 內容
@@ -227,7 +231,7 @@ class 文本表(資料表):
 		self.文本校對.create(新文本=文本)
 		return 文本
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count()>0
+		return self.校對資料來源.all().count() > 0
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)
@@ -237,7 +241,7 @@ class 聽拍規範表(models.Model):
 class 聽拍表(資料表):
 # 	語者詳細資料記佇屬性內底，逐句話記是佗一个語者
 	規範 = models.ForeignKey(聽拍規範表, related_name='全部資料')
-	聽拍資料 = models.TextField()
+	聽拍資料 = models.TextField()  # 存json.dumps的資料
 	def __str__(self):
 		return self.聽拍資料
 	@classmethod
@@ -268,4 +272,4 @@ class 聽拍表(資料表):
 		self.聽拍校對.create(新聽拍=聽拍)
 		return 聽拍
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count()>0
+		return self.校對資料來源.all().count() > 0
