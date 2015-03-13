@@ -459,7 +459,7 @@ class 加資料試驗(資料庫試驗):
 		except:
 			內容 = 屬性欄位內容
 		self.assertEqual(資料.屬性內容(), 內容)
-	def test_仝名無仝屬性試驗(self):
+	def test_來源仝名無仝屬性試驗(self):
 		無屬性花蓮人 = 來源表.objects.create(名='Dr. Pigu')
 		學生花蓮人 = 來源表.objects.create(名='Dr. Pigu')
 		學生花蓮人.屬性.add(
