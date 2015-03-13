@@ -102,14 +102,14 @@ class 加資料試驗(資料庫試驗):
 	def test_收錄者無(self):
 		self.句內容.pop('收錄者')
 		self.assertRaises(KeyError, self.資料表.加資料, self.句內容)
-	# 會當傳物件的攏用AttributeError
+	# 會當傳物件的攏用TypeError
 	def test_收錄者毋是字典字串佮編號(self):
 		self.句內容['收錄者'] = 1990.0830
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['收錄者'] = None
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['收錄者'] = ['阿媠']
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 	def test_來源舊字串(self):
 		self.句內容['來源'] = json.dumps(self.句內容['來源'])
 		原來資料數 = self.資料表.objects.all().count()
@@ -206,14 +206,14 @@ class 加資料試驗(資料庫試驗):
 	def test_來源無(self):
 		self.句內容.pop('來源')
 		self.assertRaises(KeyError, self.資料表.加資料, self.句內容)
-	# 會當傳物件的攏用AttributeError
+	# 會當傳物件的攏用TypeError
 	def test_來源毋是字典字串佮編號(self):
 		self.句內容['來源'] = 1990.0328
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['來源'] = None
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['來源'] = ['阿緣']
-		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 	def test_版權舊編號(self):
 		self.句內容['版權'] = self.袂使公開.pk
 		原來資料數 = self.資料表.objects.all().count()

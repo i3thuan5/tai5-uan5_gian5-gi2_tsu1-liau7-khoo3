@@ -26,20 +26,20 @@ class 來源表(models.Model):
 		return 內容結果
 	@classmethod
 	def 加來源(cls,內容):
-		名 = 內容.pop('名')
+		名 = 內容['名']
 		來源=cls.objects.create(名=名)
 		for 分類,性質 in 內容.items():
-			來源.屬性.add(來源屬性表.加屬性(分類, 性質))
-		內容['名']=名
+			if 分類!='名':
+				來源.屬性.add(來源屬性表.加屬性(分類, 性質))
 		return 來源
 	@classmethod
 	def 揣來源(cls,內容):
-		名 = 內容.pop('名')
+		名 = 內容['名']
 		來源屬性陣列=[]
 		for 分類, 性質 in 內容.items():
-			來源屬性 = 來源屬性表.objects.get(分類=分類, 性質=json.dumps(性質))
-			來源屬性陣列.append(來源屬性)
-		內容['名'] = 名
+			if 分類!='名':
+				來源屬性 = 來源屬性表.objects.get(分類=分類, 性質=json.dumps(性質))
+				來源屬性陣列.append(來源屬性)
 		選擇 = 來源表.objects.filter(名=名).annotate(屬性數量=Count('屬性'))
 		for 來源屬性 in 來源屬性陣列:
 			選擇 = 選擇.filter(屬性=來源屬性)
@@ -95,21 +95,15 @@ class 資料表(models.Model):
 		if isinstance(內容['收錄者'], int):
 			self.收錄者 = 來源表.objects.get(pk=內容['收錄者'])
 		else:
-			收錄者 = self._用內容揣來源(self._內容轉物件(內容['收錄者']))[0]
-			if 收錄者:
-				self.收錄者 = 收錄者.get()
-			else:
-				raise 來源表.DoesNotExist('收錄者愛是編號')
+			self.收錄者 = 來源表.揣來源(self._內容轉物件(內容['收錄者']))
 		if isinstance(內容['來源'], int):
 			self.來源 = 來源表.objects.get(pk=內容['來源'])
 		else:
-			來源, 來源名, 來源屬性陣列 = self._用內容揣來源(self._內容轉物件(內容['來源']))
-			if 來源 and 來源.count() > 0:
-				self.來源 = 來源.get()
-			else:
-				self.來源 = 來源表.objects.create(名=來源名)
-				for 來源屬性 in 來源屬性陣列:
-					self.來源.屬性.add(來源屬性)
+			來源物件=self._內容轉物件(內容['來源'])
+			try:
+				self.來源 = 來源表.揣來源(來源物件)
+			except:
+				self.來源 = 來源表.加來源(來源物件)
 		if isinstance(內容['版權'], int):
 			self.版權 = 版權表.objects.get(pk=內容['版權'])
 		elif isinstance(內容['版權'], str):
@@ -145,25 +139,6 @@ class 資料表(models.Model):
 			for 分類, 性質 in self._內容轉物件(內容['屬性']).items():
 				self.屬性.add(資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0])
 			self.save()
-	def _用內容揣來源(self, 來源內容):
-		來源內容.items()
-		來源名 = 來源內容.pop('名')
-		來源屬性陣列 = []
-		一定是新來源 = False
-		for 分類, 性質 in 來源內容.items():
-			來源屬性, 新的物件 = 來源屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))
-			來源屬性陣列.append(來源屬性)
-			if 新的物件:
-				一定是新來源 = True
-		來源內容['名'] = 來源名
-		if 一定是新來源:
-			結果 = None
-		else:
-			選擇 = 來源表.objects.filter(名=來源名).annotate(屬性數量=Count('屬性'))
-			for 來源屬性 in 來源屬性陣列:
-				選擇 = 選擇.filter(屬性=來源屬性)
-			結果 = 選擇.filter(屬性數量=len(來源屬性陣列))
-		return 結果, 來源名, 來源屬性陣列
 	def _內容轉物件(self, 內容):
 # 		try:
 # 			return json.loads(內容)
