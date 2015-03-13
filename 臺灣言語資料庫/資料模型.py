@@ -4,17 +4,19 @@ import json
 from django.core.files.base import File
 from django.db.models import Count
 
-class 來源屬性表(models.Model):
-	分類 = models.CharField(max_length=20)  # 出世地
-	性質 = models.TextField()  #json字串格式。 臺灣、…
+class 屬性表函式:
 	def 內容(self):
 		return {self.分類:json.loads(self.性質)}
 	@classmethod
-	def 加屬性(cls,分類,性質):
+	def 加屬性(cls, 分類, 性質):
 		return cls.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
 	@classmethod
-	def 揣屬性(cls,分類,性質):
+	def 揣屬性(cls, 分類, 性質):
 		return cls.objects.get(分類=分類, 性質=json.dumps(性質))
+	
+class 來源屬性表(models.Model, 屬性表函式):
+	分類 = models.CharField(max_length=20)  # 出世地
+	性質 = models.TextField()  # json字串格式。 臺灣、…
 	
 class 來源表(models.Model):
 	名 = models.CharField(max_length=100)  # 人名、冊名、…
@@ -25,19 +27,19 @@ class 來源表(models.Model):
 			內容結果[屬性.分類] = json.loads(屬性.性質)
 		return 內容結果
 	@classmethod
-	def 加來源(cls,內容):
+	def 加來源(cls, 內容):
 		名 = 內容['名']
-		來源=cls.objects.create(名=名)
-		for 分類,性質 in 內容.items():
-			if 分類!='名':
+		來源 = cls.objects.create(名=名)
+		for 分類, 性質 in 內容.items():
+			if 分類 != '名':
 				來源.屬性.add(來源屬性表.加屬性(分類, 性質))
 		return 來源
 	@classmethod
-	def 揣來源(cls,內容):
+	def 揣來源(cls, 內容):
 		名 = 內容['名']
-		來源屬性陣列=[]
+		來源屬性陣列 = []
 		for 分類, 性質 in 內容.items():
-			if 分類!='名':
+			if 分類 != '名':
 				來源屬性 = 來源屬性表.objects.get(分類=分類, 性質=json.dumps(性質))
 				來源屬性陣列.append(來源屬性)
 		選擇 = 來源表.objects.filter(名=名).annotate(屬性數量=Count('屬性'))
@@ -66,11 +68,9 @@ class 著作年表(models.Model):
 # 	1952、19xx、…
 	著作年 = models.CharField(max_length=20)
 
-class 資料屬性表(models.Model):
+class 資料屬性表(models.Model, 屬性表函式):
 	分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
 	性質 = models.TextField()  # json字串格式。名詞、…
-	def 內容(self):
-		return {self.分類:json.loads(self.性質)}
 
 class 資料表(models.Model):
 	class Meta:
@@ -99,7 +99,7 @@ class 資料表(models.Model):
 		if isinstance(內容['來源'], int):
 			self.來源 = 來源表.objects.get(pk=內容['來源'])
 		else:
-			來源物件=self._內容轉物件(內容['來源'])
+			來源物件 = self._內容轉物件(內容['來源'])
 			try:
 				self.來源 = 來源表.揣來源(來源物件)
 			except:
@@ -164,8 +164,8 @@ class 外語表(資料表):
 	def __str__(self):
 		return self.外語資料
 	@classmethod
-	def 加資料(self, 輸入內容):
-		外語 = self()
+	def 加資料(cls, 輸入內容):
+		外語 = cls()
 		內容 = 外語._內容轉物件(輸入內容)
 		if isinstance(內容['外語語言'], int):
 			外語.外語語言 = 語言腔口表.objects.get(pk=內容['外語語言'])
@@ -198,8 +198,8 @@ class 影音表(資料表):
 	def __str__(self):
 		return str(self.原始資料)
 	@classmethod
-	def 加資料(self, 輸入內容):
-		影音 = self()
+	def 加資料(cls, 輸入內容):
+		影音 = cls()
 		內容 = 影音._內容轉物件(輸入內容)
 		影音._加基本內容而且儲存(內容)
 		影音.原始影音資料.save(name='影音檔案{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
@@ -223,8 +223,8 @@ class 文本表(資料表):
 	def __str__(self):
 		return self.文本資料
 	@classmethod
-	def 加資料(self, 輸入內容):
-		文本 = self()
+	def 加資料(cls, 輸入內容):
+		文本 = cls()
 		內容 = 文本._內容轉物件(輸入內容)
 		if isinstance(內容['文本資料'], str):
 			文本.文本資料 = 內容['文本資料']
@@ -255,8 +255,8 @@ class 聽拍表(資料表):
 	def __str__(self):
 		return self.聽拍資料
 	@classmethod
-	def 加資料(self, 輸入內容):
-		聽拍 = self()
+	def 加資料(cls, 輸入內容):
+		聽拍 = cls()
 		內容 = 聽拍._內容轉物件(輸入內容)
 		if isinstance(內容['規範'], int):
 			聽拍.規範 = 聽拍規範表.objects.get(pk=內容['規範'])
