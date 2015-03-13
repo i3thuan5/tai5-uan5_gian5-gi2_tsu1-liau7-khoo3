@@ -9,11 +9,28 @@ class 來源屬性表(models.Model):
 	性質 = models.TextField()  #json字串格式。 臺灣、…
 	def 內容(self):
 		return {self.分類:json.loads(self.性質)}
+	@classmethod
+	def 加屬性(cls,分類,性質):
+		return cls.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
 	
 class 來源表(models.Model):
 	名 = models.CharField(max_length=100)  # 人名、冊名、…
 	屬性 = models.ManyToManyField(來源屬性表)  # 出世年、出世地、…
-	
+	def 屬性內容(self):
+		內容結果 = {}
+		for 屬性 in self.屬性.all():
+			內容結果[屬性.分類] = json.loads(屬性.性質)
+		return 內容結果
+	@classmethod
+	def 加來源(cls,內容):
+		名 = 內容.pop('名')
+		來源=cls.objects.create(名=名)
+		for 分類,性質 in 內容.items():
+# 			來源.屬性.add()
+# 			來源.屬性.add(來源屬性表.objects.create(分類=分類, 性質=json.dumps(性質)))
+			來源.屬性.add(來源屬性表.加屬性(分類, 性質))
+		內容['名']=名
+		return 來源
 class 版權表(models.Model):
 # 	會使公開，袂使公開
 	版權 = models.CharField(max_length=20)
@@ -57,8 +74,8 @@ class 資料表(models.Model):
 		return self.pk
 	def 屬性內容(self):
 		內容結果 = {}
-		for 資料屬性 in self.屬性.all():
-			內容結果[資料屬性.分類] = json.loads(資料屬性.性質)
+		for 屬性 in self.屬性.all():
+			內容結果[屬性.分類] = json.loads(屬性.性質)
 		return 內容結果
 	def _加基本內容而且儲存(self, 內容):
 		if isinstance(內容['收錄者'], int):
