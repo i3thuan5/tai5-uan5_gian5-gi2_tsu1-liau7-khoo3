@@ -12,6 +12,9 @@ class 來源屬性表(models.Model):
 	@classmethod
 	def 加屬性(cls,分類,性質):
 		return cls.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
+	@classmethod
+	def 揣屬性(cls,分類,性質):
+		return cls.objects.get(分類=分類, 性質=json.dumps(性質))
 	
 class 來源表(models.Model):
 	名 = models.CharField(max_length=100)  # 人名、冊名、…
@@ -26,11 +29,22 @@ class 來源表(models.Model):
 		名 = 內容.pop('名')
 		來源=cls.objects.create(名=名)
 		for 分類,性質 in 內容.items():
-# 			來源.屬性.add()
-# 			來源.屬性.add(來源屬性表.objects.create(分類=分類, 性質=json.dumps(性質)))
 			來源.屬性.add(來源屬性表.加屬性(分類, 性質))
 		內容['名']=名
 		return 來源
+	@classmethod
+	def 揣來源(cls,內容):
+		名 = 內容.pop('名')
+		來源屬性陣列=[]
+		for 分類, 性質 in 內容.items():
+			來源屬性 = 來源屬性表.objects.get(分類=分類, 性質=json.dumps(性質))
+			來源屬性陣列.append(來源屬性)
+		內容['名'] = 名
+		選擇 = 來源表.objects.filter(名=名).annotate(屬性數量=Count('屬性'))
+		for 來源屬性 in 來源屬性陣列:
+			選擇 = 選擇.filter(屬性=來源屬性)
+		return 選擇.get(屬性數量=len(來源屬性陣列))
+	
 class 版權表(models.Model):
 # 	會使公開，袂使公開
 	版權 = models.CharField(max_length=20)
