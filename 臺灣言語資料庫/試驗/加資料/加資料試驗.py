@@ -110,6 +110,8 @@ class 加資料試驗(資料庫試驗):
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['收錄者'] = ['阿媠']
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
+		self.句內容['收錄者'] = {'阿媠'}
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 	def test_來源舊字串(self):
 		self.句內容['來源'] = json.dumps(self.句內容['來源'])
 		原來資料數 = self.資料表.objects.all().count()
@@ -213,6 +215,8 @@ class 加資料試驗(資料庫試驗):
 		self.句內容['來源'] = None
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.句內容['來源'] = ['阿緣']
+		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
+		self.句內容['來源'] = {'阿緣'}
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 	def test_版權舊編號(self):
 		self.句內容['版權'] = self.袂使公開.pk
@@ -414,6 +418,9 @@ class 加資料試驗(資料庫試驗):
 		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 	def test_屬性是陣列(self):
 		self.句內容['屬性'] = ['詞性']
+		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+	def test_屬性是集合(self):
+		self.句內容['屬性'] = {'詞性'}
 		self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
 	def test_無屬性(self):
 		self.句內容.pop('屬性')
