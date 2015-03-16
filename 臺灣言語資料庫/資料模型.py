@@ -134,10 +134,15 @@ class 資料表(models.Model):
 			self.著作年 = 著作年表.objects.get_or_create(著作年=內容['著作年'])[0]
 		else:
 			raise TypeError('著作年必須愛是字串抑是整數型態')
-		self.save()
+# 		self.save()
 		if '屬性' in 內容:
+			for _, _ in self._內容轉物件(內容['屬性']).items():
+				pass
+			self.save()
 			for 分類, 性質 in self._內容轉物件(內容['屬性']).items():
 				self.屬性.add(資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0])
+# 			self.save()
+		else:
 			self.save()
 	def _內容轉物件(self, 內容):
 # 		try:
