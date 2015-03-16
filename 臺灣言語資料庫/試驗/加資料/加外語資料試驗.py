@@ -45,32 +45,44 @@ class 加外語資料試驗(加資料試驗):
 	def test_外語語言新編號(self):
 		self.詞內容['外語語言'] = 1115
 		self.assertRaises(ObjectDoesNotExist, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容['外語語言'] = 1231
 		self.assertRaises(ObjectDoesNotExist, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_外語語言毋是數字佮字串(self):
 		self.詞內容['外語語言'] = [1115]
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容['外語語言'] = 1231.23
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_無語言(self):
 		self.詞內容.pop('外語語言')
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容.pop('外語語言')
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_無資料(self):
 		self.詞內容.pop('外語資料')
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容.pop('外語資料')
 		self.assertRaises(KeyError, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_毋是字串(self):
 		self.詞內容['外語資料'] = 1228
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容['外語資料'] = ['沒辦法']
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.詞內容['外語資料'] = None
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容['外語資料'] = {}
 		self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_屬性是json字串(self):
 		外語=外語表.加資料(
 			{'著作年': '2014',
