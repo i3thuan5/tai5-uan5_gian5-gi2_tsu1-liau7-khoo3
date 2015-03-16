@@ -409,6 +409,12 @@ class 加資料試驗(資料庫試驗):
 	def test_屬性無合法的json字串(self):
 		self.句內容['屬性'] = '{[}'
 		self.assertRaises(ValueError, self.資料表.加資料, self.句內容)
+	def test_屬性是集合的json字串(self):
+		self.句內容['屬性'] = '{"sui2"}'
+		self.assertRaises(ValueError, self.資料表.加資料, self.句內容)
+	def test_屬性是字串的json字串(self):
+		self.句內容['屬性'] = 'sui2'
+		self.assertRaises(ValueError, self.資料表.加資料, self.句內容)
 	# 會當傳物件的攏用AttributeError
 	def test_屬性是數字(self):
 		self.句內容['屬性'] = 33
