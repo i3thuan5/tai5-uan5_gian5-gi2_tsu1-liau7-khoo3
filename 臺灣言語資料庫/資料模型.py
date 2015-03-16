@@ -3,6 +3,8 @@ from django.db import models
 import json
 from django.core.files.base import File
 from django.db.models import Count
+from builtins import isinstance
+from io import IOBase
 
 class 屬性表函式:
 	def 內容(self):
@@ -206,6 +208,8 @@ class 影音表(資料表):
 	def 加資料(cls, 輸入內容):
 		影音 = cls()
 		內容 = 影音._內容轉物件(輸入內容)
+		if not isinstance(內容['原始影音資料'],IOBase):
+			raise TypeError('影音資料必須是檔案')
 		影音._加基本內容而且儲存(內容)
 		影音.原始影音資料.save(name='影音檔案{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
 # 		影音.網頁影音資料 = 
