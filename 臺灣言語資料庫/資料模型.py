@@ -28,6 +28,8 @@ class 來源表(models.Model):
 		for 屬性 in self.屬性.all():
 			內容結果[屬性.分類] = json.loads(屬性.性質)
 		return 內容結果
+	def 編號(self):
+		return self.pk
 	@classmethod
 	def 加來源(cls, 內容):
 		名 = 內容['名']
