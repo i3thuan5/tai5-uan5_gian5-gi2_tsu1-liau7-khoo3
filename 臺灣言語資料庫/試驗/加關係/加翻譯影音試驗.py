@@ -69,7 +69,9 @@ class 加翻譯影音試驗(加關係試驗):
 		self.assertEqual(影音.著作所在地, self.花蓮)
 		self.assertEqual(影音.著作年, self.二空一四)
 		self.assertEqual(影音.屬性.count(), 0)
+		影音.原始影音資料. open()
 		self.assertEqual(影音.原始影音資料.read(), self.詞檔案.getvalue())
+		影音.原始影音資料. close()
 	def 加句(self, 外語):
 		原來外語資料數 = 外語表.objects.all().count()
 		原來影音資料數 = 影音表.objects.all().count()
@@ -88,4 +90,6 @@ class 加翻譯影音試驗(加關係試驗):
 		self.assertEqual(影音.著作所在地, self.臺灣)
 		self.assertEqual(影音.著作年, self.一九五空年代)
 		self.assertEqual(影音.屬性.count(), 0)
+		影音.原始影音資料. open()
 		self.assertEqual(影音.原始影音資料.read(), self.句檔案.getvalue())
+		影音.原始影音資料. close()

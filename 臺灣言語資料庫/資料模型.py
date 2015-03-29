@@ -214,6 +214,8 @@ class 影音表(資料表):
 		影音._加基本內容而且儲存(內容)
 		影音.原始影音資料.save(name='原始影音資料{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
 		影音.網頁影音資料.save(name='網頁影音檔案{0:07}.wav'.format(影音.編號()), content=File(影音.原始影音資料), save=True)
+		影音.原始影音資料.close()
+		影音.網頁影音資料.close()
 # 		影音.網頁影音資料 = 
 		return 影音
 	def 寫文本(self, 輸入文本內容):
