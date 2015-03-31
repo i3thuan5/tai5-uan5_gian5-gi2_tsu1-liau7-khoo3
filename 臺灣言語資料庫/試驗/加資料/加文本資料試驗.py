@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 文本表
+from django.core.exceptions import ValidationError
 
 class 加文本資料試驗(加資料試驗):
 	def setUp(self):
@@ -34,4 +35,8 @@ class 加文本資料試驗(加資料試驗):
 		self.assertEqual(self.資料表.objects.all().count(), 0)
 		self.句內容['文本資料'] = [' 南投縣噶哈巫文教協會', '眉溪四庄重建工作站']
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
+		self.assertEqual(self.資料表.objects.all().count(), 0)
+	def test_資料是空的(self):
+		self.句內容['文本資料'] = ''
+		self.assertRaises(ValidationError, self.資料表.加資料, self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
