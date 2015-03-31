@@ -137,7 +137,7 @@ class 資料表(models.Model):
 			self.著作年 = 著作年表.objects.get_or_create(著作年=內容['著作年'])[0]
 		else:
 			raise TypeError('著作年必須愛是字串抑是整數型態')
-# 		self.save()
+		self.full_clean()
 		if '屬性' in 內容:
 			for _, _ in self._內容轉物件(內容['屬性']).items():
 				pass
@@ -168,7 +168,7 @@ class 資料類型表(models.Model):
 
 class 外語表(資料表):
 	外語語言 = models.ForeignKey(語言腔口表, related_name='+')
-	外語資料 = models.TextField()
+	外語資料 = models.TextField(blank=False)
 	def __str__(self):
 		return self.外語資料
 	@classmethod
@@ -201,8 +201,8 @@ class 外語表(資料表):
 		return 文本
 
 class 影音表(資料表):
-	原始影音資料 = models.FileField()
-	網頁影音資料 = models.FileField()
+	原始影音資料 = models.FileField(blank=True)
+	網頁影音資料 = models.FileField(blank=True)
 	def __str__(self):
 		return str(self.原始資料)
 	@classmethod
@@ -232,7 +232,7 @@ class 影音表(資料表):
 		return 聽拍
 
 class 文本表(資料表):
-	文本資料 = models.TextField()
+	文本資料 = models.TextField(blank=False)
 	def __str__(self):
 		return self.文本資料
 	@classmethod
