@@ -140,3 +140,27 @@ class 加聽拍校對試驗(加關係試驗):
 		self.assertRaises(ValueError, 第二層詞.校對做, self.對應資料詞內容)
 		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數 + 6)
 		self.assertEqual(聽拍校對表.objects.all().count(), 原來聽拍校對數 + 3)
+
+	def test_規範攏愛仝款(self):
+		self.新聽拍規範 = 聽拍規範表.objects.create(
+			規範名='本調記錄',
+			範例='你好：li2 ho2',
+			說明='記錄原始本調',
+		)
+		self.對應資料詞內容['規範']='本調記錄'
+		self.對應資料句內容['規範']='本調記錄'
+		
+		原來詞 = self.原本資料表.加資料(self.原本資料詞內容)
+		原來句 = self.原本資料表.加資料(self.原本資料詞內容)
+		
+		原來聽拍資料數 = 聽拍表.objects.all().count()
+		原來聽拍校對數 = 聽拍校對表.objects.all().count()
+		
+		self.assertRaises(ValueError,原來詞.校對做,self.對應資料詞內容)
+		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數)
+		self.assertEqual(聽拍校對表.objects.all().count(), 原來聽拍校對數)
+		
+		self.assertRaises(ValueError,原來句.校對做,self.對應資料句內容)
+		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數)
+		self.assertEqual(聽拍校對表.objects.all().count(), 原來聽拍校對數)
+	
