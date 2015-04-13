@@ -4,8 +4,8 @@ import io
 import wave
 
 class 加關係試驗(資料庫試驗):
-	def setUp(self):
-		super(加關係試驗, self).setUp()
+	def 加初始資料(self):
+		super(加關係試驗, self).加初始資料()
 		self.詞檔案 = io.BytesIO()
 		音檔 = wave.open(self.詞檔案, 'wb')
 		音檔.setnchannels(1)

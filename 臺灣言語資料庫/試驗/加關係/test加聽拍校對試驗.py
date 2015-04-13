@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+from django.test import TestCase
 from 臺灣言語資料庫.試驗.加關係.加關係試驗 import 加關係試驗
 import json
 from 臺灣言語資料庫.資料模型 import 聽拍表
 from 臺灣言語資料庫.關係模型 import 聽拍校對表
 from 臺灣言語資料庫.資料模型 import 聽拍規範表
 
-class 加聽拍校對試驗(加關係試驗):
+class 加聽拍校對試驗(TestCase, 加關係試驗):
 	def setUp(self):
-		super(加聽拍校對試驗, self).setUp()
+		self.加初始資料()
 		self.原本資料表 = 聽拍表
 		self.中研院聽拍資料庫 = 聽拍規範表.objects.create(
 			規範名='中研院聽拍資料庫',
@@ -147,8 +148,8 @@ class 加聽拍校對試驗(加關係試驗):
 			範例='你好：li2 ho2',
 			說明='記錄原始本調',
 		)
-		self.對應資料詞內容['規範']='本調記錄'
-		self.對應資料句內容['規範']='本調記錄'
+		self.對應資料詞內容['規範'] = '本調記錄'
+		self.對應資料句內容['規範'] = '本調記錄'
 		
 		原來詞 = self.原本資料表.加資料(self.原本資料詞內容)
 		原來句 = self.原本資料表.加資料(self.原本資料詞內容)
@@ -156,11 +157,11 @@ class 加聽拍校對試驗(加關係試驗):
 		原來聽拍資料數 = 聽拍表.objects.all().count()
 		原來聽拍校對數 = 聽拍校對表.objects.all().count()
 		
-		self.assertRaises(ValueError,原來詞.校對做,self.對應資料詞內容)
+		self.assertRaises(ValueError, 原來詞.校對做, self.對應資料詞內容)
 		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數)
 		self.assertEqual(聽拍校對表.objects.all().count(), 原來聽拍校對數)
 		
-		self.assertRaises(ValueError,原來句.校對做,self.對應資料句內容)
+		self.assertRaises(ValueError, 原來句.校對做, self.對應資料句內容)
 		self.assertEqual(聽拍表.objects.all().count(), 原來聽拍資料數)
 		self.assertEqual(聽拍校對表.objects.all().count(), 原來聽拍校對數)
 	

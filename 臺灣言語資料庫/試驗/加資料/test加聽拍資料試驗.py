@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+from django.test import TestCase
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 聽拍表
 from 臺灣言語資料庫.資料模型 import 聽拍規範表
 import json
 from django.core.exceptions import ObjectDoesNotExist
 
-class 加聽拍資料試驗(加資料試驗):
+class 加聽拍資料試驗(TestCase, 加資料試驗):
 	def setUp(self):
-		super(加聽拍資料試驗, self).setUp()
+		self.加初始資料()
 		self.資料表 = 聽拍表
 		self.中研院聽拍資料庫 = 聽拍規範表.objects.create(
 			規範名='中研院聽拍資料庫',
@@ -119,10 +120,10 @@ class 加聽拍資料試驗(加資料試驗):
 		self.句內容['聽拍資料'] = None
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
-		self.句內容['聽拍資料'] = {'牛睏山部落的織布機課程','守城社區的母語課程'}
+		self.句內容['聽拍資料'] = {'牛睏山部落的織布機課程', '守城社區的母語課程'}
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
-		self.句內容['聽拍資料'] = ['牛睏山部落的織布機課程','守城社區的母語課程']
+		self.句內容['聽拍資料'] = ['牛睏山部落的織布機課程', '守城社區的母語課程']
 		self.assertRaises(TypeError, self.資料表.加資料, self.句內容)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_屬性加語者資料(self):

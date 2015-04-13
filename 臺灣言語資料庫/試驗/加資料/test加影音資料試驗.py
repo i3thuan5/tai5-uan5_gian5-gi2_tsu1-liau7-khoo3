@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.test import TestCase
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 影音表
 import io
@@ -6,9 +7,9 @@ import wave
 import codecs
 import json
 
-class 加影音資料試驗(加資料試驗):
+class 加影音資料試驗(TestCase, 加資料試驗):
 	def setUp(self):
-		super(加影音資料試驗, self).setUp()
+		self.加初始資料()
 		self.資料表 = 影音表
 		self.詞檔案 = io.BytesIO()
 		音檔 = wave.open(self.詞檔案, 'wb')
