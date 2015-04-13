@@ -2,6 +2,7 @@
 from django.test import TestCase
 from 臺灣言語資料庫.資料模型 import 來源表
 from django.core.exceptions import ObjectDoesNotExist
+from 臺灣言語資料庫.資料模型 import 來源屬性表
 
 class 揣來源試驗(TestCase):
 	def setUp(self):
@@ -51,3 +52,18 @@ class 揣來源試驗(TestCase):
 		來源表.加來源({'名':'Dr. Pigu', '職業':'學生', })
 		self.assertRaises(ObjectDoesNotExist,
 			來源表.揣來源, {'名':'Dr. Pigu', })
+
+	def test_揣無來源袂使加來源資料(self):
+		來源表.加來源({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮', })
+		來源數量 = 來源表.objects.all().count()
+		
+		self.assertRaises(ObjectDoesNotExist,
+			來源表.揣來源, {'名':'Dr. Pigu', '出世年':'1990', '職業':'學生', })
+		self.assertEqual(來源表.objects.all().count(), 來源數量)
+	def test_揣無來源袂使加屬性(self):
+		來源表.加來源({'名':'Dr. Pigu', '出世年':'1990', '出世地':'花蓮', })
+		來源屬性數量 = 來源屬性表.objects.all().count()
+		
+		self.assertRaises(ObjectDoesNotExist,
+			來源表.揣來源, {'名':'Dr. Pigu', '出世年':'1990', '職業':'學生', })
+		self.assertEqual(來源屬性表.objects.all().count(), 來源屬性數量)
