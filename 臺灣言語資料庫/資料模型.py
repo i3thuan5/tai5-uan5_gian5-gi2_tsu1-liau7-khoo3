@@ -49,6 +49,8 @@ class 來源表(models.Model):
 		for 來源屬性 in 來源屬性陣列:
 			選擇 = 選擇.filter(屬性=來源屬性)
 		return 選擇.get(屬性數量=len(來源屬性陣列))
+	def __str__(self):
+		return str(self.編號()) + ' ' + self.名
 	
 class 版權表(models.Model):
 # 	會使公開，袂使公開
