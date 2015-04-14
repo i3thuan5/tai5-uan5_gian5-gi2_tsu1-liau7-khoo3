@@ -23,7 +23,7 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 		音檔.setnchannels(1)
 		音檔.setframerate(16000)
 		音檔.setsampwidth(2)
-		音檔.writeframesraw(b'0' * 100)
+		音檔.writeframesraw(b'sui2' * 80000)
 		音檔.close()
 		self.詞內容.update({
 			'原始影音資料':self.詞檔案,
@@ -74,3 +74,12 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 		self.句內容 = json.dumps(self.句內容)
 		self.assertRaises(KeyError, super(加影音資料試驗, self).test_加句)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
+	def test_網頁資料內容有物件(self):
+		資料 = self.資料表.加資料(self.句內容)
+		資料.原始影音資料. open()
+		原始大小 = len(資料.原始影音資料.read())
+		資料.原始影音資料. close()
+		資料.網頁影音資料. open()
+		網頁大小 = len(資料.網頁影音資料.read())
+		資料.網頁影音資料. close()
+		self.assertAlmostEqual(網頁大小, 原始大小 / 2, delta=網頁大小 * 0.1)

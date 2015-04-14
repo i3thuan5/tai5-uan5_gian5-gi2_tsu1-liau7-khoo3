@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
-from django.db import models
-import json
-from django.core.files.base import File
-from django.db.models import Count
 from builtins import isinstance
+from django.core.files.base import File, ContentFile
+from django.db import models
+from django.db.models import Count
+import json
+import os
+
+from libavwrapper.avconv import Input, Output, AVConv
+from libavwrapper.codec import AudioCodec, NO_VIDEO
+from tai5_uan5_gian5_gi2_tsu1_liau7_khoo3.settings import MEDIA_ROOT
+
 
 class 屬性表函式:
 	def 內容(self):
@@ -214,11 +220,8 @@ class 影音表(資料表):
 		if not hasattr(內容['原始影音資料'], 'read'):
 			raise TypeError('影音資料必須是檔案')
 		影音._加基本內容而且儲存(內容)
-		影音.原始影音資料.save(name='原始影音資料{0:07}'.format(影音.編號()), content=File(內容['原始影音資料']), save=True)
-		影音.網頁影音資料.save(name='網頁影音檔案{0:07}.wav'.format(影音.編號()), content=File(影音.原始影音資料), save=True)
-		影音.原始影音資料.close()
-		影音.網頁影音資料.close()
-# 		影音.網頁影音資料 = 
+		影音._存原始影音資料(內容['原始影音資料'])
+		影音._產生網頁聲音資料()
 		return 影音
 	def 寫文本(self, 輸入文本內容):
 		文本內容 = self._內容轉物件(輸入文本內容)
@@ -232,6 +235,23 @@ class 影音表(資料表):
 		聽拍 = 聽拍表.加資料(聽拍內容)
 		self.影音聽拍.create(聽拍=聽拍)
 		return 聽拍
+	def _存原始影音資料(self, 原始影音資料):
+		self.原始影音資料.save(name='原始影音資料{0:07}'.format(self.編號()), content=File(原始影音資料), save=True)
+		self.原始影音資料.close()
+	def _產生網頁聲音資料(self):
+		self.網頁影音資料.save(name='網頁影音資料{0:07}.mp3'.format(self.編號()), content=ContentFile(b''), save=True)
+		self.網頁影音資料.close()
+		網頁聲音格式 = AudioCodec('mp3')
+		網頁聲音格式.channels(1)
+		網頁聲音格式.frequence(16000)
+		網頁聲音格式.bitrate('128k')
+		原始檔案 = Input(os.path.join(MEDIA_ROOT, self.原始影音資料.name))
+		網頁檔案 = Output(os.path.join(MEDIA_ROOT, self.網頁影音資料.name))
+		網頁檔案.overwrite()
+		指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
+		print(指令)
+		程序 = 指令.run()
+		程序.wait() 
 
 class 文本表(資料表):
 	文本資料 = models.TextField(blank=False)
