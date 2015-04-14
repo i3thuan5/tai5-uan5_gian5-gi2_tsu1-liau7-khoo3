@@ -13,8 +13,8 @@ from 臺灣言語資料庫.欄位資訊 import 語句
 from 臺灣言語資料庫.資料模型 import 著作年表
 import json
 
-class 資料庫試驗(TestCase):
-	def setUp(self):
+class 資料庫試驗:
+	def 加初始資料(self):
 		self.會使公開 = 版權表.objects.create(版權=會使公開)
 		self.袂使公開 = 版權表.objects.create(版權=袂使公開)
 		self.字詞 = 種類表.objects.create(種類=字詞)
@@ -37,6 +37,3 @@ class 資料庫試驗(TestCase):
 		self.英語 = 語言腔口表.objects.create(語言腔口='英語')
 		self.二空一四 = 著作年表.objects.create(著作年='2014')
 		self.一九五空年代 = 著作年表.objects.create(著作年='195x')
-
-	def tearDown(self):
-		pass

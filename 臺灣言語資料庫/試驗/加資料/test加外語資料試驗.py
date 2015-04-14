@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
+from django.test import TestCase
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 外語表
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import json
 
-class 加外語資料試驗(加資料試驗):
+class 加外語資料試驗(TestCase, 加資料試驗):
 	def setUp(self):
-		super(加外語資料試驗, self).setUp()
+		self.加初始資料()
 		self.資料表 = 外語表
 		self.詞內容.update({
 			'外語語言':'華語',
@@ -88,16 +89,16 @@ class 加外語資料試驗(加資料試驗):
 		self.assertRaises(ValidationError, super(加外語資料試驗, self).test_加詞)
 		self.assertEqual(self.資料表.objects.all().count(), 0)
 	def test_屬性是json字串(self):
-		外語=外語表.加資料(
+		外語 = 外語表.加資料(
 			{'著作年': '2014',
-			 '外語資料': '漂亮', 
-			 '種類': '字詞', 
-			 '收錄者': 1, 
-			 '著作所在地': '花蓮', 
-			 '語言腔口': '閩南語', 
-			 '版權': '會使公開', 
-			 '屬性': '{"\\u5b57\\u6578": "2", "\\u8a5e\\u6027": "\\u5f62\\u5bb9\\u8a5e"}', 
-			 '外語語言': '華語', 
+			 '外語資料': '漂亮',
+			 '種類': '字詞',
+			 '收錄者': 1,
+			 '著作所在地': '花蓮',
+			 '語言腔口': '閩南語',
+			 '版權': '會使公開',
+			 '屬性': '{"\\u5b57\\u6578": "2", "\\u8a5e\\u6027": "\\u5f62\\u5bb9\\u8a5e"}',
+			 '外語語言': '華語',
 			 '來源': '{"\\u8077\\u696d": "\\u5b78\\u751f", "\\u540d": "\\u963f\\u5aa0"}'
 			})
 		self.assertEqual(外語.屬性.count(), 2)

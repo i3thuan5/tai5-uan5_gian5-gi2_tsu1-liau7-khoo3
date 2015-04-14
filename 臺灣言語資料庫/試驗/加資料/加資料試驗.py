@@ -8,8 +8,8 @@ from 臺灣言語資料庫.資料模型 import 來源表
 from 臺灣言語資料庫.資料模型 import 來源屬性表
 
 class 加資料試驗(資料庫試驗):
-	def setUp(self):
-		super(加資料試驗, self).setUp()
+	def 加初始資料(self):
+		super(加資料試驗, self).加初始資料()
 		self.詞屬性 = {'詞性':'形容詞'}
 		self.詞內容 = {
 			'收錄者':{'名':'鄉民', '出世年':'1950', '出世地':'臺灣'},
