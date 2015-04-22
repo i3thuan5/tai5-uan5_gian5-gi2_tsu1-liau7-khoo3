@@ -249,7 +249,6 @@ class 影音表(資料表):
 		網頁檔案 = Output(os.path.join(MEDIA_ROOT, self.網頁影音資料.name))
 		網頁檔案.overwrite()
 		指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
-		print(指令)
 		程序 = 指令.run()
 		程序.wait() 
 
