@@ -8,7 +8,7 @@ import os
 
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
-from tai5_uan5_gian5_gi2_tsu1_liau7_khoo3.settings import MEDIA_ROOT
+from django.conf import settings
 
 
 class 屬性表函式:
@@ -245,8 +245,8 @@ class 影音表(資料表):
 		網頁聲音格式.channels(1)
 		網頁聲音格式.frequence(16000)
 		網頁聲音格式.bitrate('128k')
-		原始檔案 = Input(os.path.join(MEDIA_ROOT, self.原始影音資料.name))
-		網頁檔案 = Output(os.path.join(MEDIA_ROOT, self.網頁影音資料.name))
+		原始檔案 = Input(os.path.join(settings.MEDIA_ROOT, self.原始影音資料.name))
+		網頁檔案 = Output(os.path.join(settings.MEDIA_ROOT, self.網頁影音資料.name))
 		網頁檔案.overwrite()
 		指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
 		程序 = 指令.run()
