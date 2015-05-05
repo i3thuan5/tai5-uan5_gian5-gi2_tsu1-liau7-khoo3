@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import codecs
 from django.test import TestCase
+import io
+import json
+from unittest.mock import patch
+import wave
+
+
 from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 影音表
-import io
-import wave
-import codecs
-import json
 
 class 加影音資料試驗(TestCase, 加資料試驗):
 	def setUp(self):
@@ -83,3 +86,18 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 		網頁大小 = len(資料.網頁影音資料.read())
 		資料.網頁影音資料. close()
 		self.assertAlmostEqual(網頁大小, 原始大小 / 2, delta=網頁大小 * 0.1)
+	@patch('libavwrapper.avconv.AVConv.run')
+	def test_有走avconv(self, avconvRunMock):
+		avconvRunMock.return_value.wait.return_value = 0
+		self.資料表.加資料(self.句內容)
+		avconvRunMock.assert_called_once_with()
+	@patch('subprocess.Popen.wait')
+	def test_有等avconv(self, waitMock):
+		waitMock.return_value = 0
+		self.資料表.加資料(self.句內容)
+		waitMock.assert_called_once_with()
+	@patch('subprocess.Popen.wait')
+	def test_無裝avconv(self, waitMock):
+		waitMock.return_value = 1
+		self.assertRaises(OSError, self.資料表.加資料, self.句內容)
+		waitMock.assert_called_once_with()

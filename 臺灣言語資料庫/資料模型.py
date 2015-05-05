@@ -250,7 +250,9 @@ class 影音表(資料表):
 		網頁檔案.overwrite()
 		指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
 		程序 = 指令.run()
-		程序.wait() 
+		結果 = 程序.wait()
+		if 結果 != 0:
+			raise OSError('avconv指令執行失敗，回傳值：{0}'.format(結果)) 
 
 class 文本表(資料表):
 	文本資料 = models.TextField(blank=False)
