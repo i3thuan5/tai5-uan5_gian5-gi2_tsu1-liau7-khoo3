@@ -1,0 +1,26 @@
+sudo: false
+language: python
+python:
+ - "3.3"
+ - "3.4"
+env:
+  global:
+  matrix:
+   - DJANGO=Django==1.6
+   - DJANGO=Django==1.7
+install:
+ - pip install -r requirements.txt
+ - pip install $DJANGO --use-mirrors
+ - pip install coverage
+branches:
+ only:
+  - master
+script:
+	rm __init__.py
+ 	coverage run manage.py test
+ 	touch __init__.py
+matrix:
+after_success:
+  - coverage report
+  - pip install --quiet python-coveralls
+  - coveralls
