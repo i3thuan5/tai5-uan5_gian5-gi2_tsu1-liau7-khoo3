@@ -253,7 +253,7 @@ class 影音表(資料表):
 		結果 = 程序.wait()
 		if 結果 != 0:
 			raise OSError('avconv指令執行失敗，回傳值：{0}，執行訊息：\n{1}'.format(
-				結果,'\n'.join(程序.readlines))) 
+				結果,'\n'.join(程序.readlines()))) 
 
 class 文本表(資料表):
 	文本資料 = models.TextField(blank=False)
