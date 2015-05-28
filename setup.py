@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+'''
+tar無法度下傷長的檔案名，所以愛用zip
+python3 setup.py sdist --format=zip upload
+'''
 from distutils.core import setup
 import os
 from 版本 import 版本
@@ -12,7 +16,7 @@ setup(
 	packages=['臺灣言語資料庫'],
 	version=版本,
 	description='臺灣語言資訊系統（Toolkit for Languages in Taiwan）',
-	long_description=讀('README'),
+	long_description=讀('README.md'),
 	author='薛丞宏',
 	author_email='ihcaoe@gmail.com',
 	url='http://意傳.台灣/',
