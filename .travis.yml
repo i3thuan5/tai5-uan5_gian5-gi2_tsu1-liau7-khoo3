@@ -16,11 +16,11 @@ branches:
  only:
   - master
 script:
+ - python manage.py makemigrations
  - rm __init__.py
  - coverage run manage.py test
 matrix:
 after_success:
-  - python manage.py makemigrations
   - coverage report
   - pip install --quiet python-coveralls
   - coveralls
