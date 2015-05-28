@@ -18,9 +18,9 @@ branches:
 script:
  - rm __init__.py
  - coverage run manage.py test
- - touch __init__.py
 matrix:
 after_success:
+  - python manage.py makemigrations
   - coverage report
   - pip install --quiet python-coveralls
   - coveralls
