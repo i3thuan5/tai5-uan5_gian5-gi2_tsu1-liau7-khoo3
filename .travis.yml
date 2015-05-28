@@ -18,6 +18,7 @@ branches:
   - master
 script:
  - avconv -i 1.wav 1.mp3
+ - avconv -codecs
  - ffmpeg -i 1.wav 2.mp3
  - rm __init__.py
  - coverage run manage.py test
