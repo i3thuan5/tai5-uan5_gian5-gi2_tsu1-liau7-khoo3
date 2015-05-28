@@ -16,9 +16,9 @@ branches:
  only:
   - master
 script:
-	rm __init__.py
- 	coverage run manage.py test
- 	touch __init__.py
+ rm __init__.py
+ coverage run manage.py test
+ touch __init__.py
 matrix:
 after_success:
   - coverage report
