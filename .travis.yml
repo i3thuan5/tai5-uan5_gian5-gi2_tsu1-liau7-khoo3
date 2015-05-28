@@ -18,6 +18,8 @@ branches:
  only:
   - master
 script:
+ - avconv
+ - ffmpeg
  - rm __init__.py
  - coverage run manage.py test
 matrix:
