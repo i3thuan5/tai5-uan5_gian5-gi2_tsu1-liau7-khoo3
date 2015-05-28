@@ -2,18 +2,17 @@ sudo: true
 language: python
 python:
  - "3.3"
- - "3.4.0"
  - "3.4"
 env:
   global:
   matrix:
    - DJANGO=Django==1.7.7
-   - DJANGO=Django==1.8.2
 install:
+ - sudo apt-get update
+ - sudo apt-get install -y libav-tools
  - pip install -r requirements.txt
  - pip install $DJANGO
  - pip install coverage
- - sudo apt-get install libav-tools
 branches:
  only:
   - master
