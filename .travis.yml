@@ -9,15 +9,15 @@ env:
    - DJANGO=Django==1.7.7
 install:
  - sudo apt-get update
- - sudo apt-get install -y libav-tools
+ - sudo apt-get install -y libav-tools libmp3lame0
  - pip install -r requirements.txt
  - pip install $DJANGO
  - pip install coverage
+ - python manage.py makemigrations
 branches:
  only:
   - master
 script:
- - python manage.py makemigrations
  - rm __init__.py
  - coverage run manage.py test
 matrix:
