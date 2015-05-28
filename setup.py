@@ -27,7 +27,6 @@ setup(
 		'Development Status :: 4 - Beta',
 		'Operating System :: OS Independent',
 		'Framework :: Django',
-		'Programming Language :: Python :: 3.2',
 		'Programming Language :: Python :: 3.3',
 		'Programming Language :: Python :: 3.4',
 		'Natural Language :: Chinese (Traditional)',
@@ -37,6 +36,6 @@ setup(
 		'Topic :: Text Processing :: Linguistic',
 		],
 	install_requires=[
-		'django>=1.6.0',
+		'django>=1.7.0',
 		],
 )
