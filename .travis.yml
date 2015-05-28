@@ -18,8 +18,8 @@ branches:
  only:
   - master
 script:
- - avconv
- - ffmpeg
+ - avconv -i 1.wav 1.mp3
+ - ffmpeg -i 1.wav 1.mp3
  - rm __init__.py
  - coverage run manage.py test
 matrix:
