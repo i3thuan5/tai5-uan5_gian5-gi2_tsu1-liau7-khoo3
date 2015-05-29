@@ -241,7 +241,7 @@ class 影音表(資料表):
 	def _產生網頁聲音資料(self):
 		self.網頁影音資料.save(name='網頁影音資料{0:07}.mp3'.format(self.編號()), content=ContentFile(b''), save=True)
 		self.網頁影音資料.close()
-		網頁聲音格式 = AudioCodec('mp3')
+		網頁聲音格式 = AudioCodec('libmp3lame')
 		網頁聲音格式.channels(1)
 		網頁聲音格式.frequence(16000)
 		網頁聲音格式.bitrate('128k')
