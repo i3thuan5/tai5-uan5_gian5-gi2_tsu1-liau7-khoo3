@@ -241,7 +241,7 @@ class 影音表(資料表):
 	def _產生網頁聲音資料(self):
 		self.網頁影音資料.save(name='網頁影音資料{0:07}.mp3'.format(self.編號()), content=ContentFile(b''), save=True)
 		self.網頁影音資料.close()
-		網頁聲音格式 = AudioCodec('mp3')
+		網頁聲音格式 = AudioCodec('libmp3lame')
 		網頁聲音格式.channels(1)
 		網頁聲音格式.frequence(16000)
 		網頁聲音格式.bitrate('128k')
@@ -252,8 +252,9 @@ class 影音表(資料表):
 		程序 = 指令.run()
 		結果 = 程序.wait()
 		if 結果 != 0:
-			raise OSError('avconv指令執行失敗，回傳值：{0}，執行訊息：\n{1}'.format(
-				結果,'\n'.join(程序.readlines()))) 
+			raise OSError(
+				'avconv指令執行失敗，回傳值：{0}\n指令：{1}\n執行訊息：\n{2}'.format(
+					結果, 指令, '\n'.join(程序.readlines()))) 
 
 class 文本表(資料表):
 	文本資料 = models.TextField(blank=False)
