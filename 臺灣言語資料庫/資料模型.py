@@ -252,6 +252,9 @@ class 影音表(資料表):
 		程序 = 指令.run()
 		結果 = 程序.wait()
 		if 結果 != 0:
+			self.原始影音資料.delete()
+			self.網頁影音資料.delete()
+			self.delete()
 			raise OSError(
 				'avconv指令執行失敗，回傳值：{0}\n指令：{1}\n執行訊息：\n{2}'.format(
 					結果, 指令, '\n'.join(程序.readlines()))) 

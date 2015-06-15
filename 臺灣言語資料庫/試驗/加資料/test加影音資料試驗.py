@@ -101,3 +101,13 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 		waitMock.return_value = 1
 		self.assertRaises(OSError, self.資料表.加資料, self.句內容)
 		waitMock.assert_called_once_with()
+	@patch('subprocess.Popen.wait')
+	def test_avconv失敗袂使有資料(self, waitMock):
+		waitMock.return_value = 1
+		句檔案 = io.BytesIO(b'sui2')
+		self.句內容.update({
+			'原始影音資料':句檔案,
+		})
+		self.assertRaises(OSError, self.資料表.加資料, self.句內容)
+		self.assertEqual(影音表.objects.all().count(), 0)
+
