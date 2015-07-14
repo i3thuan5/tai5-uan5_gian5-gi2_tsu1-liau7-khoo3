@@ -63,12 +63,14 @@ class 資料輸出工具:
                 print(文本.文本資料, file=檔案表欄位['對齊外語'])
                 print(文本.文本資料, file=檔案表欄位['對齊母語'])
                 print(文本.文本資料, file=檔案表欄位['文本'])
+        self._關檔案表的檔案(檔案表)
 
     def 輸出文本語料(self, 資料目錄):
         檔案表 = self._建立檔案表(資料目錄, self.文本語料檔名)
         for 文本 in 文本表.objects.filter(文本校對=None):
             檔案表欄位 = 檔案表[文本.語言腔口.語言腔口][文本.種類.種類]
             print(文本.文本資料, file=檔案表欄位['文本'])
+        self._關檔案表的檔案(檔案表)
 
     def _建立檔案表(self, 資料目錄, 語料檔名):
         makedirs(資料目錄,  exist_ok=True)
@@ -84,6 +86,12 @@ class 資料輸出工具:
                     檔案表[腔.語言腔口][字詞][檔名.replace(字詞, '')] = gzip.open(
                         join(資料目錄, 腔.語言腔口, 檔名 + '.txt.gz'), 'wt')
         return 檔案表
+
+    def _關檔案表的檔案(self, 檔案表):
+        for 腔檔案 in 檔案表.values():
+            for 種類內檔案 in 腔檔案.values():
+                for 一个檔案 in 種類內檔案.values():
+                    一个檔案.close()
 
     def _加文本翻譯語料(self, 檔案表, 目前資料, 關係表, 文本物件名):
         for 文本關係 in 關係表.all():
