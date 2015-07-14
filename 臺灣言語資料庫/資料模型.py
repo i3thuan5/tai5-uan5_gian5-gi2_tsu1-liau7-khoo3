@@ -70,6 +70,11 @@ class 種類表(models.Model):
 class 語言腔口表(models.Model):
 # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
 	語言腔口 = models.CharField(max_length=50)
+	@classmethod
+	def 揣出有文本的語言腔口(cls):
+		return cls.objects.filter(
+			pk__in=文本表.objects.all().values_list('語言腔口', flat=True).distinct()
+			) 
 
 class 著作所在地表(models.Model):
 # 	臺灣、員林、…
@@ -282,7 +287,7 @@ class 文本表(資料表):
 		self.文本校對.create(新文本=文本)
 		return 文本
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count() > 0
+		return self.來源校對資料.all().exists()
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)
@@ -325,4 +330,4 @@ class 聽拍表(資料表):
 		self.聽拍校對.create(新聽拍=聽拍)
 		return 聽拍
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count() > 0
+		return self.來源校對資料.all().exists()

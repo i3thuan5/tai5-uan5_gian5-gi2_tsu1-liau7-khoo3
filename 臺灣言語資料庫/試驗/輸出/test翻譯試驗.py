@@ -1,7 +1,6 @@
 from django.test.testcases import TestCase
 import gzip
 import io
-import json
 from os import listdir
 from os.path import join, dirname, isfile, isdir
 from shutil import rmtree
@@ -12,6 +11,8 @@ from 臺灣言語資料庫.欄位資訊 import 字詞
 from 臺灣言語資料庫.資料模型 import 來源表
 from 臺灣言語資料庫.資料模型 import 外語表
 from 臺灣言語資料庫.資料模型 import 文本表
+from 臺灣言語資料庫.輸出 import 資料輸出工具
+from 臺灣言語資料庫.資料模型 import 影音表
 
 
 class 翻譯試驗(TestCase):
@@ -29,7 +30,7 @@ class 翻譯試驗(TestCase):
             '著作年': '2015',
         }
 
-        self.語料 = 語料輸出()
+        self.語料 = 資料輸出工具()
         self.目錄 = join(dirname(__file__), '結果目錄')
 
     def tearDown(self):
@@ -72,11 +73,11 @@ class 翻譯試驗(TestCase):
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            ['你好嗎？', '食飽未？']
+            sorted(['你好嗎？', '食飽未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            ['食飽未？', '食飽未？']
+            sorted(['食飽未？', '食飽未？'])
         )
 
     def test_外語母語語句對應檢查對齊字詞(self):
@@ -126,11 +127,11 @@ class 翻譯試驗(TestCase):
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語字詞.txt.gz')),
-            ['你好嗎？', '食飽未？']
+            sorted(['你好嗎？', '食飽未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語字詞.txt.gz')),
-            ['食飽未？', '食飽未？']
+            sorted(['食飽未？', '食飽未？'])
         )
 
     def test_外語母語字詞對應檢查文本(self):
@@ -155,25 +156,25 @@ class 翻譯試驗(TestCase):
 
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            ['你好嗎？', '你好嗎？', '食飽未？', '食飽未？']
+            sorted(['你好嗎？', '你好嗎？', '食飽未？', '食飽未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            ['食飽未？', '食飽未？', '食飽未？', '食飽未？']
+            sorted(['食飽未？', '食飽未？', '食飽未？', '食飽未？'])
         )
 
     def test_外語影音母語對應(self):
         外語 = self.加一筆外語你好嗎()
-        影音 = self.加一筆母語影音(外語)
+        影音 = self.外語加一筆母語影音(外語)
         self.母語影音加一筆食飽未(影音)
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            ['你好嗎？', '食飽未？']
+            sorted(['你好嗎？', '食飽未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            ['食飽未？', '食飽未？']
+            sorted(['食飽未？', '食飽未？'])
         )
 
     def test_外語母語文本兩層對應檢查對齊語句(self):
@@ -183,21 +184,38 @@ class 翻譯試驗(TestCase):
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            ['你好嗎？', '食飽未？', '食飽 未？']
+            sorted(['你好嗎？', '食飽未？', '食飽 未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            ['食飽 未？', '食飽 未？', '食飽 未？']
+            sorted(['食飽 未？', '食飽 未？', '食飽 未？'])
         )
 
     def test_外語母語文本兩層對應檢查文本(self):
         外語 = self.加一筆外語你好嗎()
         第一層文本 = self.外語加一筆母語食飽未(外語)
-        self.母語文本加一筆食飽未(第一層文本, '食飽 未？')
+        self.母語文本加一筆斷詞食飽未(第一層文本)
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
             ['食飽 未？']
+        )
+
+    def test_影音母語對應(self):
+        影音 = self.加一筆影音食飽未()
+        self.母語影音加一筆食飽未(影音)
+        self.語料.輸出翻譯語料(self.目錄)
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
+            ['食飽未？']
+        )
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
+            ['食飽未？']
+        )
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
+            ['食飽未？']
         )
 
     def test_一個文本(self):
@@ -233,11 +251,22 @@ class 翻譯試驗(TestCase):
             音檔.setframerate(16000)
             音檔.setsampwidth(2)
             音檔.writeframesraw(b'0' * 100)
-        影音內容 = {'影音資料': 影音資料}
+        影音內容 = {'原始影音資料': 影音資料}
         影音內容.update(self.資料內容)
         return 外語.錄母語(影音內容)
 
-    def 影音加一筆母語食飽未(self, 影音):
+    def 加一筆影音食飽未(self):
+        影音資料 = io.BytesIO()
+        with wave.open(影音資料, 'wb') as 音檔:
+            音檔.setnchannels(1)
+            音檔.setframerate(16000)
+            音檔.setsampwidth(2)
+            音檔.writeframesraw(b'0' * 100)
+        影音內容 = {'原始影音資料': 影音資料}
+        影音內容.update(self.資料內容)
+        return 影音表.加資料(影音內容)
+
+    def 母語影音加一筆食飽未(self, 影音):
         文本內容 = {'文本資料': '食飽未？'}
         文本內容.update(self.資料內容)
         return 影音.寫文本(文本內容)
@@ -253,6 +282,5 @@ class 翻譯試驗(TestCase):
         return 文本.校對做(文本內容)
 
     def 得著檔案資料(self, 檔名):
-        with gzip.open(檔名) as 檔案:
-            資料 = 檔案.readlines()
-        return 資料
+        with gzip.open(檔名, 'rt') as 檔案:
+            return sorted([逝.strip() for 逝 in 檔案.readlines()])
