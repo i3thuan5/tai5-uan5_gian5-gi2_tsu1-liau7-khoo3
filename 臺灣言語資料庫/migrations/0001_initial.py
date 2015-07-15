@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='來源屬性表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('分類', models.CharField(max_length=20)),
                 ('性質', models.TextField()),
             ],
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='來源表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('名', models.CharField(max_length=100)),
                 ('屬性', models.ManyToManyField(to='臺灣言語資料庫.來源屬性表')),
             ],
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='外語表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('收錄時間', models.DateTimeField(auto_now_add=True)),
                 ('外語資料', models.TextField()),
                 ('來源', models.ForeignKey(to='臺灣言語資料庫.來源表', related_name='+')),
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='影音文本表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
             ],
             options={
             },
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='影音聽拍表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
             ],
             options={
             },
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='影音表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('收錄時間', models.DateTimeField(auto_now_add=True)),
                 ('原始影音資料', models.FileField(blank=True, upload_to='')),
                 ('網頁影音資料', models.FileField(blank=True, upload_to='')),
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='文本校對表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
             ],
             options={
             },
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='文本表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('收錄時間', models.DateTimeField(auto_now_add=True)),
                 ('文本資料', models.TextField()),
                 ('來源', models.ForeignKey(to='臺灣言語資料庫.來源表', related_name='+')),
@@ -103,8 +103,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='版權表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('版權', models.CharField(max_length=20)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('版權', models.CharField(max_length=20, unique=True)),
             ],
             options={
             },
@@ -113,8 +113,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='種類表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('種類', models.CharField(max_length=100)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('種類', models.CharField(max_length=100, unique=True)),
             ],
             options={
             },
@@ -123,9 +123,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='翻譯影音表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('外語', models.ForeignKey(to='臺灣言語資料庫.外語表', related_name='翻譯影音')),
-                ('影音', models.ForeignKey(to='臺灣言語資料庫.影音表', related_name='+', unique=True)),
+                ('影音', models.ForeignKey(unique=True, related_name='來源外語', to='臺灣言語資料庫.影音表')),
             ],
             options={
             },
@@ -134,9 +134,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='翻譯文本表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('外語', models.ForeignKey(to='臺灣言語資料庫.外語表', related_name='翻譯文本')),
-                ('文本', models.ForeignKey(to='臺灣言語資料庫.文本表', related_name='+', unique=True)),
+                ('文本', models.ForeignKey(unique=True, related_name='來源外語', to='臺灣言語資料庫.文本表')),
             ],
             options={
             },
@@ -145,7 +145,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='聽拍校對表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
             ],
             options={
             },
@@ -154,7 +154,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='聽拍表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('收錄時間', models.DateTimeField(auto_now_add=True)),
                 ('聽拍資料', models.TextField()),
                 ('來源', models.ForeignKey(to='臺灣言語資料庫.來源表', related_name='+')),
@@ -167,8 +167,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='聽拍規範表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('規範名', models.CharField(unique=True, max_length=20)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('規範名', models.CharField(max_length=20, unique=True)),
                 ('範例', models.TextField()),
                 ('說明', models.TextField()),
             ],
@@ -179,8 +179,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='著作年表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('著作年', models.CharField(max_length=20)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('著作年', models.CharField(max_length=20, unique=True)),
             ],
             options={
             },
@@ -189,8 +189,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='著作所在地表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('著作所在地', models.CharField(max_length=50)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('著作所在地', models.CharField(max_length=50, unique=True)),
             ],
             options={
             },
@@ -199,8 +199,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='語言腔口表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('語言腔口', models.CharField(max_length=50)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('語言腔口', models.CharField(max_length=50, unique=True)),
             ],
             options={
             },
@@ -209,7 +209,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='資料屬性表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('分類', models.CharField(db_index=True, max_length=20)),
                 ('性質', models.TextField()),
             ],
@@ -220,12 +220,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='資料類型表',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('類型', models.CharField(max_length=20)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('類型', models.CharField(max_length=20, unique=True)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AlterUniqueTogether(
+            name='資料屬性表',
+            unique_together=set([('分類', '性質')]),
         ),
         migrations.AddField(
             model_name='聽拍表',
@@ -278,7 +282,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='聽拍校對表',
             name='新聽拍',
-            field=models.ForeignKey(to='臺灣言語資料庫.聽拍表', related_name='校對資料來源', unique=True),
+            field=models.ForeignKey(unique=True, related_name='來源校對資料', to='臺灣言語資料庫.聽拍表'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -332,7 +336,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='文本校對表',
             name='新文本',
-            field=models.ForeignKey(to='臺灣言語資料庫.文本表', related_name='校對資料來源', unique=True),
+            field=models.ForeignKey(unique=True, related_name='來源校對資料', to='臺灣言語資料庫.文本表'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -392,7 +396,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='影音聽拍表',
             name='聽拍',
-            field=models.ForeignKey(to='臺灣言語資料庫.聽拍表', related_name='+', unique=True),
+            field=models.ForeignKey(unique=True, related_name='+', to='臺灣言語資料庫.聽拍表'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -404,7 +408,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='影音文本表',
             name='文本',
-            field=models.ForeignKey(to='臺灣言語資料庫.文本表', related_name='+', unique=True),
+            field=models.ForeignKey(unique=True, related_name='來源影音', to='臺灣言語資料庫.文本表'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -454,5 +458,9 @@ class Migration(migrations.Migration):
             name='語言腔口',
             field=models.ForeignKey(to='臺灣言語資料庫.語言腔口表', related_name='+'),
             preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='來源屬性表',
+            unique_together=set([('分類', '性質')]),
         ),
     ]
