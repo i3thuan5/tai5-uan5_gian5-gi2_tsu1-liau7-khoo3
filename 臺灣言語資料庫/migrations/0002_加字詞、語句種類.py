@@ -8,8 +8,8 @@ def _種類加字詞佮語句(apps, schema_editor):
     # We can't import the Person model directly as it may be a newer
     # version than this migration expects. We use the historical version.
     種類表 = apps.get_model("臺灣言語資料庫", "種類表")
-    種類表.objects.create(種類=語句)
-    種類表.objects.create(種類=字詞)
+    種類表.objects.get_or_create(種類=語句)
+    種類表.objects.get_or_create(種類=字詞)
 
 
 class Migration(migrations.Migration):

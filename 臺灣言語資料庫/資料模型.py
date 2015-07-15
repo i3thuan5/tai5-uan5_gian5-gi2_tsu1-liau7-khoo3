@@ -60,16 +60,16 @@ class 來源表(models.Model):
 	
 class 版權表(models.Model):
 # 	會使公開，袂使公開
-	版權 = models.CharField(max_length=20)
+	版權 = models.CharField(unique=True, max_length=20)
 
 class 種類表(models.Model):
 # 	字詞 = '字詞'
 # 	語句 = '語句'
-	種類 = models.CharField(max_length=100)
+	種類 = models.CharField(unique=True, max_length=100)
 
 class 語言腔口表(models.Model):
 # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
-	語言腔口 = models.CharField(max_length=50)
+	語言腔口 = models.CharField(unique=True, max_length=50)
 	@classmethod
 	def 揣出有文本的語言腔口(cls):
 		return cls.objects.filter(
@@ -78,11 +78,11 @@ class 語言腔口表(models.Model):
 
 class 著作所在地表(models.Model):
 # 	臺灣、員林、…
-	著作所在地 = models.CharField(max_length=50)
+	著作所在地 = models.CharField(unique=True, max_length=50)
 
 class 著作年表(models.Model):
 # 	1952、19xx、…
-	著作年 = models.CharField(max_length=20)
+	著作年 = models.CharField(unique=True, max_length=20)
 
 class 資料屬性表(models.Model, 屬性表函式):
 	分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
@@ -177,7 +177,7 @@ class 資料表(models.Model):
 
 class 資料類型表(models.Model):
 # 	外語、文本、影音、聽拍
-	類型 = models.CharField(max_length=20)
+	類型 = models.CharField(unique=True, max_length=20)
 
 class 外語表(資料表):
 	外語語言 = models.ForeignKey(語言腔口表, related_name='+')
