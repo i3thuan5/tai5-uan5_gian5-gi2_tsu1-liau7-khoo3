@@ -214,6 +214,9 @@ class 外語表(資料表):
 		文本 = 文本表.加資料(文本內容)
 		self.翻譯文本.create(文本=文本)
 		return 文本
+	@classmethod
+	def 全部外語資料(cls):
+		return cls.objects.all()
 
 class 影音表(資料表):
 	原始影音資料 = models.FileField(blank=True)
@@ -242,6 +245,9 @@ class 影音表(資料表):
 		聽拍 = 聽拍表.加資料(聽拍內容)
 		self.影音聽拍.create(聽拍=聽拍)
 		return 聽拍
+	@classmethod
+	def 源頭的影音資料(cls):
+		return cls.objects.filter(來源外語=None)
 	def _存原始影音資料(self, 原始影音資料):
 		self.原始影音資料.save(name='原始影音資料{0:07}'.format(self.編號()), content=File(原始影音資料), save=True)
 		self.原始影音資料.close()
@@ -290,6 +296,14 @@ class 文本表(資料表):
 		return 文本
 	def 是校對後的資料(self):
 		return self.來源校對資料.all().exists()
+	@classmethod
+	def 源頭的文本資料(cls):
+		return cls.objects.filter(
+            來源外語=None, 來源影音=None, 來源校對資料=None
+        )
+	@classmethod
+	def 上尾層的文本資料(cls):
+		return cls.objects.filter(文本校對=None)
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)
