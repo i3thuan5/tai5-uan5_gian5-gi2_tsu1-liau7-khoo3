@@ -20,7 +20,7 @@ branches:
 script:
  - rm __init__.py
  - coverage run --source=臺灣言語資料庫 manage.py test
- - flake8
+ - flake8 --exclude=venv,migrations,setup.py .
 matrix:
 after_success:
   - coverage report
