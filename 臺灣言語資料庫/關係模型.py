@@ -27,4 +27,4 @@ class 文本校對表(models.Model):
 
 class 聽拍校對表(models.Model):
 	舊聽拍 = models.ForeignKey(聽拍表, related_name = '聽拍校對')
-	新聽拍 = models.ForeignKey(聽拍表, related_name = '校對資料來源', unique=True)
+	新聽拍 = models.ForeignKey(聽拍表, related_name = '來源校對資料', unique=True)
