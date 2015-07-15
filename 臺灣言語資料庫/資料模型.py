@@ -20,6 +20,8 @@ class 屬性表函式:
 	@classmethod
 	def 揣屬性(cls, 分類, 性質):
 		return cls.objects.get(分類=分類, 性質=json.dumps(性質))
+	class Meta:
+		unique_together=(('分類', '性質'))
 	
 class 來源屬性表(models.Model, 屬性表函式):
 	分類 = models.CharField(max_length=20)  # 出世地
