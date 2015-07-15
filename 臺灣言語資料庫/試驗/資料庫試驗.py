@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.test import TestCase
 from 臺灣言語資料庫.資料模型 import 版權表
 from 臺灣言語資料庫.資料模型 import 種類表
 from 臺灣言語資料庫.資料模型 import 來源屬性表
@@ -17,8 +16,8 @@ class 資料庫試驗:
 	def 加初始資料(self):
 		self.會使公開 = 版權表.objects.create(版權=會使公開)
 		self.袂使公開 = 版權表.objects.create(版權=袂使公開)
-		self.字詞 = 種類表.objects.create(種類=字詞)
-		self.語句 = 種類表.objects.create(種類=語句)
+		self.字詞 = 種類表.objects.get(種類=字詞)
+		self.語句 = 種類表.objects.get(種類=語句)
 		self.臺灣 = 著作所在地表.objects.create(著作所在地='臺灣')
 		self.花蓮 = 著作所在地表.objects.create(著作所在地='花蓮')
 		self.鄉民 = 來源表.objects.create(名='鄉民')

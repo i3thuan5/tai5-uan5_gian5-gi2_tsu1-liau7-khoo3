@@ -20,6 +20,8 @@ class 屬性表函式:
 	@classmethod
 	def 揣屬性(cls, 分類, 性質):
 		return cls.objects.get(分類=分類, 性質=json.dumps(性質))
+	class Meta:
+		unique_together=(('分類', '性質'))
 	
 class 來源屬性表(models.Model, 屬性表函式):
 	分類 = models.CharField(max_length=20)  # 出世地
@@ -60,24 +62,29 @@ class 來源表(models.Model):
 	
 class 版權表(models.Model):
 # 	會使公開，袂使公開
-	版權 = models.CharField(max_length=20)
+	版權 = models.CharField(unique=True, max_length=20)
 
 class 種類表(models.Model):
 # 	字詞 = '字詞'
 # 	語句 = '語句'
-	種類 = models.CharField(max_length=100)
+	種類 = models.CharField(unique=True, max_length=100)
 
 class 語言腔口表(models.Model):
 # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
-	語言腔口 = models.CharField(max_length=50)
+	語言腔口 = models.CharField(unique=True, max_length=50)
+	@classmethod
+	def 揣出有文本的語言腔口(cls):
+		return cls.objects.filter(
+			pk__in=文本表.objects.all().values_list('語言腔口', flat=True).distinct()
+			) 
 
 class 著作所在地表(models.Model):
 # 	臺灣、員林、…
-	著作所在地 = models.CharField(max_length=50)
+	著作所在地 = models.CharField(unique=True, max_length=50)
 
 class 著作年表(models.Model):
 # 	1952、19xx、…
-	著作年 = models.CharField(max_length=20)
+	著作年 = models.CharField(unique=True, max_length=20)
 
 class 資料屬性表(models.Model, 屬性表函式):
 	分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
@@ -172,7 +179,7 @@ class 資料表(models.Model):
 
 class 資料類型表(models.Model):
 # 	外語、文本、影音、聽拍
-	類型 = models.CharField(max_length=20)
+	類型 = models.CharField(unique=True, max_length=20)
 
 class 外語表(資料表):
 	外語語言 = models.ForeignKey(語言腔口表, related_name='+')
@@ -207,6 +214,9 @@ class 外語表(資料表):
 		文本 = 文本表.加資料(文本內容)
 		self.翻譯文本.create(文本=文本)
 		return 文本
+	@classmethod
+	def 全部外語資料(cls):
+		return cls.objects.all()
 
 class 影音表(資料表):
 	原始影音資料 = models.FileField(blank=True)
@@ -235,6 +245,9 @@ class 影音表(資料表):
 		聽拍 = 聽拍表.加資料(聽拍內容)
 		self.影音聽拍.create(聽拍=聽拍)
 		return 聽拍
+	@classmethod
+	def 源頭的影音資料(cls):
+		return cls.objects.filter(來源外語=None)
 	def _存原始影音資料(self, 原始影音資料):
 		self.原始影音資料.save(name='原始影音資料{0:07}'.format(self.編號()), content=File(原始影音資料), save=True)
 		self.原始影音資料.close()
@@ -282,7 +295,15 @@ class 文本表(資料表):
 		self.文本校對.create(新文本=文本)
 		return 文本
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count() > 0
+		return self.來源校對資料.all().exists()
+	@classmethod
+	def 源頭的文本資料(cls):
+		return cls.objects.filter(
+            來源外語=None, 來源影音=None, 來源校對資料=None
+        )
+	@classmethod
+	def 上尾層的文本資料(cls):
+		return cls.objects.filter(文本校對=None)
 
 class 聽拍規範表(models.Model):
 	規範名 = models.CharField(max_length=20, unique=True)
@@ -325,4 +346,4 @@ class 聽拍表(資料表):
 		self.聽拍校對.create(新聽拍=聽拍)
 		return 聽拍
 	def 是校對後的資料(self):
-		return self.校對資料來源.all().count() > 0
+		return self.來源校對資料.all().exists()
