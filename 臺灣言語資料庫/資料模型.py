@@ -347,7 +347,7 @@ class 文本表(資料表):
         return 文本
 
     def 是校對後的資料(self):
-        return self.來源校對資料.all().exists()
+        return hasattr(self, '來源校對資料')
 
     @classmethod
     def 源頭的文本資料(cls):
@@ -407,4 +407,4 @@ class 聽拍表(資料表):
         return 聽拍
 
     def 是校對後的資料(self):
-        return self.來源校對資料.all().exists()
+        return hasattr(self, '來源校對資料')
