@@ -106,12 +106,19 @@ class 著作年表(models.Model):
     著作年 = models.CharField(unique=True, max_length=20)
 
 
-class 資料屬性表(models.Model, 屬性表函式):
-    分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
-    性質 = models.TextField()  # json字串格式。名詞、…
+class 資料屬性表內容管理(models.Manager):
 
     def 音標資料(self):
-        pass
+        return json.loads(
+            super(資料屬性表內容管理, self).get_queryset(
+            ).get(分類='音標').性質
+        )
+
+
+class 資料屬性表(models.Model, 屬性表函式):
+    objects = 資料屬性表內容管理()
+    分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
+    性質 = models.TextField()  # json字串格式。名詞、…
 
 
 class 資料表(models.Model):
@@ -360,13 +367,10 @@ class 文本表(資料表):
         try:
             對齊句物件 = self._分析器.產生對齊句(
                 self.文本資料,
-                json.loads(
-                    self.屬性.get(分類='音標').性質
-                )
+                self.屬性.音標資料()
             )
             return self._譀鏡.看分詞(對齊句物件)
-        except Exception as a:
-            print(a)
+        except Exception:
             return self.文本資料
 
     @classmethod
