@@ -218,6 +218,11 @@ class 翻譯試驗(TestCase):
             ['食飽未？']
         )
 
+    def test_一个影音無對應(self):
+        self.加一筆影音食飽未()
+        self.語料.輸出翻譯語料(self.目錄)
+        self.assertEqual(len(listdir(self.目錄)), 0)
+
     def test_一個文本(self):
         self.加一筆母語食飽未()
         self.語料.輸出翻譯語料(self.目錄)
@@ -232,6 +237,23 @@ class 翻譯試驗(TestCase):
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
             ['食飽未？']
+        )
+
+    def test_兩層文本(self):
+        第一層文本=self.加一筆母語食飽未()
+        self.母語文本加一筆斷詞食飽未(第一層文本)
+        self.語料.輸出翻譯語料(self.目錄)
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
+            sorted(['食飽未？','食飽 未？'])
+        )
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
+            ['食飽 未？','食飽 未？']
+        )
+        self.assertEqual(
+            self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
+            ['食飽 未？']
         )
 
     def 加一筆外語你好嗎(self):
