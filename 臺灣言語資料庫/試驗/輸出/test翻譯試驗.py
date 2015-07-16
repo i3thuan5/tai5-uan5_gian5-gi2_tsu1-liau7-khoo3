@@ -240,16 +240,16 @@ class 翻譯試驗(TestCase):
         )
 
     def test_兩層文本(self):
-        第一層文本=self.加一筆母語食飽未()
+        第一層文本 = self.加一筆母語食飽未()
         self.母語文本加一筆斷詞食飽未(第一層文本)
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            sorted(['食飽未？','食飽 未？'])
+            sorted(['食飽未？', '食飽 未？'])
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            ['食飽 未？','食飽 未？']
+            ['食飽 未？', '食飽 未？']
         )
         self.assertEqual(
             self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
