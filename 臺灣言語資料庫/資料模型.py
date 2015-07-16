@@ -9,6 +9,8 @@ import os
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
 from django.conf import settings
+from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
+from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
 
 
 class 屬性表函式:
@@ -107,6 +109,9 @@ class 著作年表(models.Model):
 class 資料屬性表(models.Model, 屬性表函式):
     分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
     性質 = models.TextField()  # json字串格式。名詞、…
+
+    def 音標資料(self):
+        pass
 
 
 class 資料表(models.Model):
@@ -322,6 +327,8 @@ class 影音表(資料表):
 
 class 文本表(資料表):
     文本資料 = models.TextField(blank=False)
+    _分析器 = 拆文分析器()
+    _譀鏡 = 物件譀鏡()
 
     def __str__(self):
         return self.文本資料
@@ -348,6 +355,19 @@ class 文本表(資料表):
 
     def 是校對後的資料(self):
         return hasattr(self, '來源校對資料')
+
+    def 文本佮音標格式化資料(self):
+        try:
+            對齊句物件 = self._分析器.產生對齊句(
+                self.文本資料,
+                json.loads(
+                    self.屬性.get(分類='音標').性質
+                )
+            )
+            return self._譀鏡.看分詞(對齊句物件)
+        except Exception as a:
+            print(a)
+            return self.文本資料
 
     @classmethod
     def 源頭的文本資料(cls):

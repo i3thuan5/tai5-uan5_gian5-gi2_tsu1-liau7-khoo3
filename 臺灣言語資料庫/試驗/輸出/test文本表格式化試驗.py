@@ -24,7 +24,6 @@ class 文本表格式化試驗(TestCase):
         文本內容 = {'文本資料': '食飽未？'}
         文本內容.update(self.資料內容)
         文本 = 文本表.加資料(文本內容)
-        self.語料.輸出文本語料(self.目錄)
         self.assertEqual(
             文本.文本佮音標格式化資料(),
             '食飽未？'
@@ -33,14 +32,13 @@ class 文本表格式化試驗(TestCase):
     def test_對齊成功文本(self):
         文本內容 = {
             '文本資料': '食飽未？',
-            '屬性': {'音標': 'tsiah8-pa2 bue7 ?'}
+            '屬性': {'音標': 'tsiah8-pa2 0bue7 ?'}
         }
         文本內容.update(self.資料內容)
         文本 = 文本表.加資料(文本內容)
-        self.語料.輸出文本語料(self.目錄)
         self.assertEqual(
             文本.文本佮音標格式化資料(),
-            '食飽｜tsiah8-pa2 未｜0bue7 ？｜?'
+            '食-飽｜tsiah8-pa2 未｜0bue7 ？｜?'
         )
 
     def test_對齊失敗文本(self):
@@ -50,7 +48,6 @@ class 文本表格式化試驗(TestCase):
         }
         文本內容.update(self.資料內容)
         文本 = 文本表.加資料(文本內容)
-        self.語料.輸出文本語料(self.目錄)
         self.assertEqual(
             文本.文本佮音標格式化資料(),
             '食飽未？'
