@@ -4,6 +4,7 @@ import io
 from os import listdir
 from os.path import join, dirname, isfile, isdir
 from shutil import rmtree
+from unittest.mock import patch
 import wave
 from 臺灣言語資料庫.資料模型 import 版權表
 from 臺灣言語資料庫.欄位資訊 import 會使公開
@@ -255,6 +256,21 @@ class 翻譯試驗(TestCase):
             self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
             ['食飽 未？']
         )
+
+    @patch('臺灣言語資料庫.資料模型.文本表.文本佮音標格式化資料')
+    def test_外語文本用格式化輸出(self, 格式化mocka):
+        格式化mocka.return_value = ''
+        外語 = self.加一筆外語你好嗎()
+        self.外語加一筆母語食飽未(外語)
+        self.語料.輸出翻譯語料(self.目錄)
+        格式化mocka.assert_called_once_with()
+
+    @patch('臺灣言語資料庫.資料模型.文本表.文本佮音標格式化資料')
+    def test_文本用格式化輸出(self, 格式化mocka):
+        格式化mocka.return_value = ''
+        self.加一筆母語食飽未()
+        self.語料.輸出翻譯語料(self.目錄)
+        格式化mocka.assert_called_once_with()
 
     def 加一筆外語你好嗎(self):
         外語內容 = {'外語語言': '華語', '外語資料': '你好嗎？'}
