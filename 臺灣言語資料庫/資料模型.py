@@ -106,8 +106,7 @@ class 資料屬性表內容管理(models.Manager):
 
     def 音標資料(self):
         return json.loads(
-            super(資料屬性表內容管理, self).get_queryset(
-            ).get(分類='音標').性質
+            self.get_queryset().get(分類='音標').性質
         )
 
 
