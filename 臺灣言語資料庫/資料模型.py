@@ -22,11 +22,14 @@ class 屬性表函式:
     def 加屬性(cls, 分類, 性質):
         return cls.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
 
+    def __str__(self):
+        return '{}:{}'.format(self.分類, json.loads(self.性質))
+
     class Meta:
         unique_together = (('分類', '性質'))
 
 
-class 來源屬性表(models.Model, 屬性表函式):
+class 來源屬性表(屬性表函式, models.Model):
     分類 = models.CharField(max_length=20)  # 出世地
     性質 = models.TextField()  # json字串格式。 臺灣、…
 
@@ -111,7 +114,7 @@ class 資料屬性表內容管理(models.Manager):
         )
 
 
-class 資料屬性表(models.Model, 屬性表函式):
+class 資料屬性表(屬性表函式, models.Model):
     objects = 資料屬性表內容管理()
     分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
     性質 = models.TextField()  # json字串格式。名詞、…
@@ -334,7 +337,7 @@ class 文本表(資料表):
     _譀鏡 = 物件譀鏡()
 
     def __str__(self):
-        return self.文本資料
+        return self.文本佮音標格式化資料()
 
     @classmethod
     def 加資料(cls, 輸入內容):
