@@ -25,6 +25,42 @@ pip install tai5_uan5_gian5_gi2_tsu1_liau7_khoo3
 pip install Django==1.7.7 git+https://github.com/conrado/libavwrapper@6409123ee24df823a5ee0bac7a08043e6b317721#egg=libavwrapper
 ```
 
+## 使用Postgres
+
+### 在Ubuntu上快速設定
+```bash
+sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
+sudo -u postgres createuser --superuser $USER
+sudo -u postgres createdb $USER
+psql
+	\password Taiwanese(可自訂)
+pip install psycopg2
+```
+在的`setting.py`改
+```python3
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '$USER', # Linux's username
+        'USER': '$USER', # Linux's username
+        'PASSWORD': 'Taiwanese', # 剛輸入的密碼
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+```
+最後初使化資料庫
+```
+python manage.py migrate
+```
+
+### 清掉全部資料
+使用`psql`，然後輸入
+```
+drop schema public cascade;
+create schema public;
+```
+
 ## 授權說明
 本程式乃自由軟體，您必須遵照SocialCalc設計的通用公共授權（Common Public Attribution License, CPAL)來修改和重新發佈這一程式，詳情請參閱條文。授權大略如下，若有歧異，以授權原文為主：
 
