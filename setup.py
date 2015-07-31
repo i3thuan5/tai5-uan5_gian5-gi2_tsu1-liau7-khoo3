@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 tar無法度下傷長的檔案名，所以愛用zip
-python3 setup.py sdist --format=zip upload
+python setup.py sdist --format=zip upload
 '''
 from distutils.core import setup
 from 版本 import 版本
@@ -15,8 +15,7 @@ _專案說明 = '''
 '''
 
 setup(
-    # 臺灣言語資料庫 tai5_uan5_gian5_gi2_tsu1_liau7_khoo3
-    name='tai5_uan5_gian5_gi2_tsu1_liau7_khoo3',
+    name='tai5-uan5_gian5-gi2_tsu1-liau7-khoo3',
     packages=['臺灣言語資料庫'],
     version=版本,
     description='臺灣語言資料庫系統',
@@ -37,7 +36,6 @@ setup(
         'Framework :: Django',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-        'Natural Language :: Chinese (Traditional)',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Text Processing',

@@ -1,7 +1,7 @@
 # 臺灣言語資料庫
 
-[![Build Status](https://travis-ci.org/sih4sing5hong5/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3.svg?branch=master)](https://travis-ci.org/sih4sing5hong5/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3)
-[![Coverage Status](https://coveralls.io/repos/sih4sing5hong5/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3/badge.svg)](https://coveralls.io/r/sih4sing5hong5/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3)
+[![Build Status](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg?branch=master)](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
+[![Coverage Status](https://coveralls.io/repos/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/badge.svg)](https://coveralls.io/r/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 
 提供收集語料介面的django函式庫
 
@@ -21,8 +21,12 @@ virtualenv venv --python python3 # 設置環境檔
 ```
 安裝
 ```bash
-pip install tai5_uan5_gian5_gi2_tsu1_liau7_khoo3
-pip install Django==1.7.7 git+https://github.com/conrado/libavwrapper@6409123ee24df823a5ee0bac7a08043e6b317721#egg=libavwrapper
+pip install tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
+pip install Django git+https://github.com/conrado/libavwrapper@6409123ee24df823a5ee0bac7a08043e6b317721#egg=libavwrapper
+```
+開發
+```
+bash 走試驗.sh
 ```
 
 ## 授權說明
@@ -38,4 +42,5 @@ pip install Django==1.7.7 git+https://github.com/conrado/libavwrapper@6409123ee2
 
 
 ## 其他專案
-歡迎參考[臺灣言語工具](https://github.com/sih4sing5hong5/tai5_uan5_gian5_gi2_kang1_ku7)和[臺灣言語資料庫](https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_phing5-thai5)。
+* [臺灣言語工具](https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_kang1-ku7)
+* [臺灣言語平臺](https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_phing5-thai5)。
