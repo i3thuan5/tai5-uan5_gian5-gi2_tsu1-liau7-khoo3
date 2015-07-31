@@ -88,6 +88,19 @@ class 加文本校對試驗(TestCase, 加關係試驗):
         self.assertEqual(文本.屬性.count(), 0)
         self.assertEqual(文本.文本資料, '伊真媠。')
 
+    def test_是校對資料(self):
+        第一層詞 = self.原本資料表.加資料(self.原本資料詞內容)
+        self.assertFalse(第一層詞.是校對後的資料())
+        第二層詞 = 第一層詞.校對做(self.對應資料詞內容)
+        self.assertFalse(第一層詞.是校對後的資料())
+        self.assertTrue(第二層詞.是校對後的資料())
+
+        第一層句 = self.原本資料表.加資料(self.原本資料句內容)
+        self.assertFalse(第一層句.是校對後的資料())
+        第二層句 = 第一層句.校對做(self.對應資料句內容)
+        self.assertFalse(第一層句.是校對後的資料())
+        self.assertTrue(第二層句.是校對後的資料())
+
     def test_語料會使校對兩擺以上(self):
         原來文本資料數 = 文本表.objects.all().count()
         原來文本校對數 = 文本校對表.objects.all().count()
@@ -109,17 +122,13 @@ class 加文本校對試驗(TestCase, 加關係試驗):
         原來文本校對數 = 文本校對表.objects.all().count()
 
         第一層詞 = self.原本資料表.加資料(self.原本資料詞內容)
-        self.assertFalse(第一層詞.是校對後的資料())
         第二層詞 = 第一層詞.校對做(self.對應資料詞內容)
-        self.assertTrue(第二層詞.是校對後的資料())
         第二層詞.校對做(self.對應資料詞內容)
         self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 3)
         self.assertEqual(文本校對表.objects.all().count(), 原來文本校對數 + 2)
 
         第一層句 = self.原本資料表.加資料(self.原本資料句內容)
-        self.assertFalse(第一層句.是校對後的資料())
         第二層句 = 第一層句.校對做(self.對應資料句內容)
-        self.assertTrue(第二層句.是校對後的資料())
         第二層句.校對做(self.對應資料句內容)
         self.assertEqual(文本表.objects.all().count(), 原來文本資料數 + 6)
         self.assertEqual(文本校對表.objects.all().count(), 原來文本校對數 + 4)
