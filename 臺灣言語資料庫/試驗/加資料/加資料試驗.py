@@ -537,22 +537,26 @@ class 加資料試驗(資料庫試驗):
 
     def test_屬性是數字(self):
         self.句內容['屬性'] = 33
-        self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+        with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_屬性是字典(self):
         self.句內容['屬性'] = {'詞性'}
-        self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+        with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_屬性是陣列(self):
         self.句內容['屬性'] = ['詞性']
-        self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+        with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_屬性是集合(self):
         self.句內容['屬性'] = {'詞性'}
-        self.assertRaises(AttributeError, self.資料表.加資料, self.句內容)
+        with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_無屬性(self):

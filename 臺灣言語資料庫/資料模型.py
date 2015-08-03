@@ -156,19 +156,9 @@ class 資料表(models.Model):
             self._設定欄位(內容, 欄位名, True)
         self.full_clean()
         try:
-            self._設定屬性(內容['屬性'])
+            self._設定屬性而且存入資料庫(內容['屬性'])
         except KeyError:
             self.save()
-
-    def _設定屬性(self, 屬性內容):
-        屬性物件 = self._內容轉物件(屬性內容)
-        for _, _ in 屬性物件.items():
-            pass
-        self.save()
-        for 分類, 性質 in 屬性物件.items():
-            self.屬性.add(
-                資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
-            )
 
     def _內容轉物件(self, 內容):
         # 		try:
@@ -204,6 +194,18 @@ class 資料表(models.Model):
                 setattr(self, 欄位名, 資料表.objects.get(**{欄位名: 內容資料}))
         else:
             setattr(self, 欄位名, 內容資料)
+
+    def _設定屬性而且存入資料庫(self, 屬性內容):
+        屬性物件 = self._內容轉物件(屬性內容)
+        try:
+            屬性物件.items()
+        except AttributeError:
+            raise ValueError('屬性內容資料愛是辭典型態')
+        self.save()
+        for 分類, 性質 in 屬性物件.items():
+            self.屬性.add(
+                資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
+            )
 
     def _加關係的內容檢查(self, 內容):
         if 內容['種類'] != self.種類.種類:
