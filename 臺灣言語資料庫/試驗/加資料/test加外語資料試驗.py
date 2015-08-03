@@ -60,10 +60,12 @@ class 加外語資料試驗(TestCase, 加資料試驗):
 
     def test_外語語言毋是數字佮字串(self):
         self.詞內容['外語語言'] = [1115]
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['外語語言'] = 1231.23
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_無語言(self):
@@ -84,16 +86,20 @@ class 加外語資料試驗(TestCase, 加資料試驗):
 
     def test_毋是字串(self):
         self.詞內容['外語資料'] = 1228
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['外語資料'] = ['沒辦法']
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.詞內容['外語資料'] = None
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加詞)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['外語資料'] = {}
-        self.assertRaises(TypeError, super(加外語資料試驗, self).test_加句)
+        with self.assertRaises(ValueError):
+            super(加外語資料試驗, self).test_加詞()
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
     def test_資料是空的(self):

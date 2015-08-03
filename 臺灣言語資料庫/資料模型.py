@@ -175,7 +175,7 @@ class 資料表(models.Model):
         elif isinstance(內容['語言腔口'], str):
             self.語言腔口 = 語言腔口表.objects.get_or_create(語言腔口=內容['語言腔口'])[0]
         else:
-            self.語言腔口 =內容['語言腔口']
+            self.語言腔口 = 內容['語言腔口']
 #             raise TypeError('語言腔口必須愛是字串抑是整數型態')
         if isinstance(內容['著作所在地'], int):
             self.著作所在地 = 著作所在地表.objects.get(pk=內容['著作所在地'])
@@ -242,11 +242,11 @@ class 外語表(資料表):
         elif isinstance(內容['外語語言'], str):
             外語.外語語言 = 語言腔口表.objects.get_or_create(語言腔口=內容['外語語言'])[0]
         else:
-            raise TypeError('外語語言必須愛是字串抑是整數型態')
+            外語.外語語言 = 內容['外語語言']
         if isinstance(內容['外語資料'], str):
             外語.外語資料 = 內容['外語資料']
         else:
-            raise TypeError('外語資料必須愛是字串型態')
+            raise ValueError('外語資料必須愛是字串型態')
         外語._加基本內容而且儲存(內容)
         return 外語
 
@@ -281,7 +281,7 @@ class 影音表(資料表):
         影音 = cls()
         內容 = 影音._內容轉物件(輸入內容)
         if not hasattr(內容['原始影音資料'], 'read'):
-            raise TypeError('影音資料必須是檔案')
+            raise ValueError('影音資料必須是檔案')
         影音._加基本內容而且儲存(內容)
         影音._存原始影音資料(內容['原始影音資料'])
         影音._產生網頁聲音資料()
@@ -351,7 +351,7 @@ class 文本表(資料表):
         if isinstance(內容['文本資料'], str):
             文本.文本資料 = 內容['文本資料']
         else:
-            raise TypeError('文本資料必須愛是字串型態')
+            raise ValueError('文本資料必須愛是字串型態')
         文本._加基本內容而且儲存(內容)
         return 文本
 
@@ -411,13 +411,17 @@ class 聽拍表(資料表):
         elif isinstance(內容['規範'], str):
             聽拍.規範 = 聽拍規範表.objects.get(規範名=內容['規範'])
         else:
-            raise TypeError('規範必須愛是字串抑是整數型態')
+            聽拍.規範 = 內容['規範']
+#             raise TypeError('規範必須愛是字串抑是整數型態')
         聽拍資料內容 = 聽拍._內容轉物件(內容['聽拍資料'])
-        for 一句 in 聽拍資料內容:
-            if not isinstance(一句, dict):
-                raise TypeError('聽拍資料內底應該是字典型態')
-            if '內容' not in 一句:
-                raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
+        try:
+            for 一句 in 聽拍資料內容:
+                if not isinstance(一句, dict):
+                    raise ValueError('聽拍資料內底應該是字典型態')
+                if '內容' not in 一句:
+                    raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
+        except TypeError:
+            raise ValueError('聽拍資料應該是字典型態')
         聽拍.聽拍資料 = json.dumps(聽拍資料內容)
         聽拍._加基本內容而且儲存(內容)
         return 聽拍
