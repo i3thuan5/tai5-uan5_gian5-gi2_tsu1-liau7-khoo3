@@ -11,6 +11,7 @@ from libavwrapper.codec import AudioCodec, NO_VIDEO
 from django.conf import settings
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class 屬性表函式:
@@ -140,22 +141,8 @@ class 資料表(models.Model):
         return 內容結果
 
     def _加基本內容而且儲存(self, 內容):
-        if isinstance(內容['收錄者'], int):
-            self.收錄者 = 來源表.objects.get(pk=內容['收錄者'])
-        elif isinstance(內容['收錄者'], str) or isinstance(內容['收錄者'], dict):
-            self.收錄者 = 來源表.揣來源(self._內容轉物件(內容['收錄者']))
-        else:
-            self.收錄者 = 內容['收錄者']
-        if isinstance(內容['來源'], int):
-            self.來源 = 來源表.objects.get(pk=內容['來源'])
-        elif isinstance(內容['來源'], str) or isinstance(內容['來源'], dict):
-            來源物件 = self._內容轉物件(內容['來源'])
-            try:
-                self.來源 = 來源表.揣來源(來源物件)
-            except:
-                self.來源 = 來源表.加來源(來源物件)
-        else:
-            self.來源 = 內容['來源']
+        self.收錄者 = self._揣來源資料(內容['收錄者'], False)
+        self.來源 = self._揣來源資料(內容['來源'], True)
         for 欄位名 in [
             版權表,
             種類表,
@@ -187,6 +174,19 @@ class 資料表(models.Model):
         if isinstance(內容, str):
             return json.loads(內容)
         return 內容
+
+    def _揣來源資料(self, 內容資料, 會使加新的):
+        if isinstance(內容資料, int):
+            return 來源表.objects.get(pk=內容資料)
+        if isinstance(內容資料, str) or isinstance(內容資料, dict):
+            來源物件 = self._內容轉物件(內容資料)
+            try:
+                return 來源表.揣來源(來源物件)
+            except ObjectDoesNotExist:
+                if 會使加新的:
+                    return 來源表.加來源(來源物件)
+                raise
+        return 內容資料
 
     def _設定欄位(self, 內容, 資料表, 會使加新的):
         欄位名 = 資料表.__name__[:-1]
