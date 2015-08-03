@@ -161,13 +161,10 @@ class 資料表(models.Model):
             self.save()
 
     def _內容轉物件(self, 內容):
-        # 		try:
-        # 			return json.loads(內容)
-        # 		except:
-        # 			return 內容
-        if isinstance(內容, str):
+        try:
             return json.loads(內容)
-        return 內容
+        except:
+            return 內容
 
     def _揣來源資料(self, 內容資料, 會使加新的):
         if isinstance(內容資料, int):
