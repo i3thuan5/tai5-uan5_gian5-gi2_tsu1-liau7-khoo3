@@ -155,16 +155,20 @@ class 資料表(models.Model):
         ]:
             self._設定欄位(內容, 欄位名, True)
         self.full_clean()
-        if '屬性' in 內容:
-            for _, _ in self._內容轉物件(內容['屬性']).items():
-                pass
+        try:
+            self._設定屬性(內容['屬性'])
+        except KeyError:
             self.save()
-            for 分類, 性質 in self._內容轉物件(內容['屬性']).items():
-                self.屬性.add(
-                    資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0])
-# 			self.save()
-        else:
-            self.save()
+
+    def _設定屬性(self, 屬性內容):
+        屬性物件 = self._內容轉物件(屬性內容)
+        for _, _ in 屬性物件.items():
+            pass
+        self.save()
+        for 分類, 性質 in 屬性物件.items():
+            self.屬性.add(
+                資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
+            )
 
     def _內容轉物件(self, 內容):
         # 		try:
