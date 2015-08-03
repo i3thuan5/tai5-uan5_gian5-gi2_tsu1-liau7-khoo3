@@ -142,46 +142,55 @@ class 資料表(models.Model):
     def _加基本內容而且儲存(self, 內容):
         if isinstance(內容['收錄者'], int):
             self.收錄者 = 來源表.objects.get(pk=內容['收錄者'])
-        else:
+        elif isinstance(內容['收錄者'], str) or isinstance(內容['收錄者'], dict):
             self.收錄者 = 來源表.揣來源(self._內容轉物件(內容['收錄者']))
+        else:
+            self.收錄者 = 內容['收錄者']
         if isinstance(內容['來源'], int):
             self.來源 = 來源表.objects.get(pk=內容['來源'])
-        else:
+        elif isinstance(內容['來源'], str) or isinstance(內容['來源'], dict):
             來源物件 = self._內容轉物件(內容['來源'])
             try:
                 self.來源 = 來源表.揣來源(來源物件)
             except:
                 self.來源 = 來源表.加來源(來源物件)
+        else:
+            self.來源 = 內容['來源']
         if isinstance(內容['版權'], int):
             self.版權 = 版權表.objects.get(pk=內容['版權'])
         elif isinstance(內容['版權'], str):
             self.版權 = 版權表.objects.get(版權=內容['版權'])
         else:
-            raise TypeError('版權必須愛是字串抑是整數型態')
+            self.版權 = 內容['版權']
+#             raise TypeError('版權必須愛是字串抑是整數型態')
         if isinstance(內容['種類'], int):
             self.種類 = 種類表.objects.get(pk=內容['種類'])
         elif isinstance(內容['種類'], str):
             self.種類 = 種類表.objects.get(種類=內容['種類'])
         else:
-            raise TypeError('種類必須愛是字串抑是整數型態')
+            self.種類 = 內容['種類']
+#             raise TypeError('種類必須愛是字串抑是整數型態')
         if isinstance(內容['語言腔口'], int):
             self.語言腔口 = 語言腔口表.objects.get(pk=內容['語言腔口'])
         elif isinstance(內容['語言腔口'], str):
             self.語言腔口 = 語言腔口表.objects.get_or_create(語言腔口=內容['語言腔口'])[0]
         else:
-            raise TypeError('語言腔口必須愛是字串抑是整數型態')
+            self.語言腔口 =內容['語言腔口']
+#             raise TypeError('語言腔口必須愛是字串抑是整數型態')
         if isinstance(內容['著作所在地'], int):
             self.著作所在地 = 著作所在地表.objects.get(pk=內容['著作所在地'])
         elif isinstance(內容['著作所在地'], str):
             self.著作所在地 = 著作所在地表.objects.get_or_create(著作所在地=內容['著作所在地'])[0]
         else:
-            raise TypeError('著作所在地必須愛是字串抑是整數型態')
+            self.著作所在地 = 內容['著作所在地']
+#             raise TypeError('著作所在地必須愛是字串抑是整數型態')
         if isinstance(內容['著作年'], int):
             self.著作年 = 著作年表.objects.get(pk=內容['著作年'])
         elif isinstance(內容['著作年'], str):
             self.著作年 = 著作年表.objects.get_or_create(著作年=內容['著作年'])[0]
         else:
-            raise TypeError('著作年必須愛是字串抑是整數型態')
+            self.著作年 = 內容['著作年']
+#             raise TypeError('著作年必須愛是字串抑是整數型態')
         self.full_clean()
         if '屬性' in 內容:
             for _, _ in self._內容轉物件(內容['屬性']).items():
