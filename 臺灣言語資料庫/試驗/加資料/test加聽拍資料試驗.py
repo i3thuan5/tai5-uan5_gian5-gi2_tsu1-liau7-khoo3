@@ -74,6 +74,18 @@ class 加聽拍資料試驗(TestCase, 加資料試驗):
             '詞性': '形容詞',
         })
 
+    def test_規範舊物件(self):
+        self.詞內容['規範'] = self.中研院聽拍資料庫
+        self.資料 = self.資料表.加資料(self.詞內容)
+        self.assertEqual(self.資料.規範, self.中研院聽拍資料庫)
+        self.assertEqual(json.loads(self.資料.聽拍資料), [
+            {'語者': '阿宏', '內容': 'li1', '開始時間': 0.0, '結束時間': 1.2},
+            {'語者': '阿莉', '內容': 'ho2', '開始時間': 1.2, '結束時間': 2.0},
+        ])
+        self.比較屬性(self.資料, {
+            '詞性': '形容詞',
+        })
+
     def test_規範新字串(self):
         self.句內容['規範'] = '新聽拍方法'
         self.assertRaises(ObjectDoesNotExist, self.資料表.加資料, self.句內容)
