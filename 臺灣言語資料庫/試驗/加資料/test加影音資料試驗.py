@@ -62,19 +62,19 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 
     def test_影音資料毋是檔案(self):
         self.句內容['原始影音資料'] = 2015
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['原始影音資料'] = None
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['原始影音資料'] = codecs.encode('牛睏山部落的織布機課程、守城社區的母語課程')
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['原始影音資料'] = '牛睏山部落的織布機課程、守城社區的母語課程'
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
     # 檔案無法度轉json字串，所以這愛改做無檔案的error

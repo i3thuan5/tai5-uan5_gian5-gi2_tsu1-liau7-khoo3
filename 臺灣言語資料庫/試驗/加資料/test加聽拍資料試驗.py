@@ -98,15 +98,15 @@ class 加聽拍資料試驗(TestCase, 加資料試驗):
 
     def test_規範毋是字串佮編號(self):
         self.句內容['規範'] = 2015.0217
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['規範'] = None
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['規範'] = ['「忘了母語，我還會記得怎麼奔跑嗎？」']
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -144,19 +144,19 @@ class 加聽拍資料試驗(TestCase, 加資料試驗):
 
     def test_聽拍資料毋是字串佮物件(self):
         self.句內容['聽拍資料'] = 2015
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['聽拍資料'] = None
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['聽拍資料'] = {'牛睏山部落的織布機課程', '守城社區的母語課程'}
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['聽拍資料'] = ['牛睏山部落的織布機課程', '守城社區的母語課程']
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 

@@ -35,15 +35,15 @@ class 加文本資料試驗(TestCase, 加資料試驗):
 
     def test_資料毋是字串(self):
         self.句內容['文本資料'] = 2005
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['文本資料'] = None
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['文本資料'] = [' 南投縣噶哈巫文教協會', '眉溪四庄重建工作站']
-        with self.assertRaises(ValueError): 
+        with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
