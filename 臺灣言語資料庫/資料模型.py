@@ -11,6 +11,7 @@ from libavwrapper.codec import AudioCodec, NO_VIDEO
 from django.conf import settings
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class 屬性表函式:
@@ -143,76 +144,83 @@ class 資料表(models.Model):
         return 內容結果
 
     def _加基本內容而且儲存(self, 內容):
-        if isinstance(內容['收錄者'], int):
-            self.收錄者 = 來源表.objects.get(pk=內容['收錄者'])
-        else:
-            self.收錄者 = 來源表.揣來源(self._內容轉物件(內容['收錄者']))
-        if isinstance(內容['來源'], int):
-            self.來源 = 來源表.objects.get(pk=內容['來源'])
-        else:
-            來源物件 = self._內容轉物件(內容['來源'])
-            try:
-                self.來源 = 來源表.揣來源(來源物件)
-            except:
-                self.來源 = 來源表.加來源(來源物件)
-        if isinstance(內容['版權'], int):
-            self.版權 = 版權表.objects.get(pk=內容['版權'])
-        elif isinstance(內容['版權'], str):
-            self.版權 = 版權表.objects.get(版權=內容['版權'])
-        else:
-            raise TypeError('版權必須愛是字串抑是整數型態')
-        if isinstance(內容['種類'], int):
-            self.種類 = 種類表.objects.get(pk=內容['種類'])
-        elif isinstance(內容['種類'], str):
-            self.種類 = 種類表.objects.get(種類=內容['種類'])
-        else:
-            raise TypeError('種類必須愛是字串抑是整數型態')
-        if isinstance(內容['語言腔口'], int):
-            self.語言腔口 = 語言腔口表.objects.get(pk=內容['語言腔口'])
-        elif isinstance(內容['語言腔口'], str):
-            self.語言腔口 = 語言腔口表.objects.get_or_create(語言腔口=內容['語言腔口'])[0]
-        else:
-            raise TypeError('語言腔口必須愛是字串抑是整數型態')
-        if isinstance(內容['著作所在地'], int):
-            self.著作所在地 = 著作所在地表.objects.get(pk=內容['著作所在地'])
-        elif isinstance(內容['著作所在地'], str):
-            self.著作所在地 = 著作所在地表.objects.get_or_create(著作所在地=內容['著作所在地'])[0]
-        else:
-            raise TypeError('著作所在地必須愛是字串抑是整數型態')
-        if isinstance(內容['著作年'], int):
-            self.著作年 = 著作年表.objects.get(pk=內容['著作年'])
-        elif isinstance(內容['著作年'], str):
-            self.著作年 = 著作年表.objects.get_or_create(著作年=內容['著作年'])[0]
-        else:
-            raise TypeError('著作年必須愛是字串抑是整數型態')
+        self.收錄者 = self._揣來源資料(內容['收錄者'], False)
+        self.來源 = self._揣來源資料(內容['來源'], True)
+        for 欄位名 in [
+            版權表,
+            種類表,
+        ]:
+            self._設定欄位(內容, 欄位名, False)
+        for 欄位名 in [
+            語言腔口表,
+            著作所在地表,
+            著作年表,
+        ]:
+            self._設定欄位(內容, 欄位名, True)
         self.full_clean()
-        if '屬性' in 內容:
-            for _, _ in self._內容轉物件(內容['屬性']).items():
-                pass
-            self.save()
-            for 分類, 性質 in self._內容轉物件(內容['屬性']).items():
-                self.屬性.add(
-                    資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0])
-# 			self.save()
-        else:
+        try:
+            self._設定屬性而且存入資料庫(內容['屬性'])
+        except KeyError:
             self.save()
 
     def _內容轉物件(self, 內容):
-        # 		try:
-        # 			return json.loads(內容)
-        # 		except:
-        # 			return 內容
-        if isinstance(內容, str):
+        try:
             return json.loads(內容)
-        return 內容
+        except:
+            return 內容
+
+    def _揣來源資料(self, 內容資料, 會使加新的):
+        if isinstance(內容資料, int):
+            return 來源表.objects.get(pk=內容資料)
+        if isinstance(內容資料, str) or isinstance(內容資料, dict):
+            來源物件 = self._內容轉物件(內容資料)
+            try:
+                return 來源表.揣來源(來源物件)
+            except ObjectDoesNotExist:
+                if 會使加新的:
+                    return 來源表.加來源(來源物件)
+                raise
+        return 內容資料
+
+    def _設定欄位(self, 內容, 資料表, 會使加新的):
+        欄位名 = 資料表.__name__[:-1]
+        內容資料 = 內容[欄位名]
+        if isinstance(內容資料, int):
+            setattr(self, 欄位名, 資料表.objects.get(pk=內容資料))
+        elif isinstance(內容資料, str):
+            if 會使加新的:
+                setattr(self, 欄位名, 資料表.objects.get_or_create(**{欄位名: 內容資料})[0])
+            else:
+                setattr(self, 欄位名, 資料表.objects.get(**{欄位名: 內容資料}))
+        else:
+            setattr(self, 欄位名, 內容資料)
+
+    def _設定屬性而且存入資料庫(self, 屬性內容):
+        屬性物件 = self._內容轉物件(屬性內容)
+        try:
+            屬性物件.items()
+        except AttributeError:
+            raise ValueError('屬性內容資料愛是辭典型態')
+        self.save()
+        for 分類, 性質 in 屬性物件.items():
+            self.屬性.add(
+                資料屬性表.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
+            )
 
     def _加關係的內容檢查(self, 內容):
         if 內容['種類'] != self.種類.種類:
             raise ValueError(
-                '新資料的種類「{}」愛佮原本資料的種類「{}」仝款！！'.format(內容['種類'], self.種類.種類))
+                '新資料的種類「{}」愛佮原本資料的種類「{}」仝款！！'.format(
+                    內容['種類'],
+                    self.種類.種類
+                )
+            )
         if 內容['語言腔口'] != self.語言腔口.語言腔口:
-            raise ValueError('新資料的語言腔口「{}」愛佮原本資料的語言腔口「{}」仝款！！'
-                             .format(內容['語言腔口'], self.語言腔口.語言腔口))
+            raise ValueError(
+                '新資料的語言腔口「{}」愛佮原本資料的語言腔口「{}」仝款！！'.format(
+                    內容['語言腔口'],
+                    self.語言腔口.語言腔口)
+            )
 
 
 class 資料類型表(models.Model):
@@ -236,11 +244,11 @@ class 外語表(資料表):
         elif isinstance(內容['外語語言'], str):
             外語.外語語言 = 語言腔口表.objects.get_or_create(語言腔口=內容['外語語言'])[0]
         else:
-            raise TypeError('外語語言必須愛是字串抑是整數型態')
+            外語.外語語言 = 內容['外語語言']
         if isinstance(內容['外語資料'], str):
             外語.外語資料 = 內容['外語資料']
         else:
-            raise TypeError('外語資料必須愛是字串型態')
+            raise ValueError('外語資料必須愛是字串型態')
         外語._加基本內容而且儲存(內容)
         return 外語
 
@@ -275,7 +283,7 @@ class 影音表(資料表):
         影音 = cls()
         內容 = 影音._內容轉物件(輸入內容)
         if not hasattr(內容['原始影音資料'], 'read'):
-            raise TypeError('影音資料必須是檔案')
+            raise ValueError('影音資料必須是檔案')
         影音._加基本內容而且儲存(內容)
         影音._存原始影音資料(內容['原始影音資料'])
         影音._產生網頁聲音資料()
@@ -345,13 +353,11 @@ class 文本表(資料表):
         if isinstance(內容['文本資料'], str):
             文本.文本資料 = 內容['文本資料']
         else:
-            raise TypeError('文本資料必須愛是字串型態')
+            raise ValueError('文本資料必須愛是字串型態')
         文本._加基本內容而且儲存(內容)
         return 文本
 
     def 校對做(self, 輸入文本內容):
-        if self.是校對後的資料():
-            raise ValueError('校對的資料袂使閣校對，必須對原來的資料校對')
         文本內容 = self._內容轉物件(輸入文本內容)
         self._加關係的內容檢查(文本內容)
         文本 = 文本表.加資料(文本內容)
@@ -405,20 +411,22 @@ class 聽拍表(資料表):
         elif isinstance(內容['規範'], str):
             聽拍.規範 = 聽拍規範表.objects.get(規範名=內容['規範'])
         else:
-            raise TypeError('規範必須愛是字串抑是整數型態')
+            聽拍.規範 = 內容['規範']
+#             raise TypeError('規範必須愛是字串抑是整數型態')
         聽拍資料內容 = 聽拍._內容轉物件(內容['聽拍資料'])
-        for 一句 in 聽拍資料內容:
-            if not isinstance(一句, dict):
-                raise TypeError('聽拍資料內底應該是字典型態')
-            if '內容' not in 一句:
-                raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
+        try:
+            for 一句 in 聽拍資料內容:
+                if not isinstance(一句, dict):
+                    raise ValueError('聽拍資料內底應該是字典型態')
+                if '內容' not in 一句:
+                    raise KeyError('逐句聽拍資料攏愛有「內容」欄位')
+        except TypeError:
+            raise ValueError('聽拍資料應該是字典型態')
         聽拍.聽拍資料 = json.dumps(聽拍資料內容)
         聽拍._加基本內容而且儲存(內容)
         return 聽拍
 
     def 校對做(self, 輸入聽拍內容):
-        if self.是校對後的資料():
-            raise ValueError('校對的資料袂使閣校對，必須對原來的資料校對')
         聽拍內容 = self._內容轉物件(輸入聽拍內容)
         self._加關係的內容檢查(聽拍內容)
         if 聽拍內容['規範'] != self.規範.規範名:

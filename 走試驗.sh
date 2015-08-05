@@ -1,1 +1,2 @@
-rm __init__.py ; python3 manage.py test ; touch __init__.py
+#!/bin/bash
+rm __init__.py ; python manage.py migrate ; python manage.py test ; touch __init__.py
