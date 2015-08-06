@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 tar無法度下傷長的檔案名，所以愛用zip
+find . -name '*pyc' -exec rm {} -f \;
 python setup.py sdist --format=zip upload
 '''
 from distutils.core import setup
