@@ -117,7 +117,6 @@ class 加資料試驗(資料庫試驗):
         self.句內容.pop('收錄者')
         self.assertRaises(KeyError, self.資料表.加資料, self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-    # 會當傳物件的攏用TypeError
 
     def test_收錄者毋是字典字串佮編號(self):
         self.句內容['收錄者'] = 1990.0830
@@ -238,11 +237,16 @@ class 加資料試驗(資料庫試驗):
         self.assertRaises(ObjectDoesNotExist, self.資料表.加資料, self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
+    def test_來源無效字串(self):
+        self.句內容['來源'] = '名'
+        with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
+        self.assertEqual(self.資料表.objects.all().count(), 0)
+
     def test_來源無(self):
         self.句內容.pop('來源')
         self.assertRaises(KeyError, self.資料表.加資料, self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-    # 會當傳物件的攏用TypeError
 
     def test_來源毋是字典字串佮編號(self):
         self.句內容['來源'] = 1990.0328

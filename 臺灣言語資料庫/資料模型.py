@@ -176,6 +176,8 @@ class 資料表(models.Model):
             來源物件 = self._內容轉物件(內容資料)
             try:
                 return 來源表.揣來源(來源物件)
+            except TypeError:
+                raise ValueError('來源毋是有效字串！！')
             except ObjectDoesNotExist:
                 if 會使加新的:
                     return 來源表.加來源(來源物件)
