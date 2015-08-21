@@ -13,6 +13,13 @@
 * [臺灣言語平臺](https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_phing5-thai5)。
   * 修改`臺灣言語資料庫`的網頁介面
 
+## 編專案
+```
+pip install recommonmark
+cd docs
+make html
+```
+
 ### 臺灣言語資料庫
 
 #### 資料關係
