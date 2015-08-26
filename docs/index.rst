@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to 臺灣言語說明's documentation!
+臺灣言語資料庫說明文件
 ========================================
 
 Contents:
@@ -11,8 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
    
-   臺灣言語工具
-   臺灣言語資料庫
+   介紹
+   資料結構
+   資料輸出
+   資料來源
    臺灣言語服務
    臺灣言語平臺
 
