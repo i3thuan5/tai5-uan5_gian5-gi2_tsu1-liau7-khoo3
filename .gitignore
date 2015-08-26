@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 __pycache__/
 /MANIFEST
 /dist
 /.settings
 /venv
-=======
-_*
-venv
-.settings
->>>>>>> refs/heads/合到資料庫
+/文件/_*
