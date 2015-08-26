@@ -3,3 +3,4 @@ __pycache__/
 /dist
 /.settings
 /venv
+/文件/_*
