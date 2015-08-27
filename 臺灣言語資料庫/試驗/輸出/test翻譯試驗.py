@@ -210,7 +210,7 @@ class 翻譯試驗(TestCase):
         self.加一筆母語食飽未()
         self.語料.輸出翻譯語料(self.目錄)
         self.assertEqual(len(listdir(self.目錄)), 0)
-        
+
     def test_兩層文本(self):
         第一層文本 = self.加一筆母語食飽未()
         self.母語文本加一筆斷詞食飽未(第一層文本)
