@@ -2,12 +2,16 @@
 
 [![Build Status](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg?branch=master)](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 [![Coverage Status](https://coveralls.io/repos/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/badge.svg)](https://coveralls.io/r/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
+[![Documentation Status](https://readthedocs.org/projects/tai5-uan5-gian5-gi2-tsu1-liau7-khoo3/badge/?version=latest)](https://readthedocs.org/projects/tai5-uan5-gian5-gi2-tsu1-liau7-khoo3/?badge=latest)
 
 提供收集語料介面的django函式庫
 
 希望能方便語言學習、研究。
 
 感謝您的使用與推廣～～勞力！承蒙！
+
+## 文件
+http://tai5-uan5-gian5-gi2-tsu1-liau7-khoo3.readthedocs.org
 
 ##安裝方法
 設置環境
