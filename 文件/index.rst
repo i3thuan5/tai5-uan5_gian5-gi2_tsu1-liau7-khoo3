@@ -12,6 +12,8 @@ Contents:
    :maxdepth: 2
    
    介紹
+   安裝
+   使用Postgres
    資料結構
    資料輸出
    資料來源
