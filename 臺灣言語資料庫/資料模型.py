@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from builtins import isinstance
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import File, ContentFile
 from django.db import models
 from django.db.models import Count
@@ -8,10 +10,11 @@ import os
 
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
-from django.conf import settings
+
+
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
-from django.core.exceptions import ObjectDoesNotExist
+from 臺灣言語資料庫.欄位資訊 import 語句
 
 
 class 屬性表函式:
@@ -93,6 +96,14 @@ class 語言腔口表(models.Model):
     def 揣出有文本的語言腔口(cls):
         return cls.objects.filter(
             pk__in=文本表.objects.all().values_list('語言腔口', flat=True).distinct()
+        )
+
+    @classmethod
+    def 揣出有語句文本的語言腔口(cls):
+        語句種類 = 種類表.objects.get(種類=語句)
+        return cls.objects.filter(
+            pk__in=文本表.objects.filter(種類=語句種類).values_list(
+                '語言腔口', flat=True).distinct()
         )
 
 

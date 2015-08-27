@@ -107,47 +107,12 @@ class 翻譯試驗(TestCase):
             []
         )
 
-    def test_外語母語字詞對應檢查對齊語句(self):
+    def test_愛有語句才有輸出(self):
         self.資料內容['種類'] = 字詞
         外語 = self.加一筆外語你好嗎()
         self.外語加一筆母語食飽未(外語)
         self.語料.輸出翻譯語料(self.目錄)
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語語句.txt.gz')),
-            []
-        )
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語語句.txt.gz')),
-            []
-        )
-
-    def test_外語母語字詞對應檢查對齊文本(self):
-        self.資料內容['種類'] = 字詞
-        外語 = self.加一筆外語你好嗎()
-        self.外語加一筆母語食飽未(外語)
-        self.語料.輸出翻譯語料(self.目錄)
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '對齊外語字詞.txt.gz')),
-            sorted(['你好嗎？', '食飽未？'])
-        )
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '對齊母語字詞.txt.gz')),
-            sorted(['食飽未？', '食飽未？'])
-        )
-
-    def test_外語母語字詞對應檢查文本(self):
-        self.資料內容['種類'] = 字詞
-        外語 = self.加一筆外語你好嗎()
-        self.外語加一筆母語食飽未(外語)
-        self.語料.輸出翻譯語料(self.目錄)
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '語句文本.txt.gz')),
-            []
-        )
-        self.assertEqual(
-            self.得著檔案資料(join(self.目錄, '閩南語', '字詞文本.txt.gz')),
-            ['食飽未？']
-        )
+        self.assertEqual(len(listdir(self.目錄)), 0)
 
     def test_外語雙母語對應(self):
         外語 = self.加一筆外語你好嗎()
@@ -240,6 +205,12 @@ class 翻譯試驗(TestCase):
             ['食飽未？']
         )
 
+    def test_一個文本愛有語句才有輸出(self):
+        self.資料內容['種類'] = 字詞
+        self.加一筆母語食飽未()
+        self.語料.輸出翻譯語料(self.目錄)
+        self.assertEqual(len(listdir(self.目錄)), 0)
+        
     def test_兩層文本(self):
         第一層文本 = self.加一筆母語食飽未()
         self.母語文本加一筆斷詞食飽未(第一層文本)
