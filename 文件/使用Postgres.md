@@ -26,9 +26,20 @@ DATABASES = {
     }
 }
 ```
-最後初使化資料庫
+
+## 初使化資料庫
 ```
 python manage.py migrate
+```
+
+## 資料備份
+匯出做檔案
+```bash
+pg_dump $USER -O | gzip > 臺灣言語資料庫`date +%m%d`.sql.gz
+```
+檔案匯入
+```bash
+gzip -c -d 臺灣言語資料庫20150903.sql.gz | psql $USER
 ```
 
 ## 清掉全部資料
