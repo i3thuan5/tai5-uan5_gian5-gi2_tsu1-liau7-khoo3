@@ -114,7 +114,7 @@ class 匯入試驗(TestCase):
     @patch('臺灣言語資料庫.資料模型.外語表.錄母語')
     def test_影音檔案錄母語(self, 錄母語mocka):
         self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
-        self.assertEqual(錄母語mocka.call_count, 2)
+        self.assertEqual(錄母語mocka.call_count, 1)
 
     @patch('臺灣言語資料庫.資料模型.影音表.加資料')
     def test_影音檔案加資料(self, 加資料mocka):
@@ -157,17 +157,18 @@ class 匯入試驗(TestCase):
     @patch('臺灣言語資料庫.資料模型.外語表.錄母語')
     def test_全部相關資料組外語表錄母語(self, 錄母語mocka):
         self.匯入工具.匯入檔案(self._提yaml資料('全部相關資料組.yaml'))
-        錄母語mocka.assert_called_once_with({
-            '收錄者': 來源表.objects.get(名='系統管理者'),
-            '來源': {'名': '教育部閩南語辭典'},
-            '版權': '姓名標示-禁止改作 3.0 台灣',
-            '種類': '語句',
-            '著作年': '2015',
-            '著作所在地': '臺灣',
-            '語言腔口': '閩南語',
-            '原始影音資料': '耳鏡破去矣。',
-            '屬性': {'音標': 'hinn7-kiann3 phua3-0khi3-0ah4 .'}
-        })
+        with open(join(dirname(abspath(__file__)), '資料', 'audio','08345.mp3')) as 檔案:
+            錄母語mocka.assert_called_once_with({
+                '收錄者': 來源表.objects.get(名='系統管理者'),
+                '來源': {'名': '教育部閩南語辭典'},
+                '版權': '姓名標示-禁止改作 3.0 台灣',
+                '種類': '語句',
+                '著作年': '2015',
+                '著作所在地': '臺灣',
+                '語言腔口': '閩南語',
+                '原始影音資料': 檔案.read(),
+                '屬性': {'音標': 'hinn7-kiann3 phua3-0khi3-0ah4 .'}
+            })
 
     @patch('臺灣言語資料庫.資料模型.影音表.寫文本')
     def test_全部相關資料組影音表寫文本(self, 寫文本mocka):
