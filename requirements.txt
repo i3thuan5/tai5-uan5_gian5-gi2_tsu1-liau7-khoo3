@@ -1,3 +1,4 @@
-Django==1.8.3
+Django
+tai5-uan5-gian5-gi2-kang1-ku7
 -e git+https://github.com/conrado/libavwrapper@master#egg=libavwrapper
-tai5-uan5-gian5-gi2-kang1-ku7==0.5.6
+pyyaml
