@@ -82,6 +82,48 @@ class 匯入試驗(TestCase):
             '屬性': {'音標': 'hinn7-kiann3 phua3-0khi3-0ah4 .'}
         })
 
+    @patch('臺灣言語資料庫.資料模型.外語表.錄母語')
+    def test_影音網址錄母語(self, 錄母語mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(錄母語mocka.call_count, 1)
+
+    @patch('臺灣言語資料庫.資料模型.影音表.加資料')
+    def test_影音網址加資料(self, 加資料mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(加資料mocka.call_count, 1)
+
+    def test_影音網址有文本(self):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(文本表.objects.all().count(), 2)
+
+    @patch('臺灣言語資料庫.資料模型.外語表.錄母語')
+    def test_影音檔案錄母語(self, 錄母語mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(錄母語mocka.call_count, 2)
+
+    @patch('臺灣言語資料庫.資料模型.影音表.加資料')
+    def test_影音檔案加資料(self, 加資料mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(加資料mocka.call_count, 1)
+
+    def test_影音檔案有文本(self):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'))
+        self.assertEqual(文本表.objects.all().count(), 2)
+
+    @patch('臺灣言語資料庫.資料模型.外語表.錄母語')
+    def test_無用影音錄母語(self, 錄母語mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'), 匯入影音=False)
+        self.assertEqual(錄母語mocka.call_count, 0)
+
+    @patch('臺灣言語資料庫.資料模型.影音表.加資料')
+    def test_無用影音加資料(self, 加資料mocka):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'), 匯入影音=False)
+        self.assertEqual(加資料mocka.call_count, 0)
+
+    def test_無用影音有文本(self):
+        self.匯入工具.匯入檔案(self._提yaml資料('影音檔案.yaml'), 匯入影音=False)
+        self.assertEqual(文本表.objects.all().count(), 2)
+
     def test_翻母語語料(self):
         self.匯入工具.匯入檔案(self._提yaml資料('xls整理.yaml'))
         self.assertEqual(文本表.objects.filter(文本資料='耳鏡破去矣。').count(), 1)
