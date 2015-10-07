@@ -14,7 +14,7 @@ from 臺灣言語資料庫.資料模型 import 影音表
 class 加影音資料試驗(TestCase, 加資料試驗):
 
     def setUp(self):
-        self.加初始資料()
+        self.加初始資料佮設定變數()
         self.資料表 = 影音表
         self.詞檔案 = io.BytesIO()
         音檔 = wave.open(self.詞檔案, 'wb')
