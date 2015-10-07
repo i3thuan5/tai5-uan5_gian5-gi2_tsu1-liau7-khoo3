@@ -5,8 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import File, ContentFile
 from django.db import models
 from django.db.models import Count
+import io
 import json
 import os
+from urllib import request
 
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
@@ -295,12 +297,33 @@ class 影音表(資料表):
     def 加資料(cls, 輸入內容):
         影音 = cls()
         內容 = 影音._內容轉物件(輸入內容)
+        if '原始影音所在' in 內容 and '原始影音資料' in 內容:
+            raise ValueError('「所在」佮「資料」提供一个就好！！')
+        if '原始影音所在' in 內容 and '原始影音資料' not in 內容:
+            return cls._影音所在加資料(內容)
         if not hasattr(內容['原始影音資料'], 'read'):
             raise ValueError('影音資料必須是檔案')
         影音._加基本內容而且儲存(內容)
         影音._存原始影音資料(內容['原始影音資料'])
         影音._產生網頁聲音資料()
         return 影音
+
+    @classmethod
+    def _影音所在加資料(cls, 舊內容):
+        新內容 = {}
+        新內容.update(舊內容)
+        所在 = 新內容.pop('原始影音所在')
+        try:
+            with io.open(所在, 'rb') as 檔案:
+                新內容['原始影音資料'] = 檔案
+                return cls.加資料(新內容)
+        except:
+            if not 所在.startswith('http://') and not 所在.startswith('https://'):
+                所在 = 'http://'+所在
+            with request.urlopen(所在) as 檔案:
+                with io.BytesIO(檔案.read()) as 暫存:
+                    新內容['原始影音資料'] = 暫存
+                    return cls.加資料(新內容)
 
     def 寫文本(self, 輸入文本內容):
         文本內容 = self._內容轉物件(輸入文本內容)
