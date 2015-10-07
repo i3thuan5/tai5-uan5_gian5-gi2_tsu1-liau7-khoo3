@@ -3,6 +3,7 @@ import codecs
 from django.test import TestCase
 import io
 import json
+from os.path import abspath, dirname, join
 from unittest.mock import patch
 import wave
 
@@ -43,16 +44,16 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 
     def test_加詞(self):
         super(加影音資料試驗, self).test_加詞()
-        self.資料.原始影音資料. open()
+        self.資料.原始影音資料.open()
         self.assertEqual(self.資料.原始影音資料.read(), self.詞檔案.getvalue())
-        self.資料.原始影音資料. close()
+        self.資料.原始影音資料.close()
 # 		self.assertEqual(self.資料.網頁影音資料,)
 
     def test_加句(self):
         super(加影音資料試驗, self).test_加句()
-        self.資料.原始影音資料. open()
+        self.資料.原始影音資料.open()
         self.assertEqual(self.資料.原始影音資料.read(), self.句檔案.getvalue())
-        self.資料.原始影音資料. close()
+        self.資料.原始影音資料.close()
 # 		self.assertEqual(self.資料.網頁影音資料,)
 
     def test_無資料(self):
@@ -95,12 +96,12 @@ class 加影音資料試驗(TestCase, 加資料試驗):
 
     def test_網頁資料內容有物件(self):
         資料 = self.資料表.加資料(self.句內容)
-        資料.原始影音資料. open()
+        資料.原始影音資料.open()
         原始大小 = len(資料.原始影音資料.read())
-        資料.原始影音資料. close()
-        資料.網頁影音資料. open()
+        資料.原始影音資料.close()
+        資料.網頁影音資料.open()
         網頁大小 = len(資料.網頁影音資料.read())
-        資料.網頁影音資料. close()
+        資料.網頁影音資料.close()
         self.assertAlmostEqual(網頁大小, 原始大小 / 2, delta=網頁大小 * 0.1)
 
     @patch('libavwrapper.avconv.AVConv.run')
@@ -130,3 +131,35 @@ class 加影音資料試驗(TestCase, 加資料試驗):
         })
         self.assertRaises(OSError, self.資料表.加資料, self.句內容)
         self.assertEqual(影音表.objects.all().count(), 0)
+
+    def test_傳檔案所在(self):
+        檔案所在 = join(dirname(abspath(__file__)), 'audio/08310.mp3')
+        self.詞內容.pop('原始影音資料')
+        self.詞內容['原始影音所在'] = 檔案所在
+        super(加影音資料試驗, self).test_加詞()
+        with open(檔案所在, 'rb') as 聲音檔案:
+            self.assertEqual(self.資料.原始影音資料.read(), 聲音檔案.read())
+
+    def test_傳網址所在(self):
+        網址所在 = 'http://twblg.dict.edu.tw/holodict_new/audio/08310.mp3'
+        self.詞內容.pop('原始影音資料')
+        self.詞內容['原始影音所在'] = 網址所在
+        super(加影音資料試驗, self).test_加詞()
+        檔案所在 = join(dirname(abspath(__file__)), 'audio/08310.mp3')
+        with open(檔案所在, 'rb') as 聲音檔案:
+            self.assertEqual(self.資料.原始影音資料.read(), 聲音檔案.read())
+
+    def test_傳網址所在無協定(self):
+        網址所在 = 'twblg.dict.edu.tw/holodict_new/audio/08310.mp3'
+        self.詞內容.pop('原始影音資料')
+        self.詞內容['原始影音所在'] = 網址所在
+        super(加影音資料試驗, self).test_加詞()
+        檔案所在 = join(dirname(abspath(__file__)), 'audio/08310.mp3')
+        with open(檔案所在, 'rb') as 聲音檔案:
+            self.assertEqual(self.資料.原始影音資料.read(), 聲音檔案.read())
+
+    def test_袂使傳資料閣傳所在(self):
+        網址所在 = join(dirname(abspath(__file__)), 'audio/08310.mp3')
+        self.詞內容['原始影音所在'] = 網址所在
+        with self.assertRaises(ValueError):
+            super(加影音資料試驗, self).test_加詞()
