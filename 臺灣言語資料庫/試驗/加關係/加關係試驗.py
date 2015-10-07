@@ -22,6 +22,10 @@ class 加關係試驗:
         音檔.writeframesraw(b'0' * 100)
         音檔.close()
 
+    def tearDown(self):
+        self.詞檔案.close()
+        self.句檔案.close()
+
     def test_加詞(self):
         原本資料 = self.原本資料表.加資料(self.原本資料詞內容)
         self.加詞(原本資料)

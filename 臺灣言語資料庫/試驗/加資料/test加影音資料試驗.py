@@ -37,6 +37,10 @@ class 加影音資料試驗(TestCase, 加資料試驗):
             '原始影音資料': self.句檔案,
         })
 
+    def tearDown(self):
+        self.詞檔案.close()
+        self.句檔案.close()
+
     def test_加詞(self):
         super(加影音資料試驗, self).test_加詞()
         self.資料.原始影音資料. open()
