@@ -8,7 +8,7 @@ from 臺灣言語資料庫.關係模型 import 影音聽拍表
 from 臺灣言語資料庫.資料模型 import 聽拍規範表
 
 
-class 加影音聽拍試驗(TestCase, 加關係試驗):
+class 加影音聽拍試驗(加關係試驗, TestCase):
 
     def setUp(self):
         self.加初始資料()
@@ -77,13 +77,15 @@ class 加影音聽拍試驗(TestCase, 加關係試驗):
         self.assertEqual(影音聽拍表.objects.all().count(), 原來影音聽拍數 + 1)
         self.assertIsInstance(影音.影音聽拍.get(聽拍=聽拍), 影音聽拍表)
         self.assertEqual(影音.影音聽拍.get(聽拍=聽拍).聽拍, 聽拍)
-        self.assertEqual(聽拍.收錄者, self.鄉民)
-        self.assertEqual(聽拍.來源, self.Pigu)
-        self.assertEqual(聽拍.版權, self.會使公開)
-        self.assertEqual(聽拍.種類, self.字詞)
-        self.assertEqual(聽拍.語言腔口, self.閩南語)
-        self.assertEqual(聽拍.著作所在地, self.花蓮)
-        self.assertEqual(聽拍.著作年, self.二空一四)
+        self.assertEqual(聽拍.收錄者.名, '鄉民')
+        self.assertEqual(聽拍.收錄者.屬性內容(), {'出世年': '1950', '出世地': '臺灣'})
+        self.assertEqual(聽拍.來源.名, 'Dr. Pigu')
+        self.assertEqual(聽拍.來源.屬性內容(), {'出世年': '1990', '出世地': '花蓮人'})
+        self.assertEqual(聽拍.版權.版權, '會使公開')
+        self.assertEqual(聽拍.種類.種類, '字詞')
+        self.assertEqual(聽拍.語言腔口.語言腔口, '閩南語')
+        self.assertEqual(聽拍.著作所在地.著作所在地, '花蓮')
+        self.assertEqual(聽拍.著作年.著作年, '2014')
         self.assertEqual(聽拍.屬性.count(), 0)
         self.assertEqual(聽拍.規範, self.中研院聽拍資料庫)
         self.assertEqual(json.loads(聽拍.聽拍資料), [
@@ -101,13 +103,15 @@ class 加影音聽拍試驗(TestCase, 加關係試驗):
         self.assertEqual(影音聽拍表.objects.all().count(), 原來影音聽拍數 + 1)
         self.assertIsInstance(影音.影音聽拍.get(聽拍=聽拍), 影音聽拍表)
         self.assertEqual(影音.影音聽拍.get(聽拍=聽拍).聽拍, 聽拍)
-        self.assertEqual(聽拍.收錄者, self.Pigu)
-        self.assertEqual(聽拍.來源, self.鄉民)
-        self.assertEqual(聽拍.版權, self.袂使公開)
-        self.assertEqual(聽拍.種類, self.語句)
-        self.assertEqual(聽拍.語言腔口, self.四縣話)
-        self.assertEqual(聽拍.著作所在地, self.臺灣)
-        self.assertEqual(聽拍.著作年, self.一九五空年代)
+        self.assertEqual(聽拍.收錄者.名, 'Dr. Pigu')
+        self.assertEqual(聽拍.收錄者.屬性內容(), {'出世年': '1990', '出世地': '花蓮人'})
+        self.assertEqual(聽拍.來源.名, '鄉民')
+        self.assertEqual(聽拍.來源.屬性內容(), {'出世年': '1950', '出世地': '臺灣'})
+        self.assertEqual(聽拍.版權.版權, '袂使公開')
+        self.assertEqual(聽拍.種類.種類, '語句')
+        self.assertEqual(聽拍.語言腔口.語言腔口, '四縣話')
+        self.assertEqual(聽拍.著作所在地.著作所在地, '臺灣')
+        self.assertEqual(聽拍.著作年.著作年, '195x')
         self.assertEqual(聽拍.屬性.count(), 0)
         self.assertEqual(聽拍.規範, self.中研院聽拍資料庫)
         self.assertEqual(json.loads(聽拍.聽拍資料),
