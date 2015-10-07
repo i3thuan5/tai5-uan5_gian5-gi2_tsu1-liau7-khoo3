@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-from 臺灣言語資料庫.試驗.資料庫試驗 import 資料庫試驗
 import io
 import wave
 
 
-class 加關係試驗(資料庫試驗):
+class 加關係試驗:
+    fixtures = ['試驗基本資料.yaml']
 
     def 加初始資料(self):
-        super(加關係試驗, self).加初始資料()
         self.詞檔案 = io.BytesIO()
         音檔 = wave.open(self.詞檔案, 'wb')
         音檔.setnchannels(1)

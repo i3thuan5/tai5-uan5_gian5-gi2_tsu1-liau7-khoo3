@@ -9,7 +9,7 @@ from 臺灣言語資料庫.資料模型 import 外語表
 class 加外語資料試驗(TestCase, 加資料試驗):
 
     def setUp(self):
-        self.加初始資料()
+        self.加初始資料佮設定變數()
         self.資料表 = 外語表
         self.詞內容.update({
             '外語語言': '華語',
