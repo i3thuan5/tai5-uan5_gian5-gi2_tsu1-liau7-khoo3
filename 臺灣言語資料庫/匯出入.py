@@ -1,6 +1,4 @@
-import io
 from os.path import dirname, join
-from urllib import request
 
 import yaml
 
@@ -59,7 +57,7 @@ class 匯出入工具:
     def _清掉狀態資料(self, 這馬狀態):
         新狀態 = {}
         新狀態.update(這馬狀態)
-        for 欄位 in ['外語資料', '外語語言', '原始影音資料', '文本資料']:
+        for 欄位 in ['外語資料', '外語語言', '原始影音所在', '文本資料']:
             try:
                 新狀態.pop(欄位)
             except KeyError:
@@ -72,9 +70,9 @@ class 匯出入工具:
                 return 外語表.加資料(這馬狀態)
             raise RuntimeError(
                 '型態有問題！！外語袂使有頂懸層語料，頂懸層型態：{}'.format(頂懸層語料.__class__.__name__))
-        elif '原始影音資料' in 這馬狀態:
+        elif '原始影音所在' in 這馬狀態:
             if 匯入影音:
-                這馬狀態['原始影音資料'] = self._資料掠落來(資料目錄, 這馬狀態['原始影音資料'])
+                這馬狀態['原始影音所在'] = join(資料目錄, 這馬狀態['原始影音所在'])
                 if 頂懸層語料 is None:
                     return 影音表.加資料(這馬狀態)
                 return 頂懸層語料.錄母語(這馬狀態)
@@ -87,16 +85,4 @@ class 匯出入工具:
                 return 頂懸層語料.寫文本(這馬狀態)
 #             if 頂懸層語料.__class__ == 文本表:
             return 頂懸層語料.校對做(這馬狀態)
-#             raise RuntimeError(
-#                 '型態有問題！！頂懸層語料型態：{}'.format(頂懸層語料.__class__.__name__))
         return 頂懸層語料
-
-    def _資料掠落來(self, 資料目錄, 所在):
-        try:
-            return io.open(join(資料目錄, 所在), 'rb')
-            with io.open(join(資料目錄, 所在), 'rb') as 檔案:
-                return 檔案
-        except:
-            return request.urlopen(所在)
-            with request.urlopen(所在) as 檔案:
-                return 檔案
