@@ -1,5 +1,6 @@
+import io
 from os.path import dirname, join
-from urllib.request import urlopen
+from urllib import request
 
 import yaml
 
@@ -20,14 +21,15 @@ class 匯出入工具:
             self.收錄者 = 來源表.objects.get_or_create(名='系統管理者')[0]
 
     def 匯入檔案(self, 檔名, 匯入影音=True):
-        with open(檔名) as 檔案:
-            self._匯入物件(yaml.load(檔案), dirname(檔名), 匯入影音)
+        with io.open(檔名) as 檔案:
+            self._匯入物件(檔案, dirname(檔名), 匯入影音)
 
     def 匯入網址(self, 網址, 匯入影音=True):
-        with urlopen(網址) as 檔案:
-            self._匯入物件(yaml.load(檔案), None, 匯入影音)
+        with request.urlopen(網址) as 檔案:
+            self._匯入物件(檔案, None, 匯入影音)
 
-    def _匯入物件(self, 資料物件, 資料目錄, 匯入影音):
+    def _匯入物件(self, yaml檔案資料, 資料目錄, 匯入影音):
+        資料物件 = yaml.load(yaml檔案資料)
         版權表.objects.get_or_create(版權=資料物件['版權'])
         self._遞迴匯入物件(
             資料物件,
