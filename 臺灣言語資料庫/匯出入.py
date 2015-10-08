@@ -13,8 +13,11 @@ from 臺灣言語資料庫.資料模型 import 影音表
 
 class 匯出入工具:
 
-    def __init__(self, 收錄者=來源表.objects.get_or_create(名='系統管理者')[0]):
-        self.收錄者 = 收錄者
+    def __init__(self, 收錄者=None):
+        if 收錄者:
+            self.收錄者 = 收錄者
+        else:
+            self.收錄者 = 來源表.objects.get_or_create(名='系統管理者')[0]
 
     def 匯入檔案(self, 檔名, 匯入影音=True):
         with open(檔名) as 檔案:
