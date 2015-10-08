@@ -28,7 +28,7 @@ class 匯入資料指令試驗(TestCase):
     def test_莫匯入影音(self, urlopenMocka, 匯入物件mocka):
         out = io.StringIO()
         call_command(
-            '匯入資料', 
+            '匯入資料',
             'http://意傳.台灣/臺灣言語資料庫.yaml',
             '--莫匯入影音',
             stdout=out
