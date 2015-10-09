@@ -81,7 +81,7 @@ class 來源表(models.Model):
 
 class 版權表(models.Model):
     # 	會使公開，袂使公開
-    版權 = models.CharField(unique=True, max_length=20)
+    版權 = models.CharField(unique=True, max_length=100)
 
 
 class 種類表(models.Model):
