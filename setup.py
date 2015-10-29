@@ -53,7 +53,9 @@ setup(
         'Topic :: Text Processing :: Linguistic',
     ],
     install_requires=[
-        'django>=1.7.0',
-        'tai5-uan5-gian5-gi2-kang1-ku7>=0.5.3',
+        'tai5-uan5-gian5-gi2-kang1-ku7>=0.5.9',
+        'django>=1.8.0',
+        'pyyaml',
+        'lxml',
     ],
 )
