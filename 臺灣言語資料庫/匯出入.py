@@ -20,6 +20,9 @@ class 匯出入工具:
         else:
             self.收錄者 = 來源表.objects.get_or_create(名='系統管理者')[0]
 
+    def 顯示資料狀態(self):
+        pass
+
     def 匯入檔案(self, 檔名, 匯入影音=True):
         with io.open(檔名) as 檔案:
             self._匯入物件(檔案, dirname(檔名), 匯入影音)

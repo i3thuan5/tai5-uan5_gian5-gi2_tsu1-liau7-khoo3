@@ -40,3 +40,11 @@ class 匯入資料指令試驗(TestCase):
     def test_無網址(self):
         with self.assertRaises(CommandError):
             call_command('匯入資料')
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具.顯示資料狀態')
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    @patch('urllib.request.urlopen')
+    def test_愛算資料狀態(self, urlopenMocka, 匯入物件mocka, 顯示資料狀態mocka):
+        with io.StringIO() as out:
+            call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
+        self.assertEqual(顯示資料狀態mocka.call_count, 2)
