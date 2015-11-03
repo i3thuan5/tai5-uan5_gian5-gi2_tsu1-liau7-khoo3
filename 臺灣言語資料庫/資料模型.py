@@ -156,6 +156,10 @@ class 資料表(models.Model):
             內容結果[屬性.分類] = json.loads(屬性.性質)
         return 內容結果
 
+    @classmethod
+    def 資料數量(cls):
+        return cls.objects.all().count()
+
     def _加基本內容而且儲存(self, 內容):
         self.收錄者 = self._揣來源資料(內容['收錄者'], False)
         self.來源 = self._揣來源資料(內容['來源'], True)
@@ -319,7 +323,7 @@ class 影音表(資料表):
                 return cls.加資料(新內容)
         except:
             if not 所在.startswith('http://') and not 所在.startswith('https://'):
-                所在 = 'http://'+所在
+                所在 = 'http://' + 所在
             with request.urlopen(所在) as 檔案:
                 with io.BytesIO(檔案.read()) as 暫存:
                     新內容['原始影音資料'] = 暫存

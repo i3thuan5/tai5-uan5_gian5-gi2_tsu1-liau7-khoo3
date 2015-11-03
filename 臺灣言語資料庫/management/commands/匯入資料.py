@@ -30,8 +30,8 @@ class Command(BaseCommand):
         if len(失敗網址) > 0:
             raise CommandError('無法度下載：{}'.format('\n'.join(失敗網址)))
         匯入工具 = 匯出入工具()
-        匯入工具.顯示資料狀態()
+        self.stdout.write(匯入工具.顯示資料狀態())
         for 安全網址, 原本網址 in 網址陣列:
             匯入工具.匯入網址(安全網址, not 參數['莫匯入影音'])
             self.stdout.write('「{}」成功匯入'.format(basename(原本網址)))
-            匯入工具.顯示資料狀態()
+            self.stdout.write(匯入工具.顯示資料狀態())

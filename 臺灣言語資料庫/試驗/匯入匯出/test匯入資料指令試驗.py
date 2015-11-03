@@ -1,8 +1,13 @@
+import io
+from re import search
+from unittest.mock import patch
+
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase
-import io
-from unittest.mock import patch
+
+
+from 臺灣言語資料庫.匯出入 import 匯出入工具
 
 
 class 匯入資料指令試驗(TestCase):
@@ -48,3 +53,32 @@ class 匯入資料指令試驗(TestCase):
         with io.StringIO() as out:
             call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
         self.assertEqual(顯示資料狀態mocka.call_count, 2)
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具.顯示資料狀態')
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    @patch('urllib.request.urlopen')
+    def test_有顯示資料狀態(self, urlopenMocka, 匯入物件mocka, 顯示資料狀態mocka):
+        顯示資料狀態mocka.side_effect = [
+            '外語有0筆，影音有0筆，文本有0筆',
+            '外語有2筆，影音有5筆，文本有33筆'
+        ]
+        with io.StringIO() as out:
+            call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
+            self.assertIn('外語有0筆，影音有0筆，文本有0筆', out.getvalue())
+            self.assertIn('外語有2筆，影音有5筆，文本有33筆', out.getvalue())
+
+    def test_顯示資料狀態有資料數量(self):
+        self.assertIsNotNone(
+            search(
+                r'外語有\d+筆，影音有\d+筆，文本有\d+筆',
+                匯出入工具.顯示資料狀態()
+            )
+        )
+
+    def test_顯示資料狀態有這馬時間(self):
+        self.assertIsNotNone(
+            search(
+                r'這馬時間：\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
+                匯出入工具.顯示資料狀態()
+            )
+        )
