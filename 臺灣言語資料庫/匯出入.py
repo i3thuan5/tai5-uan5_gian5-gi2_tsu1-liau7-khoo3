@@ -1,3 +1,4 @@
+from datetime import datetime
 import io
 from os.path import dirname, join
 from urllib import request
@@ -19,6 +20,15 @@ class 匯出入工具:
             self.收錄者 = 收錄者
         else:
             self.收錄者 = 來源表.objects.get_or_create(名='系統管理者')[0]
+
+    @classmethod
+    def 顯示資料狀態(cls):
+        return '外語有{}筆，影音有{}筆，文本有{}筆。這馬時間：{}'.format(
+            外語表.資料數量(),
+            影音表.資料數量(),
+            文本表.資料數量(),
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        )
 
     def 匯入檔案(self, 檔名, 匯入影音=True):
         with io.open(檔名) as 檔案:
