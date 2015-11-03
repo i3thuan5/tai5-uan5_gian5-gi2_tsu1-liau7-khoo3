@@ -32,4 +32,4 @@ class Command(BaseCommand):
         匯入工具 = 匯出入工具()
         for 安全網址, 原本網址 in 網址陣列:
             匯入工具.匯入網址(安全網址, not 參數['莫匯入影音'])
-            print('「{}」成功匯入'.format(basename(原本網址)), file=self.stdout)
+            self.stdout.write('「{}」成功匯入'.format(basename(原本網址)))
