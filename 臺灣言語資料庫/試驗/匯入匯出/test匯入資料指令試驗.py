@@ -8,6 +8,7 @@ from django.test import TestCase
 
 
 from 臺灣言語資料庫.匯出入 import 匯出入工具
+from django.core.exceptions import ValidationError
 
 
 class 匯入資料指令試驗(TestCase):
@@ -17,7 +18,7 @@ class 匯入資料指令試驗(TestCase):
     def test_成功匯入(self, urlopenMocka, 匯入物件mocka):
         with io.StringIO() as out:
             call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
-            self.assertIn('「臺灣言語資料庫.yaml」成功匯入', out.getvalue())
+            self.assertIn('「臺灣言語資料庫.yaml」匯入成功', out.getvalue())
 
     @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
     @patch('urllib.request.urlopen')
@@ -79,3 +80,29 @@ class 匯入資料指令試驗(TestCase):
                 匯出入工具.顯示資料狀態()
             )
         )
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    @patch('urllib.request.urlopen')
+    def test_程式錯誤愛接起來(self, urlopenMocka, 匯入物件mocka):
+        匯入物件mocka.side_effect = ValidationError('資料格式錯誤')
+        with io.StringIO() as out:
+            call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
+            self.assertIn('ValidationError', out.getvalue())
+            self.assertIn('資料格式錯誤', out.getvalue())
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    @patch('urllib.request.urlopen')
+    def test_程式錯誤匯入失敗愛顯示出來(self, urlopenMocka, 匯入物件mocka):
+        匯入物件mocka.side_effect = ValidationError('資料格式錯誤')
+        with io.StringIO() as out:
+            call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
+            self.assertIn('「臺灣言語資料庫.yaml」匯入失敗', out.getvalue())
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具.顯示資料狀態')
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    @patch('urllib.request.urlopen')
+    def test_程式錯誤愛算資料狀態(self, urlopenMocka, 匯入物件mocka, 顯示資料狀態mocka):
+        匯入物件mocka.side_effect = ValidationError('資料格式錯誤')
+        with io.StringIO() as out:
+            call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
+        self.assertEqual(顯示資料狀態mocka.call_count, 2)
