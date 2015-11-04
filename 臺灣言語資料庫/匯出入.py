@@ -11,6 +11,7 @@ from 臺灣言語資料庫.資料模型 import 來源表
 from 臺灣言語資料庫.資料模型 import 版權表
 from 臺灣言語資料庫.資料模型 import 外語表
 from 臺灣言語資料庫.資料模型 import 影音表
+from 臺灣言語資料庫.資料模型 import 資料表工具
 
 
 class 匯出入工具:
@@ -23,10 +24,8 @@ class 匯出入工具:
 
     @classmethod
     def 顯示資料狀態(cls):
-        return '外語有{}筆，影音有{}筆，文本有{}筆。這馬時間：{}'.format(
-            外語表.資料數量(),
-            影音表.資料數量(),
-            文本表.資料數量(),
+        return '{}。這馬時間：{}'.format(
+            資料表工具.顯示資料數量(),
             datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         )
 
