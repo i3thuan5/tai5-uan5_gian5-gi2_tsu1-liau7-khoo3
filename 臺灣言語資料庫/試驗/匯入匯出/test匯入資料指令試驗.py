@@ -67,13 +67,10 @@ class 匯入資料指令試驗(TestCase):
             self.assertIn('外語有0筆，影音有0筆，文本有0筆', out.getvalue())
             self.assertIn('外語有2筆，影音有5筆，文本有33筆', out.getvalue())
 
-    def test_顯示資料狀態有資料數量(self):
-        self.assertIsNotNone(
-            search(
-                r'外語有\d+筆，影音有\d+筆，文本有\d+筆',
-                匯出入工具.顯示資料狀態()
-            )
-        )
+    @patch('臺灣言語資料庫.資料模型.資料表工具.顯示資料數量')
+    def test_顯示資料狀態有資料數量(self, 顯示資料數量mocka):
+        匯出入工具.顯示資料狀態()
+        顯示資料數量mocka.assert_called_once_with()
 
     def test_顯示資料狀態有這馬時間(self):
         self.assertIsNotNone(
