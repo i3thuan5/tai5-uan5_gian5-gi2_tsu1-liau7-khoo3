@@ -1,24 +1,32 @@
 sudo: true
 language: python
 python:
- - "3.4"
+- '3.4'
 env:
-  global:
-  matrix:
+  global: 
+  matrix: 
 install:
- - sudo apt-get update
- - sudo apt-get install -y libav-tools libmp3lame0 libavcodec-extra-*
- - pip install -r requirements.txt
- - pip install python-coveralls
- - pip install flake8
+- sudo apt-get update
+- sudo apt-get install -y libav-tools libmp3lame0 libavcodec-extra-*
+- pip install -r requirements.txt
+- pip install python-coveralls
+- pip install flake8
 branches:
- only:
+  only:
   - master
 script:
- - coverage run --source=臺灣言語資料庫 manage.py test
- - pip install .
- - flake8 --exclude=venv,migrations,文件 --max-line-length=93 .
-matrix:
+- coverage run --source=臺灣言語資料庫 manage.py test
+- pip install .
+- flake8 --exclude=venv,migrations,文件 --max-line-length=93 .
+matrix: 
 after_success:
-  - coverage report
-  - coveralls
+- coverage report
+- coveralls
+deploy:
+  provider: pypi
+  user: sih4sing5hong5
+  password:
+    secure: Wt4OmIKoQeG/VeWRmU+hSt9WjvV9StgQEoqO1KUCLECRRwYgKtu6bFcz21U6KsfLbNVpo2592bAimNYQJGXQuYUilLYHQ/4lMcQg+geOTbzgGSaTBi7Q2zyOTC8TW2kt1idVjPt3iAJr+YZC3Jyq81KUD6H+CPkyyD37EfR+OlK/l9WnUt5ZCaxNuixQw49/iAS/suho4GWeJCC3+LJ/pWzZ6DcLsLVaunLgiu+GYkYCVe59GxAEPkB0zir8FwvxFVMuXLpPBw8HS5Sh6MbmLi8969MZVC7y+AHAZ9reHfTNmRlefXD/afu1QsbQCx78CUbTUR7qGtK1TdZSiuk6YT9ib90LYCjNNCQAEBi4HJzaySIp8i7+J48QS2I2phBCnEi7lUQkCoFXcAHLAVXv9+FXWmOhYbw1CD4UobCXz6h+ZljSjRGpwpX8A6U9s5DTJEs26Whja0A1B4YPY5MSl6aIVyiAk9cVEuGkBBhPn1zSOxjVcPGX6ODoKo7zBh6+S5E7Tn8Gyh2T9tfc9ROGuG3jQHu7OJpJmZfqVXAZ/R4EQmXcJq3b2hDqhtm6dm20TzLJ2mVXQ/e+JKBfrClOmbg10yrehwjp2QujxLkvx9daX42A90LmbkFX1oGJKLPAzaS8WjQQ9znvRkrqZvo+wfzJJvYpffMZq+4VA5JgVoc=
+  on:
+    tags: true
+    repo: sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
