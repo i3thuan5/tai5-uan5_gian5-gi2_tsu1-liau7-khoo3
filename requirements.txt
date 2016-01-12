@@ -1,5 +1,0 @@
-tai5-uan5-gian5-gi2-kang1-ku7
-Django
-pyyaml
-lxml
--e git+https://github.com/conrado/libavwrapper@master#egg=libavwrapper

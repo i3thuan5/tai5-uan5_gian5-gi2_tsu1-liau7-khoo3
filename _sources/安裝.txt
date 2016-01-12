@@ -1,0 +1,57 @@
+# 安裝方法
+
+## 設置環境
+```bash
+sudo apt-get install -y python3 python-virtualenv g++ python3-dev libyaml-dev libxslt1-dev
+virtualenv venv --python python3 # 設置環境檔
+```
+
+## 載入環境
+每次使用前必須執行
+```bash
+. venv/bin/activate 
+```
+
+## 安裝
+```bash
+pip install tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
+pip install git+https://github.com/conrado/libavwrapper@6409123ee24df823a5ee0bac7a08043e6b317721#egg=libavwrapper
+```
+
+## 設定
+在Django的`settings.py`設定檔加上
+```
+INSTALLED_APPS = +(
+    '臺灣言語資料庫',
+)
+```
+
+## 開發
+```bash
+pip install -r requirements.txt
+python manage.py test
+```
+
+## 文件
+先裝好開發環境，閣來環境設定
+```bash
+pip install sphinx sphinx-autobuild recommonmark
+cd 文件
+sphinx-quickstart # 建立一開始的專案
+```
+編譯
+```
+make html
+```
+
+## 文件
+先裝好開發環境，閣來環境設定
+```bash
+pip install sphinx sphinx-autobuild recommonmark
+cd 文件
+sphinx-quickstart # 建立一開始的專案
+```
+編譯
+```
+make html
+```
