@@ -19,7 +19,7 @@ addons:
       - libxslt1-dev
       - libav-tools  
       - libmp3lame0
-      - libavcodec-extra-*
+      - libavcodec-extra-54
 install:
 - pip install -r requirements.txt
 - pip install python-coveralls
