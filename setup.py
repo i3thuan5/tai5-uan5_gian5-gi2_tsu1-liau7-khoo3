@@ -59,6 +59,7 @@ setup(
     ],
     install_requires=[
         'tai5-uan5-gian5-gi2-kang1-ku7>=0.5.9',
+        'pypi-libavwrapper',
         'django>=1.8.0',
         'pyyaml',
         'lxml',
