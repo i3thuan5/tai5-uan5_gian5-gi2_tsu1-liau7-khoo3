@@ -27,6 +27,7 @@ install:
 branches:
   only:
   - master
+  - /\d+\.\d+\.\d+/
 script:
 - coverage run --source=臺灣言語資料庫 manage.py test
 - pip install .
