@@ -6,7 +6,8 @@ sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
 sudo -u postgres createuser --superuser $USER
 sudo -u postgres createdb $USER
 psql
-	\password Taiwanese(可自訂)
+	\password
+		Taiwanese(密碼可自訂)
 ```
 
 ## Django專案設定

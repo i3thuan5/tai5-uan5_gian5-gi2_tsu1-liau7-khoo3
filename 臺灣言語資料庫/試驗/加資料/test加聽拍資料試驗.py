@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 class 加聽拍資料試驗(TestCase, 加資料試驗):
 
     def setUp(self):
-        self.加初始資料()
+        self.加初始資料佮設定變數()
         self.資料表 = 聽拍表
         self.中研院聽拍資料庫 = 聽拍規範表.objects.create(
             規範名='中研院聽拍資料庫',

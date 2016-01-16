@@ -4,3 +4,4 @@ __pycache__/
 /.settings
 /venv
 /文件/_*
+/node_modules/

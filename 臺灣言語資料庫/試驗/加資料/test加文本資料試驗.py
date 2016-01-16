@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 class 加文本資料試驗(TestCase, 加資料試驗):
 
     def setUp(self):
-        self.加初始資料()
+        self.加初始資料佮設定變數()
         self.資料表 = 文本表
         self.詞內容.update({
             '文本資料': '媠',

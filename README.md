@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg?branch=master)](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 [![Coverage Status](https://coveralls.io/repos/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/badge.svg)](https://coveralls.io/r/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
-[![Documentation Status](https://readthedocs.org/projects/tai5-uan5-gian5-gi2-tsu1-liau7-khoo3/badge/?version=latest)](https://readthedocs.org/projects/tai5-uan5-gian5-gi2-tsu1-liau7-khoo3/?badge=latest)
 
 提供收集語料介面的Django函式庫，
 
@@ -14,7 +13,7 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 
-說明文件：<http://tai5-uan5-gian5-gi2-tsu1-liau7-khoo3.readthedocs.org>
+說明文件[佇遮](http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)！！
 
 
 ## 授權說明

@@ -14,9 +14,10 @@ Contents:
    介紹
    安裝
    使用Postgres
+   資料匯入
+   Taiwanese-Corpus專案
    資料結構
    資料輸出
-   資料來源
    臺灣言語服務
    臺灣言語平臺
 

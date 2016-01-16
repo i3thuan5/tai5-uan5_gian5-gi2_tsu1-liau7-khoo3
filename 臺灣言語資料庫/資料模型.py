@@ -5,8 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import File, ContentFile
 from django.db import models
 from django.db.models import Count
+import io
 import json
 import os
+from urllib import request
 
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
@@ -79,7 +81,7 @@ class 來源表(models.Model):
 
 class 版權表(models.Model):
     # 	會使公開，袂使公開
-    版權 = models.CharField(unique=True, max_length=20)
+    版權 = models.CharField(unique=True, max_length=100)
 
 
 class 種類表(models.Model):
@@ -153,6 +155,10 @@ class 資料表(models.Model):
         for 屬性 in self.屬性.all():
             內容結果[屬性.分類] = json.loads(屬性.性質)
         return 內容結果
+
+    @classmethod
+    def 資料數量(cls):
+        return cls.objects.all().count()
 
     def _加基本內容而且儲存(self, 內容):
         self.收錄者 = self._揣來源資料(內容['收錄者'], False)
@@ -295,12 +301,33 @@ class 影音表(資料表):
     def 加資料(cls, 輸入內容):
         影音 = cls()
         內容 = 影音._內容轉物件(輸入內容)
+        if '原始影音所在' in 內容 and '原始影音資料' in 內容:
+            raise ValueError('「所在」佮「資料」提供一个就好！！')
+        if '原始影音所在' in 內容 and '原始影音資料' not in 內容:
+            return cls._影音所在加資料(內容)
         if not hasattr(內容['原始影音資料'], 'read'):
             raise ValueError('影音資料必須是檔案')
         影音._加基本內容而且儲存(內容)
         影音._存原始影音資料(內容['原始影音資料'])
         影音._產生網頁聲音資料()
         return 影音
+
+    @classmethod
+    def _影音所在加資料(cls, 舊內容):
+        新內容 = {}
+        新內容.update(舊內容)
+        所在 = 新內容.pop('原始影音所在')
+        try:
+            with io.open(所在, 'rb') as 檔案:
+                新內容['原始影音資料'] = 檔案
+                return cls.加資料(新內容)
+        except:
+            if not 所在.startswith('http://') and not 所在.startswith('https://'):
+                所在 = 'http://' + 所在
+            with request.urlopen(所在) as 檔案:
+                with io.BytesIO(檔案.read()) as 暫存:
+                    新內容['原始影音資料'] = 暫存
+                    return cls.加資料(新內容)
 
     def 寫文本(self, 輸入文本內容):
         文本內容 = self._內容轉物件(輸入文本內容)
@@ -451,3 +478,15 @@ class 聽拍表(資料表):
 
     def 是校對後的資料(self):
         return hasattr(self, '來源校對資料')
+
+
+class 資料表工具:
+
+    @classmethod
+    def 顯示資料數量(cls):
+        return '外語有{}筆，影音有{}筆，文本有{}筆，聽拍有{}筆'.format(
+            外語表.資料數量(),
+            影音表.資料數量(),
+            文本表.資料數量(),
+            聽拍表.資料數量(),
+        )
