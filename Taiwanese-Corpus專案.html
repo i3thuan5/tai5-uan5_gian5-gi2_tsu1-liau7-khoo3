@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>使用Taiwanese-Corpus專案 &mdash; 臺灣言語說明 3.1.7 documentation</title>
+  <title>使用Taiwanese-Corpus專案 &mdash; 臺灣言語說明 3.1.8 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="臺灣言語說明 3.1.7 documentation" href="index.html"/>
+    <link rel="top" title="臺灣言語說明 3.1.8 documentation" href="index.html"/>
         <link rel="next" title="資料結構" href="資料結構.html"/>
         <link rel="prev" title="資料匯入" href="資料匯入.html"/> 
 
@@ -93,6 +93,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ok">臺灣閩南語卡拉OK正字字表</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#icorpus">iCorpus臺華平行新聞語料庫漢字臺羅版</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#">咱的字你敢捌－台語漢字</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#">猶未整理</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#">客家話</a><ul>
@@ -103,6 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#">族語</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#e">族語E樂園</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#virginia-fey-s-amis-dictionary">阿美語方敏英字典Virginia Fey&#8217;s Amis Dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#">猶未整理</a></li>
 </ul>
 </li>
 </ul>
@@ -164,7 +166,7 @@ https://Taiwanese-Corpus.github.io/moedict-data-twblg/轉到臺灣言語資料�
 https://Taiwanese-Corpus.github.io/moedict-data-twblg/轉到臺灣言語資料庫/資料/異用字.yaml <span class="se">\</span>
 https://Taiwanese-Corpus.github.io/moe_minkalaok/閩南語卡拉OK正字字表.yaml <span class="se">\</span>
 https://Taiwanese-Corpus.github.io/icorpus_ka1_han3-ji7/臺華平行新聞語料庫.yaml <span class="se">\</span>
-https://Taiwanese-Corpus.github.io/linya-huang_taiwanesecharacters/咱的字你敢捌.yaml <span class="se">\</span>
+https://Taiwanese-Corpus.github.io/Linya-Huang_2014_taiwanesecharacters/咱的字你敢捌.yaml <span class="se">\</span>
 https://Taiwanese-Corpus.github.io/moedict-data-hakka/臺灣客家語常用詞辭典網路版語料.yaml <span class="se">\</span>
 https://Taiwanese-Corpus.github.io/hakka_elearning/臺灣客話詞彙資料庫語料.yaml <span class="se">\</span>
 https://Taiwanese-Corpus.github.io/klokah_data_extract/族語E樂園.yaml <span class="se">\</span>
@@ -175,66 +177,129 @@ https://Taiwanese-Corpus.github.io/amis-data/dict-amis.yaml
 <div class="section" id="">
 <span id="id2"></span><h2>臺語/閩南語<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id3"></span><h3>臺灣閩南語常用詞辭典<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/moedict-data-twblg/tree/gh-pages/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB">連結</a></p>
+<span id="id3"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/moedict-data-twblg/tree/gh-pages/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB">臺灣閩南語常用詞辭典</a><a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/moedict-data-twblg/轉到臺灣言語資料庫/資料/xls整理.yaml https://Taiwanese-Corpus.github.io/moedict-data-twblg/轉到臺灣言語資料庫/資料/異用字.yaml
 </pre></div>
 </div>
 </div>
 <div class="section" id="ok">
-<span id="ok"></span><h3>臺灣閩南語卡拉OK正字字表<a class="headerlink" href="#ok" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/moe_minkalaok">連結</a></p>
+<span id="ok"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/moe_minkalaok">臺灣閩南語卡拉OK正字字表</a><a class="headerlink" href="#ok" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/moe_minkalaok/閩南語卡拉OK正字字表.yaml
 </pre></div>
 </div>
 </div>
 <div class="section" id="icorpus">
-<span id="icorpus"></span><h3>iCorpus臺華平行新聞語料庫漢字臺羅版<a class="headerlink" href="#icorpus" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/icorpus_ka1_han3-ji7">連結</a></p>
+<span id="icorpus"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/icorpus_ka1_han3-ji7">iCorpus臺華平行新聞語料庫漢字臺羅版</a><a class="headerlink" href="#icorpus" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/icorpus_ka1_han3-ji7/臺華平行新聞語料庫.yaml
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
-<span id="id4"></span><h3>咱的字你敢捌－台語漢字<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/linya-huang_taiwanesecharacters">連結</a></p>
-<div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/linya-huang_taiwanesecharacters/咱的字你敢捌.yaml
+<span id="id4"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/Linya-Huang_2014_taiwanesecharacters">咱的字你敢捌－台語漢字</a><a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/Linya-Huang_2014_taiwanesecharacters/咱的字你敢捌.yaml
 </pre></div>
 </div>
 </div>
+<div class="section" id="">
+<span id="id5"></span><h3>猶未整理<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<p>遮的語料攏猶未提供臺灣言語資料庫yaml格式，毋過大部份攏好處理。語料專案照處理方法排：</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/nmtl_dadwt">台語文數位典藏資料庫</a><ul>
+<li>純文字、臺灣言語工具分詞</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Ungian_2005_guliau-supin">台語文語料庫蒐集及語料庫為本台語書面語音節詞頻統計</a><ul>
+<li>純文字</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Schlegel-Gustave_1886_Nederlandsch-Chineesch-Woordenboek">荷華文語類參</a><ul>
+<li>xls</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/J.-J.-C.-Francken_C.-F.-M.-de-Grijs_1882_Chineesch-Hollandsch_woordenboek-van-het-Emoi-dialekt">厦荷詞典</a><ul>
+<li>xls</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Loh_2004_hanyu-document">駱嘉鵬老師華語臺語客語文件-字典、對應表</a><ul>
+<li>xls</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Bernard-L.M.-Embree_1973_A-Dictionary-of-Southern-Min">Embree台英辭典</a><ul>
+<li>xls</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Tinn-liong-ui_2000_taihoa-dictionary">台文/華文線頂辭典</a><ul>
+<li>xls</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Ungian_2009_KIPsupin">教育部臺灣閩南語字詞頻調查工作</a><ul>
+<li>允言整理過的doc</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/kok4hau7-kho3pun2">臺語國校仔課本</a><ul>
+<li>允言整理過的doc</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Pakhelke-1916_KoTan-1975_hiantaiekpun-2008_tailwanese-bible">新約聖經語料</a><ul>
+<li>允言整理過的doc</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Carstairs-Douglas_1873_chinese-english-dictionary">廈英大辭典</a><ul>
+<li>未整理的doc</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/Ogawa-Naoyoshi_1931-1932">台日大辭典台語譯本</a><ul>
+<li>sql</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/koktai">吳守禮《國臺對照活用辭典》電子化</a><ul>
+<li>專案內，有parser會當轉做jade格式</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/unclassified_corpus">猶未整理的語料</a><ul>
+<li>csv、xls…</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/internet_corpus">網路語料</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="">
-<span id="id5"></span><h2>客家話<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id6"></span><h2>客家話<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id6"></span><h3>教育部臺灣客家語常用詞辭典<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id7"></span><h3>教育部臺灣客家語常用詞辭典<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/moedict-data-hakka/tree/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB">連結</a></p>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/moedict-data-hakka/臺灣客家語常用詞辭典網路版語料.yaml
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
-<span id="id7"></span><h3>客語能力認證資料檔<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/hakka_elearning">連結</a></p>
+<span id="id8"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/hakka_elearning">客語能力認證資料檔</a><a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/hakka_elearning/臺灣客話詞彙資料庫語料.yaml
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="">
-<span id="id8"></span><h2>族語<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id9"></span><h2>族語<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="e">
-<span id="e"></span><h3>族語E樂園<a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/moedict-data-twblg/tree/gh-pages/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB">連結</a></p>
+<span id="e"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/moedict-data-twblg/tree/gh-pages/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB">族語E樂園</a><a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/klokah_data_extract/族語E樂園.yaml
 </pre></div>
 </div>
 </div>
 <div class="section" id="virginia-fey-s-amis-dictionary">
-<span id="virginia-fey-s-amis-dictionary"></span><h3>阿美語方敏英字典Virginia Fey&#8217;s Amis Dictionary<a class="headerlink" href="#virginia-fey-s-amis-dictionary" title="Permalink to this headline">¶</a></h3>
-<p>專案<a class="reference external" href="https://github.com/Taiwanese-Corpus/amis-data">連結</a></p>
+<span id="virginia-fey-s-amis-dictionary"></span><h3><a class="reference external" href="https://github.com/Taiwanese-Corpus/amis-data">阿美語方敏英字典Virginia Fey&#8217;s Amis Dictionary</a><a class="headerlink" href="#virginia-fey-s-amis-dictionary" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/amis-data/dict-amis.yaml
 </pre></div>
 </div>
+</div>
+<div class="section" id="">
+<span id="id10"></span><h3>猶未整理<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/amis-francais">Dictionnaire Amis-Français</a></li>
+<li><a class="reference external" href="https://github.com/Taiwanese-Corpus/kaxabu-muwalak-misa-a-ahan-bizu">噶哈巫語分類辭典</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -280,7 +345,7 @@ https://Taiwanese-Corpus.github.io/amis-data/dict-amis.yaml
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'3.1.7',
+            VERSION:'3.1.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
