@@ -60,6 +60,8 @@ python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/Linya-Huang_201
   * 未整理的doc
 * [台日大辭典台語譯本](https://github.com/Taiwanese-Corpus/Ogawa-Naoyoshi_1931-1932)
   * sql
+* [吳守禮《國臺對照活用辭典》電子化](https://github.com/Taiwanese-Corpus/koktai)
+  * 專案內，有parser會當轉做jade格式
 * [猶未整理的語料](https://github.com/Taiwanese-Corpus/unclassified_corpus)
   * csv、xls…
 * [網路語料](https://github.com/Taiwanese-Corpus/internet_corpus)
