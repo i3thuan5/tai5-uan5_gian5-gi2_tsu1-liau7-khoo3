@@ -67,8 +67,7 @@ python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/Linya-Huang_201
 * [網路語料](https://github.com/Taiwanese-Corpus/internet_corpus)
 
 ## 客家話
-### 教育部臺灣客家語常用詞辭典
-專案[連結](https://github.com/Taiwanese-Corpus/moedict-data-hakka/tree/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB)
+### [教育部臺灣客家語常用詞辭典](https://github.com/Taiwanese-Corpus/moedict-data-hakka/tree/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB/%E8%BD%89%E5%88%B0%E8%87%BA%E7%81%A3%E8%A8%80%E8%AA%9E%E8%B3%87%E6%96%99%E5%BA%AB)
 ```bash
 python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/moedict-data-hakka/臺灣客家語常用詞辭典網路版語料.yaml
 ```
