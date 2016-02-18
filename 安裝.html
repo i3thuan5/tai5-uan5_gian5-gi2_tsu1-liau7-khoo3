@@ -100,8 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語服務.html">臺灣言語服務</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語平臺.html">臺灣言語平臺</a></li>
 </ul>
 
             
@@ -150,36 +148,36 @@
 <span id="id1"></span><h1>安裝方法<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="">
 <span id="id2"></span><h2>設置環境<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install -y python3 python-virtualenv g++ python3-dev zlib1g-dev libbz2-dev liblzma-dev libboost-all-dev libyaml-dev libxslt1-dev libav-tools libmp3lame0 libavcodec-extra-*
-virtualenv venv --python python3 <span class="c"># 設置環境檔</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install -y python3 python-virtualenv g++ python3-dev zlib1g-dev libbz2-dev liblzma-dev libboost-all-dev libyaml-dev libxslt1-dev libav-tools libmp3lame0 libavcodec-extra-*
+virtualenv venv --python python3 <span class="c1"># 設置環境檔</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id3"></span><h2>載入環境<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>每次使用前必須執行</p>
-<div class="highlight-bash"><div class="highlight"><pre>. venv/bin/activate 
+<div class="highlight-bash"><div class="highlight"><pre><span></span>. venv/bin/activate 
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id4"></span><h2>安裝<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>pip install tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id5"></span><h2>設定<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>在Django的<code class="docutils literal"><span class="pre">settings.py</span></code>設定檔加上</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span>
-    <span class="s">&#39;臺灣言語資料庫&#39;</span><span class="p">,</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span>
+    <span class="s1">&#39;臺灣言語資料庫&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id6"></span><h2>開發<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>pip install -r requirements.txt
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install -r requirements.txt
 python manage.py <span class="nb">test</span>
 </pre></div>
 </div>
@@ -187,23 +185,23 @@ python manage.py <span class="nb">test</span>
 <div class="section" id="">
 <span id="id7"></span><h2>文件<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>先裝好<code class="docutils literal"><span class="pre">python-virtualenv</span></code>開發環境，閣來環境設定</p>
-<div class="highlight-bash"><div class="highlight"><pre>pip install sphinx sphinx-autobuild recommonmark
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install sphinx sphinx-autobuild recommonmark
 npm i
 </pre></div>
 </div>
 <p>裝起哩</p>
-<div class="highlight-bash"><div class="highlight"><pre>npm run deploy
+<div class="highlight-bash"><div class="highlight"><pre><span></span>npm run deploy
 </pre></div>
 </div>
 <div class="section" id="">
 <span id="id8"></span><h3>自頭開始<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre>mkdir 文件
-<span class="nb">cd </span>文件
-sphinx-quickstart <span class="c"># 建立一開始的專案</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir 文件
+<span class="nb">cd</span> 文件
+sphinx-quickstart <span class="c1"># 建立一開始的專案</span>
 </pre></div>
 </div>
 <p>編譯</p>
-<div class="highlight-python"><div class="highlight"><pre>cd 文件
+<div class="highlight-python"><div class="highlight"><pre><span></span>cd 文件
 make html
 </pre></div>
 </div>

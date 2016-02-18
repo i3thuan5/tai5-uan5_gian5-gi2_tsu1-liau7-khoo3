@@ -96,8 +96,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語服務.html">臺灣言語服務</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語平臺.html">臺灣言語平臺</a></li>
 </ul>
 
             
@@ -146,9 +144,9 @@
 <span id="postgres"></span><h1>使用Postgres<a class="headerlink" href="#postgres" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="ubuntu14-04-mint17">
 <span id="ubuntu14-04-mint17"></span><h2>在Ubuntu14.04/Mint17上快速設定環境<a class="headerlink" href="#ubuntu14-04-mint17" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
-sudo -u postgres createuser --superuser <span class="nv">$USER</span>
-sudo -u postgres createdb <span class="nv">$USER</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
+sudo -u postgres createuser --superuser $USER
+sudo -u postgres createdb $USER
 psql
     <span class="se">\p</span>assword
         Taiwanese<span class="o">(</span>密碼可自訂<span class="o">)</span>
@@ -157,18 +155,18 @@ psql
 </div>
 <div class="section" id="django">
 <span id="django"></span><h2>Django專案設定<a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre>pip install psycopg2
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install psycopg2
 </pre></div>
 </div>
 <p>在的<code class="docutils literal"><span class="pre">setting.py</span></code>改</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span class="p">,</span>
-        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;$USER&#39;</span><span class="p">,</span> <span class="c"># Linux&#39;s username</span>
-        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;$USER&#39;</span><span class="p">,</span> <span class="c"># Linux&#39;s username</span>
-        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;Taiwanese&#39;</span><span class="p">,</span> <span class="c"># 剛輸入的密碼</span>
-        <span class="s">&#39;HOST&#39;</span><span class="p">:</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span>
-        <span class="s">&#39;PORT&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;$USER&#39;</span><span class="p">,</span> <span class="c1"># Linux&#39;s username</span>
+        <span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;$USER&#39;</span><span class="p">,</span> <span class="c1"># Linux&#39;s username</span>
+        <span class="s1">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s1">&#39;Taiwanese&#39;</span><span class="p">,</span> <span class="c1"># 剛輸入的密碼</span>
+        <span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -176,30 +174,30 @@ psql
 </div>
 <div class="section" id="">
 <span id="id1"></span><h2>初使化資料庫<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre>python manage.py migrate
+<div class="highlight-python"><div class="highlight"><pre><span></span>python manage.py migrate
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id2"></span><h2>資料備份<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>匯出做檔案</p>
-<div class="highlight-bash"><div class="highlight"><pre>pg_dump <span class="nv">$USER</span> -O <span class="p">|</span> gzip &gt; 臺灣言語資料庫<span class="sb">`</span>date +%m%d<span class="sb">`</span>.sql.gz
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pg_dump $USER -O <span class="p">|</span> gzip &gt; 臺灣言語資料庫<span class="sb">`</span>date +%m%d<span class="sb">`</span>.sql.gz
 </pre></div>
 </div>
 <p>檔案匯入</p>
-<div class="highlight-bash"><div class="highlight"><pre>gzip -c -d 臺灣言語資料庫20150903.sql.gz <span class="p">|</span> psql <span class="nv">$USER</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>gzip -c -d 臺灣言語資料庫20150903.sql.gz <span class="p">|</span> psql $USER
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id3"></span><h2>清掉全部資料<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>使用<code class="docutils literal"><span class="pre">psql</span></code>，然後輸入</p>
-<div class="highlight-python"><div class="highlight"><pre>drop schema public cascade;
+<div class="highlight-python"><div class="highlight"><pre><span></span>drop schema public cascade;
 create schema public;
 </pre></div>
 </div>
 <p>愛記得閣初使化資料庫</p>
-<div class="highlight-python"><div class="highlight"><pre>python manage.py migrate
+<div class="highlight-python"><div class="highlight"><pre><span></span>python manage.py migrate
 </pre></div>
 </div>
 </div>

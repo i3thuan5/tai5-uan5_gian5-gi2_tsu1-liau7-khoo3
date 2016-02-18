@@ -18,8 +18,6 @@ Contents:
    Taiwanese-Corpus專案
    資料結構
    資料輸出
-   臺灣言語服務
-   臺灣言語平臺
 
 
 

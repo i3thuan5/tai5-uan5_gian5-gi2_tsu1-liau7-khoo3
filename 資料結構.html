@@ -99,8 +99,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語服務.html">臺灣言語服務</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語平臺.html">臺灣言語平臺</a></li>
 </ul>
 
             
@@ -153,65 +151,65 @@
 <p>目前有外語、影音、文本佮聽拍四種。</p>
 <div class="section" id="">
 <span id="id3"></span><h3>外語<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>外語
+<div class="highlight-python"><div class="highlight"><pre><span></span>外語
 ├── 影音
 └── 文本
 </pre></div>
 </div>
 <p>加一筆外語當資料源頭：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">外語</span> <span class="o">=</span> <span class="n">外語表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">外語內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">外語</span> <span class="o">=</span> <span class="n">外語表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">外語內容</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>建立對應的影音或翻譯文本：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">外語</span><span class="o">.</span><span class="n">錄母語</span><span class="p">(</span><span class="n">影音內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">外語</span><span class="o">.</span><span class="n">錄母語</span><span class="p">(</span><span class="n">影音內容</span><span class="p">)</span>
 <span class="n">外語</span><span class="o">.</span><span class="n">翻母語</span><span class="p">(</span><span class="n">文本內容</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id4"></span><h3>影音<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>影音
+<div class="highlight-python"><div class="highlight"><pre><span></span>影音
 ├── 文本
 └── 聽拍
 </pre></div>
 </div>
 <p>加一筆影音當資料源頭：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">影音</span> <span class="o">=</span> <span class="n">影音表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">影音內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">影音</span> <span class="o">=</span> <span class="n">影音表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">影音內容</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>建立對應的文本或聽打：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">影音</span><span class="o">.</span><span class="n">寫文本</span><span class="p">(</span><span class="n">文本內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">影音</span><span class="o">.</span><span class="n">寫文本</span><span class="p">(</span><span class="n">文本內容</span><span class="p">)</span>
 <span class="n">影音</span><span class="o">.</span><span class="n">寫聽拍</span><span class="p">(</span><span class="n">聽拍內容</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id5"></span><h3>文本<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>文本
+<div class="highlight-python"><div class="highlight"><pre><span></span>文本
 └── 新文本
 </pre></div>
 </div>
 <p>加一筆母語文本當資料源頭：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">文本</span> <span class="o">=</span> <span class="n">文本表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">文本內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">文本</span> <span class="o">=</span> <span class="n">文本表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">文本內容</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>校對文本內容，建立新的文本</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">文本</span><span class="o">.</span><span class="n">校對做</span><span class="p">(</span><span class="n">新文本內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">文本</span><span class="o">.</span><span class="n">校對做</span><span class="p">(</span><span class="n">新文本內容</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
 <span id="id6"></span><h3>聽拍<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>聽拍
+<div class="highlight-python"><div class="highlight"><pre><span></span>聽拍
 └── 新聽拍
 </pre></div>
 </div>
 <p>加一筆母語聽拍當資料源頭：</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">聽拍</span> <span class="o">=</span> <span class="n">聽拍表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">聽拍內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">聽拍</span> <span class="o">=</span> <span class="n">聽拍表</span><span class="o">.</span><span class="n">加資料</span><span class="p">(</span><span class="n">聽拍內容</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>校對聽拍內容，建立新的聽拍</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="n">聽拍</span><span class="o">.</span><span class="n">校對做</span><span class="p">(</span><span class="n">新聽拍內容</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">聽拍</span><span class="o">.</span><span class="n">校對做</span><span class="p">(</span><span class="n">新聽拍內容</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -219,7 +217,7 @@
 <div class="section" id="">
 <span id="id7"></span><h2>複雜資料範例<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>以外語為資料源頭：</p>
-<div class="highlight-python"><div class="highlight"><pre>外語
+<div class="highlight-python"><div class="highlight"><pre><span></span>外語
 ├── 影音
 │   ├── 文本1
 │   │   └── 第一擺校對的文本1

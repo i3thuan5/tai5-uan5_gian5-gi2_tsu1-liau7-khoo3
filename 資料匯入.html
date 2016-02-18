@@ -99,8 +99,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語服務.html">臺灣言語服務</a></li>
-<li class="toctree-l1"><a class="reference internal" href="臺灣言語平臺.html">臺灣言語平臺</a></li>
 </ul>
 
             
@@ -161,7 +159,7 @@ Postgres請參考專頁。</p>
 <div class="section" id="">
 <span id="id3"></span><h3>匯入方法<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <p>使用<code class="docutils literal"><span class="pre">臺灣言語資料庫</span></code>提供的<code class="docutils literal"><span class="pre">匯入資料</span></code>指令</p>
-<div class="highlight-bash"><div class="highlight"><pre>python manage.py 匯入資料  <span class="o">[</span>--莫匯入影音<span class="o">]</span> 網址 <span class="o">[</span>網址 ...<span class="o">]</span> 
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py 匯入資料  <span class="o">[</span>--莫匯入影音<span class="o">]</span> 網址 <span class="o">[</span>網址 ...<span class="o">]</span> 
 </pre></div>
 </div>
 <p>若用途或硬體設備考量，不需要匯入影音，可加入參數<code class="docutils literal"><span class="pre">--莫匯入影音</span></code>。</p>
@@ -170,49 +168,49 @@ Postgres請參考專頁。</p>
 <span id="id4"></span><h3>資料結構<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <p>最上層放公家的變數，像是<code class="docutils literal"><span class="pre">來源</span></code>、<code class="docutils literal"><span class="pre">著作年</span></code>、……
 <code class="docutils literal"><span class="pre">下層</span></code>放資料，像是<code class="docutils literal"><span class="pre">外語</span></code>的「美麗」接<code class="docutils literal"><span class="pre">影音</span></code>再接<code class="docutils literal"><span class="pre">文本</span></code>的「媠噹噹」例如下</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">下層</span><span class="p-Indicator">:</span>
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">下層</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">下層</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">屬性</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">音標</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">suí-tang-tang</span>
-      <span class="l-Scalar-Plain">文本資料</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">媠噹噹</span>
-    <span class="l-Scalar-Plain">原始影音所在</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">audio/08345.mp3</span>
-  <span class="l-Scalar-Plain">外語語言</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">華語</span>
-  <span class="l-Scalar-Plain">外語資料</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">美麗</span>
-  <span class="l-Scalar-Plain">種類</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">語句</span>
-<span class="l-Scalar-Plain">來源</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">名</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">教育部閩南語辭典</span>
-<span class="l-Scalar-Plain">版權</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">姓名標示-禁止改作 3.0 台灣</span>
-<span class="l-Scalar-Plain">種類</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">字詞</span>
-<span class="l-Scalar-Plain">著作年</span><span class="p-Indicator">:</span> <span class="s">&#39;2015&#39;</span>
-<span class="l-Scalar-Plain">著作所在地</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">臺灣</span>
-<span class="l-Scalar-Plain">語言腔口</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">閩南語</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">下層</span><span class="p p-Indicator">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">下層</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">下層</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">屬性</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">音標</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">suí-tang-tang</span>
+      <span class="l l-Scalar l-Scalar-Plain">文本資料</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">媠噹噹</span>
+    <span class="l l-Scalar l-Scalar-Plain">原始影音所在</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">audio/08345.mp3</span>
+  <span class="l l-Scalar l-Scalar-Plain">外語語言</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">華語</span>
+  <span class="l l-Scalar l-Scalar-Plain">外語資料</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">美麗</span>
+  <span class="l l-Scalar l-Scalar-Plain">種類</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">語句</span>
+<span class="l l-Scalar l-Scalar-Plain">來源</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">名</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">教育部閩南語辭典</span>
+<span class="l l-Scalar l-Scalar-Plain">版權</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">姓名標示-禁止改作 3.0 台灣</span>
+<span class="l l-Scalar l-Scalar-Plain">種類</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">字詞</span>
+<span class="l l-Scalar l-Scalar-Plain">著作年</span><span class="p p-Indicator">:</span> <span class="s">&#39;2015&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">著作所在地</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">臺灣</span>
+<span class="l l-Scalar l-Scalar-Plain">語言腔口</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">閩南語</span>
 </pre></div>
 </div>
 <p>若是資料形式無分支（沒有一個外語接兩個影音的情況），會使寫做<code class="docutils literal"><span class="pre">相關資料組</span></code>，裡面陣列的內容視為依序相關的</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">下層</span><span class="p-Indicator">:</span>
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">相關資料組</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">外語語言</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">華語</span>
-    <span class="l-Scalar-Plain">外語資料</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">美麗</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">原始影音所在</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">audio/08345.mp3</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">文本資料</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">媠噹噹</span>
-    <span class="l-Scalar-Plain">屬性</span><span class="p-Indicator">:</span>
-      <span class="l-Scalar-Plain">音標</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hinn7-kiann3 phua3-0khi3-0ah4 .</span>
-<span class="l-Scalar-Plain">來源</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">名</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">教育部閩南語辭典</span>
-<span class="l-Scalar-Plain">版權</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">姓名標示-禁止改作 3.0 台灣</span>
-<span class="l-Scalar-Plain">種類</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">字詞</span>
-<span class="l-Scalar-Plain">著作年</span><span class="p-Indicator">:</span> <span class="s">&#39;2015&#39;</span>
-<span class="l-Scalar-Plain">著作所在地</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">臺灣</span>
-<span class="l-Scalar-Plain">語言腔口</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">閩南語</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">下層</span><span class="p p-Indicator">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">相關資料組</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">外語語言</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">華語</span>
+    <span class="l l-Scalar l-Scalar-Plain">外語資料</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">美麗</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">原始影音所在</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">audio/08345.mp3</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">文本資料</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">媠噹噹</span>
+    <span class="l l-Scalar l-Scalar-Plain">屬性</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">音標</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hinn7-kiann3 phua3-0khi3-0ah4 .</span>
+<span class="l l-Scalar l-Scalar-Plain">來源</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">名</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">教育部閩南語辭典</span>
+<span class="l l-Scalar l-Scalar-Plain">版權</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">姓名標示-禁止改作 3.0 台灣</span>
+<span class="l l-Scalar l-Scalar-Plain">種類</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">字詞</span>
+<span class="l l-Scalar l-Scalar-Plain">著作年</span><span class="p p-Indicator">:</span> <span class="s">&#39;2015&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">著作所在地</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">臺灣</span>
+<span class="l l-Scalar l-Scalar-Plain">語言腔口</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">閩南語</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="dump">
 <span id="id5"></span><h3>dump方法<a class="headerlink" href="#dump" title="Permalink to this headline">¶</a></h3>
 <p>若是在<code class="docutils literal"><span class="pre">資料</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">'來源':</span> <span class="pre">...</span> <span class="pre">}</span></code>，可用以下程式輸出成yaml格式檔</p>
-<div class="highlight-python3"><div class="highlight"><pre><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;臺灣言語資料庫語料.yaml&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">檔案</span><span class="p">:</span>
-    <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">資料</span><span class="p">,</span> <span class="n">檔案</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="k">False</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;臺灣言語資料庫語料.yaml&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">檔案</span><span class="p">:</span>
+    <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">資料</span><span class="p">,</span> <span class="n">檔案</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
