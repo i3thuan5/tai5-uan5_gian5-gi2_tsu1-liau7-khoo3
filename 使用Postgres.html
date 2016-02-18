@@ -93,9 +93,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="資料匯入.html">資料匯入</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">Taiwanese-Corpus語料專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="開發.html">開發</a></li>
 </ul>
 
             
@@ -144,12 +145,12 @@
 <span id="postgres"></span><h1>使用Postgres<a class="headerlink" href="#postgres" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="ubuntu14-04-mint17">
 <span id="ubuntu14-04-mint17"></span><h2>在Ubuntu14.04/Mint17上快速設定環境<a class="headerlink" href="#ubuntu14-04-mint17" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
+<p>設定資料庫使用者和密碼</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
 sudo -u postgres createuser --superuser $USER
 sudo -u postgres createdb $USER
 psql
-    <span class="se">\p</span>assword
-        Taiwanese<span class="o">(</span>密碼可自訂<span class="o">)</span>
+    \password
 </pre></div>
 </div>
 </div>

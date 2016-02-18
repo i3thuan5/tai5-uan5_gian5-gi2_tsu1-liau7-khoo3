@@ -30,7 +30,8 @@
   
 
   
-    <link rel="top" title="臺灣言語說明 3.1.8 documentation" href="index.html"/> 
+    <link rel="top" title="臺灣言語說明 3.1.8 documentation" href="index.html"/>
+        <link rel="prev" title="資料輸出" href="資料輸出.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,14 +80,19 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="介紹.html">介紹</a></li>
 <li class="toctree-l1"><a class="reference internal" href="安裝.html">安裝方法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="使用Postgres.html">使用Postgres</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料匯入.html">資料匯入</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">Taiwanese-Corpus語料專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">開發</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#">試驗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#">文件</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -135,82 +141,21 @@
 <span id="id1"></span><h1>開發<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="">
 <span id="id2"></span><h2>試驗<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="">
-<span id="id3"></span><h3>全部走一擺<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;drop schema public cascade;create schema public;&#39;</span> <span class="p">|</span> psql $USER
-gzip -c -d 臺灣言語資料庫20150903.sql.gz <span class="p">|</span> psql $USER
-<span class="nb">echo</span> <span class="s2">&quot;from 臺灣言語服務.模型訓練 import 模型訓練; 模型訓練.走()&quot;</span> <span class="p">|</span> python manage.py shell
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install . <span class="p">;</span> pip uninstall -y tai5-uan5_gian5-gi2_tsu1-liau7-khoo3
+python manage.py <span class="nb">test</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="">
-<span id="id4"></span><h3>個別試驗<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py <span class="nb">test</span> -p <span class="s1">&#39;test*單元試驗.py&#39;</span> <span class="c1"># 走單元試驗</span>
-pip install tblib<span class="p">;</span> python -m unittest --parallel <span class="c1"># 同齊試驗</span>
-python -m unittest <span class="c1"># 除錯方便</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id5"></span><h2>文件<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>文件<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>先裝好<code class="docutils literal"><span class="pre">python-virtualenv</span></code>開發環境，閣來環境設定</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pip install sphinx sphinx-autobuild recommonmark
-npm i
 </pre></div>
 </div>
 <p>裝起哩</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>npm run deploy
+<div class="highlight-bash"><div class="highlight"><pre><span></span>npm i <span class="o">&amp;&amp;</span> npm run deploy
 </pre></div>
 </div>
-<div class="section" id="">
-<span id="id6"></span><h3>自頭開始<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<p>cd 文件
-sphinx-quickstart # 建立一開始的專案</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>編譯
-```bash
-make html
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id7"></span><h2>資料、模型路徑<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-text"><div class="highlight"><pre><span></span>資料/
-├── 合成模型
-│   └── 閩南語
-│       └── Taiwanese.htsvoice
-├── 翻譯模型
-│   └── 閩南語
-│       ├── model
-│       │   ├── moses.ini
-│       │   ├── phrase-table.gz
-│       │   └── reordering-table.wbe-msd-bidirectional-fe.gz
-│       ├── 母語辭典.txt.gz
-│       └── 語言模型.lm
-└── 翻譯語料
-    └── 閩南語
-        ├── 加工語料
-        │   ├── 字詞文本.txt.gz
-        │   ├── 對齊外語字詞.txt.gz
-        │   ├── 對齊外語語句.txt.gz
-        │   ├── 對齊母語字詞.txt.gz
-        │   ├── 對齊母語語句.txt.gz
-        │   └── 語句文本.txt.gz
-        ├── 字詞文本.txt.gz
-        ├── 對齊外語字詞.txt.gz
-        ├── 對齊外語語句.txt.gz
-        ├── 對齊母語字詞.txt.gz
-        ├── 對齊母語語句.txt.gz
-        ├── 語句文本.txt.gz
-        └── 語言模型資料夾
-            ├── 語言模型.lm
-            └── 語言模型.txt
-</pre></div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id8"></span><h2>翻譯方法<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -218,6 +163,13 @@ make html
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="資料輸出.html" class="btn btn-neutral" title="資料輸出" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

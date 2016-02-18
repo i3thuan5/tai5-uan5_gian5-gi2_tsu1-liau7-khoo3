@@ -1,4 +1,4 @@
-# 使用Taiwanese-Corpus專案
+# Taiwanese-Corpus語料專案
 ## 全部匯入
 ```bash
 python manage.py 匯入資料 \

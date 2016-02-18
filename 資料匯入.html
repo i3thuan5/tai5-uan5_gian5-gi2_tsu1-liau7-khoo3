@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="臺灣言語說明 3.1.8 documentation" href="index.html"/>
-        <link rel="next" title="使用Taiwanese-Corpus專案" href="Taiwanese-Corpus專案.html"/>
+        <link rel="next" title="Taiwanese-Corpus語料專案" href="Taiwanese-Corpus專案.html"/>
         <link rel="prev" title="使用Postgres" href="使用Postgres.html"/> 
 
   
@@ -86,6 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="安裝.html">安裝方法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="使用Postgres.html">使用Postgres</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">資料匯入</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#">匯入現有語料</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#">寫程式直接存入</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dump">使用現成資料庫dump檔案</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#yaml">匯入臺灣言語資料庫yaml格式資料</a><ul>
@@ -96,9 +97,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">使用Taiwanese-Corpus專案</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taiwanese-Corpus專案.html">Taiwanese-Corpus語料專案</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料輸出.html">資料輸出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="開發.html">開發</a></li>
 </ul>
 
             
@@ -146,7 +148,11 @@
   <div class="section" id="">
 <span id="id1"></span><h1>資料匯入<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="">
-<span id="id2"></span><h2>寫程式直接存入<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>匯入現有語料<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<p>可直接匯入<a class="reference external" href="http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/Taiwanese-Corpus%E5%B0%88%E6%A1%88.html">Taiwanese-Corpus語料專案</a>既有yaml格式資料</p>
+</div>
+<div class="section" id="">
+<span id="id3"></span><h2>寫程式直接存入<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>用資料結構<code class="docutils literal"><span class="pre">加資料</span></code>、<code class="docutils literal"><span class="pre">錄母語</span></code>、<code class="docutils literal"><span class="pre">翻母語</span></code>、<code class="docutils literal"><span class="pre">寫文本</span></code>、<code class="docutils literal"><span class="pre">寫聽拍</span></code>、<code class="docutils literal"><span class="pre">校對做</span></code>六種函式存入資料庫。</p>
 </div>
 <div class="section" id="dump">
@@ -157,7 +163,7 @@ Postgres請參考專頁。</p>
 <div class="section" id="yaml">
 <span id="yaml"></span><h2>匯入臺灣言語資料庫yaml格式資料<a class="headerlink" href="#yaml" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id3"></span><h3>匯入方法<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h3>匯入方法<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <p>使用<code class="docutils literal"><span class="pre">臺灣言語資料庫</span></code>提供的<code class="docutils literal"><span class="pre">匯入資料</span></code>指令</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py 匯入資料  <span class="o">[</span>--莫匯入影音<span class="o">]</span> 網址 <span class="o">[</span>網址 ...<span class="o">]</span> 
 </pre></div>
@@ -165,7 +171,7 @@ Postgres請參考專頁。</p>
 <p>若用途或硬體設備考量，不需要匯入影音，可加入參數<code class="docutils literal"><span class="pre">--莫匯入影音</span></code>。</p>
 </div>
 <div class="section" id="">
-<span id="id4"></span><h3>資料結構<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>資料結構<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <p>最上層放公家的變數，像是<code class="docutils literal"><span class="pre">來源</span></code>、<code class="docutils literal"><span class="pre">著作年</span></code>、……
 <code class="docutils literal"><span class="pre">下層</span></code>放資料，像是<code class="docutils literal"><span class="pre">外語</span></code>的「美麗」接<code class="docutils literal"><span class="pre">影音</span></code>再接<code class="docutils literal"><span class="pre">文本</span></code>的「媠噹噹」例如下</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">下層</span><span class="p p-Indicator">:</span>
@@ -207,7 +213,7 @@ Postgres請參考專頁。</p>
 </div>
 </div>
 <div class="section" id="dump">
-<span id="id5"></span><h3>dump方法<a class="headerlink" href="#dump" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>dump方法<a class="headerlink" href="#dump" title="Permalink to this headline">¶</a></h3>
 <p>若是在<code class="docutils literal"><span class="pre">資料</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">'來源':</span> <span class="pre">...</span> <span class="pre">}</span></code>，可用以下程式輸出成yaml格式檔</p>
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;臺灣言語資料庫語料.yaml&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">檔案</span><span class="p">:</span>
     <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">資料</span><span class="p">,</span> <span class="n">檔案</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -224,7 +230,7 @@ Postgres請參考專頁。</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Taiwanese-Corpus專案.html" class="btn btn-neutral float-right" title="使用Taiwanese-Corpus專案" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Taiwanese-Corpus專案.html" class="btn btn-neutral float-right" title="Taiwanese-Corpus語料專案" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="使用Postgres.html" class="btn btn-neutral" title="使用Postgres" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
