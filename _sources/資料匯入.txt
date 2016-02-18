@@ -1,7 +1,7 @@
 # 資料匯入
 
 ## 匯入現有語料
-可直接匯入[Taiwanese-Corpus語料專案](http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/Taiwanese-Corpus%E5%B0%88%E6%A1%88.html)既有yaml格式資料
+可直接匯入[Taiwanese-Corpus語料專案](http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_hok8-bu7/Taiwanese-Corpus%E8%AA%9E%E6%96%99.html)既有yaml格式資料
 
 ## 寫程式直接存入
 用資料結構`加資料`、`錄母語`、`翻母語`、`寫文本`、`寫聽拍`、`校對做`六種函式存入資料庫。
