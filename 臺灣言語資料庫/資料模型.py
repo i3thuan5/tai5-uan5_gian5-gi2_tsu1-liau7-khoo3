@@ -15,7 +15,6 @@ from libavwrapper.codec import AudioCodec, NO_VIDEO
 
 
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.解析整理.物件譀鏡 import 物件譀鏡
 from 臺灣言語資料庫.欄位資訊 import 語句
 
 
@@ -380,8 +379,6 @@ class 影音表(資料表):
 
 class 文本表(資料表):
     文本資料 = models.TextField(blank=False)
-    _分析器 = 拆文分析器()
-    _譀鏡 = 物件譀鏡()
 
     def __str__(self):
         return self.文本佮音標格式化資料()
@@ -409,11 +406,11 @@ class 文本表(資料表):
 
     def 文本佮音標格式化資料(self):
         try:
-            對齊句物件 = self._分析器.產生對齊句(
+            對齊句物件 = 拆文分析器.對齊句物件(
                 self.文本資料,
                 self.屬性.音標資料()
             )
-            return self._譀鏡.看分詞(對齊句物件)
+            return 對齊句物件.看分詞()
         except Exception:
             return self.文本資料
 
