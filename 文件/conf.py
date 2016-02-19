@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# 臺灣言語說明 documentation build configuration file, created by
+# 臺灣言語資料庫 documentation build configuration file, created by
 # sphinx-quickstart on Fri Aug 21 15:32:50 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -51,7 +51,7 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = '臺灣言語說明'
+project = '臺灣言語資料庫'
 copyright = '2015, 薛丞宏'
 author = '薛丞宏'
 
@@ -239,7 +239,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'sphinx.tex', '臺灣言語說明 Documentation',
+    (master_doc, 'sphinx.tex', '臺灣言語資料庫 Documentation',
      '薛丞宏', 'manual'),
 ]
 
@@ -269,7 +269,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'sphinx', '臺灣言語說明 Documentation',
+    (master_doc, 'sphinx', '臺灣言語資料庫 Documentation',
      [author], 1)
 ]
 
@@ -283,7 +283,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'sphinx', '臺灣言語說明 Documentation',
+    (master_doc, 'sphinx', '臺灣言語資料庫 Documentation',
      author, 'sphinx', 'One line description of project.',
      'Miscellaneous'),
 ]

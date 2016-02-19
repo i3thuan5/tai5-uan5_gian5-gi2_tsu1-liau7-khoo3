@@ -1,5 +1,0 @@
-tai5-uan5-gian5-gi2-kang1-ku7
-Django
-pypi-libavwrapper
-pyyaml
-lxml

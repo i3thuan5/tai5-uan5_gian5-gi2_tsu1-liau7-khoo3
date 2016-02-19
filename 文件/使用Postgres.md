@@ -1,13 +1,13 @@
 # 使用Postgres
 
 ## 在Ubuntu14.04/Mint17上快速設定環境
-```bash
+設定資料庫使用者和密碼
+```text
 sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
 sudo -u postgres createuser --superuser $USER
 sudo -u postgres createdb $USER
 psql
 	\password
-		Taiwanese(密碼可自訂)
 ```
 
 ## Django專案設定
