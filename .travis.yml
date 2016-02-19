@@ -21,7 +21,6 @@ addons:
       - libmp3lame0
       - libavcodec-extra-53
 install:
-- pip install -r requirements.txt
 - pip install python-coveralls
 - pip install flake8
 branches:
@@ -29,8 +28,8 @@ branches:
   - master
   - /\d+\.\d+\.\d+/
 script:
-- coverage run --source=臺灣言語資料庫 manage.py test
 - pip install .
+- coverage run --source=臺灣言語資料庫 manage.py test
 - flake8 --exclude=venv,migrations,文件 --max-line-length=93 .
 matrix: 
 after_success:
