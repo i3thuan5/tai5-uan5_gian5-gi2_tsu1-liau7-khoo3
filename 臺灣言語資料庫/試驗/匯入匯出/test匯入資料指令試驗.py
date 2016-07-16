@@ -1,24 +1,32 @@
 import io
+from os.path import join, dirname, abspath
 from re import search
 from unittest.mock import patch
 
+from django.core.exceptions import ValidationError
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase
 
 
 from 臺灣言語資料庫.匯出入 import 匯出入工具
-from django.core.exceptions import ValidationError
 
 
 class 匯入資料指令試驗(TestCase):
 
     @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
     @patch('urllib.request.urlopen')
-    def test_成功匯入(self, urlopenMocka, 匯入物件mocka):
+    def test_成功匯入網址(self, urlopenMocka, 匯入物件mocka):
         with io.StringIO() as out:
             call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
             self.assertIn('「臺灣言語資料庫.yaml」匯入成功', out.getvalue())
+
+    @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
+    def test_成功匯入檔案(self, 匯入物件mocka):
+        with io.StringIO() as out:
+            call_command(
+                '匯入資料', join(dirname(abspath(__file__)), '資料', '全部相關資料組.yaml'), stdout=out)
+            self.assertIn('「全部相關資料組.yaml」匯入成功', out.getvalue())
 
     @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
     @patch('urllib.request.urlopen')
