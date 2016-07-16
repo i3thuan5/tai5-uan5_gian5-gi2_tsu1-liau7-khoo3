@@ -23,8 +23,6 @@ SECRET_KEY = 'qxpzv0%huc1imupmkq5a4@9)t#dwr2dz%bz7ce(so3n#sc+j=y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -69,7 +67,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -86,3 +84,19 @@ STATIC_URL = '/static/'
 # 使用者上傳檔案
 MEDIA_ROOT = os.path.join(BASE_DIR, "資料庫影音檔案")
 MEDIA_URL = '/影音檔案/'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Required by allauth template tags
+                'django.contrib.auth.context_processors.auth',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
+            ],
+        },
+    },
+]
