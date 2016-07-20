@@ -51,3 +51,20 @@ class 加文本資料試驗(TestCase, 加資料試驗):
         self.句內容['文本資料'] = ''
         self.assertRaises(ValidationError, self.資料表.加資料, self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
+
+    def test_音標資料欄位(self):
+        self.句內容.update({
+            '音標資料': 'i1 tsiann5 sui2 .',
+            '屬性': {},
+        })
+        self.資料 = self.資料表.加資料(self.句內容)
+        self.assertEqual(self.資料.音標資料, 'i1 tsiann5 sui2 .')
+        self.assertEqual(self.資料.屬性.count(), 0)
+
+    def test_屬性的音標愛存去音標資料(self):
+        self.句內容.update({
+            '屬性': {'音標': 'i1 tsiann5 sui2 .', },
+        })
+        self.資料 = self.資料表.加資料(self.句內容)
+        self.assertEqual(self.資料.音標資料, 'i1 tsiann5 sui2 .')
+        self.assertEqual(self.資料.屬性.count(), 0)
