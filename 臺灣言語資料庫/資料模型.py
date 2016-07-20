@@ -421,7 +421,7 @@ class 文本表(資料表):
         try:
             對齊句物件 = 拆文分析器.對齊句物件(
                 self.文本資料,
-                self.屬性.音標資料()
+                self.音標資料
             )
             return 對齊句物件.看分詞()
         except Exception:
