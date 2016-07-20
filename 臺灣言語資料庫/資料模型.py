@@ -118,16 +118,7 @@ class 著作年表(models.Model):
     著作年 = models.CharField(unique=True, max_length=20)
 
 
-class 資料屬性表內容管理(models.Manager):
-
-    def 音標資料(self):
-        return json.loads(
-            self.get_queryset().get(分類='音標').性質
-        )
-
-
 class 資料屬性表(屬性表函式, models.Model):
-    objects = 資料屬性表內容管理()
     分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
     性質 = models.TextField()  # json字串格式。名詞、…
 
