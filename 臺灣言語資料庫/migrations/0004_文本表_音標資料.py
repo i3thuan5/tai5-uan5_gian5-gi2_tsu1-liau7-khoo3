@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='文本表',
             name='音標資料',
-            field=models.TextField(blank=True),
+            field=models.TextField(blank=True, default=''),
         ),
     ]
