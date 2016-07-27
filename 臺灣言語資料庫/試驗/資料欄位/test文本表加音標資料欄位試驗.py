@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import connection
 from django.db.migrations.executor import MigrationExecutor
-from django.test import TransactionTestCase
+from django.test import TestCase
 
 
-class 文本表加音標資料欄位試驗(TransactionTestCase):
+class 文本表加音標資料欄位試驗(TestCase):
     app名 = '臺灣言語資料庫'
     原本migration = [(app名, '0003_auto_20151009_0731_版權加長度')]
     新migration = [(app名, '0004_文本表_音標資料')]
