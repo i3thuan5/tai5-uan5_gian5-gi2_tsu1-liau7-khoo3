@@ -23,9 +23,9 @@ class 文本表加音標資料欄位試驗(TestCase):
 
     def test_原本屬性有音標(self):
         原本 = self.加文本()
-        原本.屬性.add(self.原本apps.get_model(
-            self.app名, '資料屬性表').objects.create(分類='音標', 性質='sui2')
-        )
+        原本.屬性.add(self.原本apps.get_model(self.app名, '資料屬性表').objects.create(
+            分類='音標', 性質='sui2'
+        ))
 
         self.徙資料庫()
 
@@ -35,9 +35,9 @@ class 文本表加音標資料欄位試驗(TestCase):
 
     def test_屬性的音標會無去(self):
         原本 = self.加文本()
-        原本.屬性.add(self.原本apps.get_model(
-            self.app名, '資料屬性表').objects.create(分類='音標', 性質='sui2')
-        )
+        原本.屬性.add(self.原本apps.get_model(self.app名, '資料屬性表').objects.create(
+            分類='音標', 性質='sui2'
+        ))
 
         self.徙資料庫()
 
@@ -65,13 +65,13 @@ class 文本表加音標資料欄位試驗(TestCase):
             版權=self.原本apps.get_model(self.app名, '版權表').objects.create(版權='公開'),
             種類=self.原本apps.get_model(self.app名, '種類表').objects.get(種類='字詞'),
             語言腔口=self.原本apps.get_model(self.app名, '語言腔口表').objects.create(
-                語言腔口=''
+                語言腔口='333'
             ),
             著作所在地=self.原本apps.get_model(self.app名, '著作所在地表').objects.create(
-                著作所在地=''
+                著作所在地='konn5'
             ),
             著作年=self.原本apps.get_model(self.app名, '著作年表').objects.create(
-                著作年=''
+                著作年='3'
             ),
             文本資料='媠',
         )
