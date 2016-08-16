@@ -285,7 +285,7 @@ class 影音表(資料表):
     網頁影音資料 = models.FileField(blank=True)
 
     def __str__(self):
-        return str(self.原始資料)
+        return str(self.原始影音資料)
 
     @classmethod
     def 加資料(cls, 輸入內容):
