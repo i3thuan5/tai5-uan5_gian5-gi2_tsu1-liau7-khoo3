@@ -118,16 +118,7 @@ class 著作年表(models.Model):
     著作年 = models.CharField(unique=True, max_length=20)
 
 
-class 資料屬性表內容管理(models.Manager):
-
-    def 音標資料(self):
-        return json.loads(
-            self.get_queryset().get(分類='音標').性質
-        )
-
-
 class 資料屬性表(屬性表函式, models.Model):
-    objects = 資料屬性表內容管理()
     分類 = models.CharField(max_length=20, db_index=True)  # 詞性、語者…
     性質 = models.TextField()  # json字串格式。名詞、…
 
@@ -379,6 +370,7 @@ class 影音表(資料表):
 
 class 文本表(資料表):
     文本資料 = models.TextField(blank=False)
+    音標資料 = models.TextField(blank=True)
 
     def __str__(self):
         return self.文本佮音標格式化資料()
@@ -391,8 +383,20 @@ class 文本表(資料表):
             文本.文本資料 = 內容['文本資料']
         else:
             raise ValueError('文本資料必須愛是字串型態')
+        文本._揣出內容的音標資料(內容)
         文本._加基本內容而且儲存(內容)
         return 文本
+
+    def _揣出內容的音標資料(self, 內容):
+        try:
+            self.音標資料 = 內容.pop('音標資料')
+            return
+        except:
+            pass
+        try:
+            self.音標資料 = 內容['屬性'].pop('音標')
+        except:
+            self.音標資料 = ''
 
     def 校對做(self, 輸入文本內容):
         文本內容 = self._內容轉物件(輸入文本內容)
@@ -408,7 +412,7 @@ class 文本表(資料表):
         try:
             對齊句物件 = 拆文分析器.對齊句物件(
                 self.文本資料,
-                self.屬性.音標資料()
+                self.音標資料
             )
             return 對齊句物件.看分詞()
         except Exception:
