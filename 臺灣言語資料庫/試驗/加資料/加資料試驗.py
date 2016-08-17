@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import json
 from 臺灣言語資料庫.資料模型 import 語言腔口表
 from 臺灣言語資料庫.資料模型 import 著作所在地表
@@ -152,14 +152,14 @@ class 加資料試驗:
         self.句內容['收錄者'] = 1990.0830
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
-        self.句內容['收錄者'] = None
-        with self.assertRaises(ValueError):
-            self.資料表.加資料(self.句內容)
         self.句內容['收錄者'] = ['阿媠']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.句內容['收錄者'] = {'阿媠'}
         with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
+        self.句內容['收錄者'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
 
     def test_來源舊字串(self):
@@ -283,16 +283,16 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['來源'] = None
-        with self.assertRaises(ValueError):
-            self.資料表.加資料(self.句內容)
-        self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['來源'] = ['阿緣']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
         self.句內容['來源'] = {'阿緣'}
         with self.assertRaises(ValueError):
+            self.資料表.加資料(self.句內容)
+        self.assertEqual(self.資料表.objects.all().count(), 0)
+        self.句內容['來源'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -330,12 +330,12 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['版權'] = None
+        self.句內容['版權'] = ['阿投']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['版權'] = ['阿投']
-        with self.assertRaises(ValueError):
+        self.句內容['版權'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -373,12 +373,12 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['種類'] = None
+        self.句內容['種類'] = ['過年']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['種類'] = ['過年']
-        with self.assertRaises(ValueError):
+        self.句內容['種類'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -425,12 +425,12 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['語言腔口'] = None
+        self.句內容['語言腔口'] = ['噶哈巫', '四庄番']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['語言腔口'] = ['噶哈巫', '四庄番']
-        with self.assertRaises(ValueError):
+        self.句內容['語言腔口'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -477,12 +477,12 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['著作所在地'] = None
+        self.句內容['著作所在地'] = {'守城份', '牛眠山', '大湳', '蜈蚣崙'}
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['著作所在地'] = {'守城份', '牛眠山', '大湳', '蜈蚣崙'}
-        with self.assertRaises(ValueError):
+        self.句內容['著作所在地'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
@@ -530,12 +530,12 @@ class 加資料試驗:
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['著作年'] = None
+        self.句內容['著作年'] = {'苗栗縣', '台中縣', '彰化縣'}
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['著作年'] = {'苗栗縣', '台中縣', '彰化縣'}
-        with self.assertRaises(ValueError):
+        self.句內容['著作年'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
