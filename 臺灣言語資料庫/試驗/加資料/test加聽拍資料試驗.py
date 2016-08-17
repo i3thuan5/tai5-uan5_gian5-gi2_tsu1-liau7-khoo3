@@ -4,7 +4,7 @@ from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試�
 from 臺灣言語資料庫.資料模型 import 聽拍表
 from 臺灣言語資料庫.資料模型 import 聽拍規範表
 import json
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 
 class 加聽拍資料試驗(TestCase, 加資料試驗):
@@ -101,12 +101,12 @@ class 加聽拍資料試驗(TestCase, 加資料試驗):
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['規範'] = None
+        self.句內容['規範'] = ['「忘了母語，我還會記得怎麼奔跑嗎？」']
         with self.assertRaises(ValueError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-        self.句內容['規範'] = ['「忘了母語，我還會記得怎麼奔跑嗎？」']
-        with self.assertRaises(ValueError):
+        self.句內容['規範'] = None
+        with self.assertRaises(ValidationError):
             self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 0)
 
