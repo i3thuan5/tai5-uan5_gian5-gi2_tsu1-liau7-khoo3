@@ -141,7 +141,7 @@ class 加影音資料試驗(TestCase, 加資料試驗):
             self.assertEqual(self.資料.原始影音資料.read(), 聲音檔案.read())
 
     def test_傳網址所在(self):
-        網址所在 = 'http://twblg.dict.edu.tw/holodict_new/audio/08310.mp3'
+        網址所在 = 'http://t.moedict.tw/08310.mp3'
         self.詞內容.pop('原始影音資料')
         self.詞內容['原始影音所在'] = 網址所在
         super(加影音資料試驗, self).test_加詞()
@@ -150,7 +150,7 @@ class 加影音資料試驗(TestCase, 加資料試驗):
             self.assertEqual(self.資料.原始影音資料.read(), 聲音檔案.read())
 
     def test_傳網址所在無協定(self):
-        網址所在 = 'twblg.dict.edu.tw/holodict_new/audio/08310.mp3'
+        網址所在 = 't.moedict.tw/08310.mp3'
         self.詞內容.pop('原始影音資料')
         self.詞內容['原始影音所在'] = 網址所在
         super(加影音資料試驗, self).test_加詞()
