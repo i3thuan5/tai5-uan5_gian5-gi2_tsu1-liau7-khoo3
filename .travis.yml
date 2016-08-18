@@ -16,7 +16,6 @@ addons:
       - liblzma-dev
       - libboost-all-dev
       - libyaml-dev
-      - libxslt1-dev
       - libav-tools  
       - libmp3lame0
       - libavcodec-extra-53
