@@ -62,7 +62,6 @@ setup(
         'pypi-libavwrapper',
         'django>=1.8.0',
         'pyyaml',
-        'lxml',
         'psycopg2',
     ],
 )
