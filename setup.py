@@ -38,7 +38,7 @@ setup(
     long_description=_專案說明,
     author='薛丞宏',
     author_email='ihcaoe@gmail.com',
-    url='http://意傳.台灣/',
+    url='https://xn--v0qr21b.xn--kpry57d/',
     download_url='https://github.com/sih4sing5hong5/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3',
     keywords=[
         '語料庫', '語言合成', '機器翻譯',
