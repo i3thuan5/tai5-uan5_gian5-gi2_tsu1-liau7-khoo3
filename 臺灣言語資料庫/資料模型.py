@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 from builtins import isinstance
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import File, ContentFile
-from django.db import models
-from django.db.models import Count
 import io
 import json
 import os
+from os.path import join
+from tempfile import mkdtemp
 from urllib import request
 
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import File
+from django.db import models
+from django.db.models import Count
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
 
@@ -281,42 +283,40 @@ class 外語表(資料表):
 
 
 class 影音表(資料表):
-    原始影音資料 = models.FileField(blank=True)
-    網頁影音資料 = models.FileField(blank=True)
+    影音資料 = models.FileField(blank=True)
 
     def __str__(self):
-        return str(self.原始影音資料)
+        return str(self.影音資料)
 
     @classmethod
     def 加資料(cls, 輸入內容):
         影音 = cls()
         內容 = 影音._內容轉物件(輸入內容)
-        if '原始影音所在' in 內容 and '原始影音資料' in 內容:
+        if '影音所在' in 內容 and '影音資料' in 內容:
             raise ValueError('「所在」佮「資料」提供一个就好！！')
-        if '原始影音所在' in 內容 and '原始影音資料' not in 內容:
+        if '影音所在' in 內容 and '影音資料' not in 內容:
             return cls._影音所在加資料(內容)
-        if not hasattr(內容['原始影音資料'], 'read'):
+        if not hasattr(內容['影音資料'], 'read'):
             raise ValueError('影音資料必須是檔案')
         影音._加基本內容而且儲存(內容)
-        影音._存原始影音資料(內容['原始影音資料'])
-#         影音._產生網頁聲音資料()
+        影音._存影音資料(內容['影音資料'])
         return 影音
 
     @classmethod
     def _影音所在加資料(cls, 舊內容):
         新內容 = {}
         新內容.update(舊內容)
-        所在 = 新內容.pop('原始影音所在')
+        所在 = 新內容.pop('影音所在')
         try:
             with io.open(所在, 'rb') as 檔案:
-                新內容['原始影音資料'] = 檔案
+                新內容['影音資料'] = 檔案
                 return cls.加資料(新內容)
         except:
             if not 所在.startswith('http://') and not 所在.startswith('https://'):
                 所在 = 'http://' + 所在
             with request.urlopen(所在) as 檔案:
                 with io.BytesIO(檔案.read()) as 暫存:
-                    新內容['原始影音資料'] = 暫存
+                    新內容['影音資料'] = 暫存
                     return cls.加資料(新內容)
 
     def 寫文本(self, 輸入文本內容):
@@ -337,35 +337,34 @@ class 影音表(資料表):
     def 源頭的影音資料(cls):
         return cls.objects.filter(來源外語=None)
 
-    def _存原始影音資料(self, 原始影音資料):
-        self.原始影音資料.save(
-            name='原始影音資料{0:07}'.format(self.編號()),
-            content=File(原始影音資料),
+    def _存影音資料(self, 影音資料):
+        self.影音資料.save(
+            name='影音資料{0:07}'.format(self.編號()),
+            content=File(影音資料),
             save=True
         )
-        self.原始影音資料.close()
+        self.影音資料.close()
 
-    def _產生網頁聲音資料(self):
-        self.網頁影音資料.save(name='網頁影音資料{0:07}.mp3'.format(
-            self.編號()), content=ContentFile(b''), save=True)
-        self.網頁影音資料.close()
+    def 網頁聲音資料(self):
+        目錄 = mkdtemp()
+        所在 = join(目錄, '網頁影音資料.mp3')
         網頁聲音格式 = AudioCodec('libmp3lame')
         網頁聲音格式.channels(1)
         網頁聲音格式.frequence(16000)
         網頁聲音格式.bitrate('128k')
-        原始檔案 = Input(os.path.join(settings.MEDIA_ROOT, self.原始影音資料.name))
-        網頁檔案 = Output(os.path.join(settings.MEDIA_ROOT, self.網頁影音資料.name))
-        網頁檔案.overwrite()
+        原始檔案 = Input(os.path.join(settings.MEDIA_ROOT, self.影音資料.name))
+        網頁檔案 = Output(所在)
         指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
         程序 = 指令.run()
         結果 = 程序.wait()
         if 結果 != 0:
-            self.原始影音資料.delete()
-            self.網頁影音資料.delete()
-            self.delete()
             raise OSError(
                 'avconv指令執行失敗，回傳值：{0}\n指令：{1}\n執行訊息：\n{2}'.format(
-                    結果, 指令, '\n'.join(程序.readlines())))
+                    結果, 指令, '\n'.join(程序.readlines())
+                )
+            )
+        with open(所在, 'rb') as 網頁聲音音檔:
+            return 網頁聲音音檔.read()
 
 
 class 文本表(資料表):

@@ -27,7 +27,7 @@ class 影音產生網頁用音檔(TestCase):
             '語言腔口': '閩南語',
             '著作所在地': '花蓮',
             '著作年': '2016',
-            '原始影音資料': self.句檔案,
+            '影音資料': self.句檔案,
         }
         self.資料 = 影音表.加資料(詞內容)
 
@@ -37,34 +37,26 @@ class 影音產生網頁用音檔(TestCase):
     @patch('libavwrapper.avconv.AVConv.run')
     def test_有走avconv(self, avconvRunMock):
         avconvRunMock.return_value.wait.return_value = 0
-        self.資料.網頁影音資料()
+        with self.assertRaises(FileNotFoundError):
+            self.資料.網頁聲音資料()
         avconvRunMock.assert_called_once_with()
 
     @patch('subprocess.Popen.wait')
     def test_有等avconv(self, waitMock):
         waitMock.return_value = 0
-        self.資料.網頁影音資料()
+        with self.assertRaises(FileNotFoundError):
+            self.資料.網頁聲音資料()
         waitMock.assert_called_once_with()
 
     @patch('subprocess.Popen.wait')
-    def test_無裝avconv(self, waitMock):
+    def test_無裝avconv抑是avconv失敗(self, waitMock):
         waitMock.return_value = 1
-        self.assertRaises(OSError, self.資料.網頁影音資料)
+        self.assertRaises(OSError, self.資料.網頁聲音資料)
         waitMock.assert_called_once_with()
-
-    @patch('subprocess.Popen.wait')
-    def test_avconv失敗袂使有資料(self, waitMock):
-        waitMock.return_value = 1
-        句檔案 = io.BytesIO(b'sui2')
-        self.句內容.update({
-            '原始影音資料': 句檔案,
-        })
-        self.assertRaises(OSError, self.資料.網頁影音資料)
-        self.assertEqual(影音表.objects.all().count(), 0)
 
     def test_網頁資料內容有物件(self):
         self.資料.影音資料.open()
-        原始大小 = len(self.資料.原始影音資料.read())
+        原始大小 = len(self.資料.影音資料.read())
         self.資料.影音資料.close()
-        網頁大小 = len(self.資料.網頁影音資料())
+        網頁大小 = len(self.資料.網頁聲音資料())
         self.assertAlmostEqual(網頁大小, 原始大小 / 2, delta=網頁大小 * 0.1)

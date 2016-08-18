@@ -158,7 +158,7 @@ class 匯入試驗(TestCase):
             '著作年': '2015',
             '著作所在地': '臺灣',
             '語言腔口': '閩南語',
-            '原始影音所在': join(dirname(abspath(__file__)), '資料', 'audio', '08345.mp3'),
+            '影音所在': join(dirname(abspath(__file__)), '資料', 'audio', '08345.mp3'),
         })
 
     @patch('臺灣言語資料庫.資料模型.影音表.寫文本')
