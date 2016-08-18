@@ -4,7 +4,6 @@ from django.test import TestCase
 import io
 import json
 from os.path import abspath, dirname, join
-from unittest.mock import patch
 import wave
 
 
@@ -93,44 +92,6 @@ class 加影音資料試驗(TestCase, 加資料試驗):
         self.句內容 = json.dumps(self.句內容)
         self.assertRaises(KeyError, super(加影音資料試驗, self).test_加句)
         self.assertEqual(self.資料表.objects.all().count(), 0)
-
-    def test_網頁資料內容有物件(self):
-        資料 = self.資料表.加資料(self.句內容)
-        資料.原始影音資料.open()
-        原始大小 = len(資料.原始影音資料.read())
-        資料.原始影音資料.close()
-        資料.網頁影音資料.open()
-        網頁大小 = len(資料.網頁影音資料.read())
-        資料.網頁影音資料.close()
-        self.assertAlmostEqual(網頁大小, 原始大小 / 2, delta=網頁大小 * 0.1)
-
-    @patch('libavwrapper.avconv.AVConv.run')
-    def test_有走avconv(self, avconvRunMock):
-        avconvRunMock.return_value.wait.return_value = 0
-        self.資料表.加資料(self.句內容)
-        avconvRunMock.assert_called_once_with()
-
-    @patch('subprocess.Popen.wait')
-    def test_有等avconv(self, waitMock):
-        waitMock.return_value = 0
-        self.資料表.加資料(self.句內容)
-        waitMock.assert_called_once_with()
-
-    @patch('subprocess.Popen.wait')
-    def test_無裝avconv(self, waitMock):
-        waitMock.return_value = 1
-        self.assertRaises(OSError, self.資料表.加資料, self.句內容)
-        waitMock.assert_called_once_with()
-
-    @patch('subprocess.Popen.wait')
-    def test_avconv失敗袂使有資料(self, waitMock):
-        waitMock.return_value = 1
-        句檔案 = io.BytesIO(b'sui2')
-        self.句內容.update({
-            '原始影音資料': 句檔案,
-        })
-        self.assertRaises(OSError, self.資料表.加資料, self.句內容)
-        self.assertEqual(影音表.objects.all().count(), 0)
 
     def test_傳檔案所在(self):
         檔案所在 = join(dirname(abspath(__file__)), 'audio/08310.mp3')
