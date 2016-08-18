@@ -42,7 +42,7 @@ class 加翻譯影音試驗(加關係試驗, TestCase):
             '語言腔口': '閩南語',
             '著作所在地': '花蓮',
             '著作年': '2014',
-            '原始影音資料': self.詞檔案,
+            '影音資料': self.詞檔案,
         }
         self.對應資料句內容 = {
             '收錄者': json.dumps({'名': 'Dr. Pigu', '出世年': '1990', '出世地': '花蓮人'}),
@@ -52,7 +52,7 @@ class 加翻譯影音試驗(加關係試驗, TestCase):
             '語言腔口': '四縣話',
             '著作所在地': '臺灣',
             '著作年': '195x',
-            '原始影音資料': self.句檔案,
+            '影音資料': self.句檔案,
         }
 
     def 加詞(self, 外語):
@@ -75,9 +75,9 @@ class 加翻譯影音試驗(加關係試驗, TestCase):
         self.assertEqual(影音.著作所在地.著作所在地, '花蓮')
         self.assertEqual(影音.著作年.著作年, '2014')
         self.assertEqual(影音.屬性.count(), 0)
-        影音.原始影音資料. open()
-        self.assertEqual(影音.原始影音資料.read(), self.詞檔案.getvalue())
-        影音.原始影音資料. close()
+        影音.影音資料. open()
+        self.assertEqual(影音.影音資料.read(), self.詞檔案.getvalue())
+        影音.影音資料. close()
 
     def 加句(self, 外語):
         原來外語資料數 = 外語表.objects.all().count()
@@ -99,6 +99,6 @@ class 加翻譯影音試驗(加關係試驗, TestCase):
         self.assertEqual(影音.著作所在地.著作所在地, '臺灣')
         self.assertEqual(影音.著作年.著作年, '195x')
         self.assertEqual(影音.屬性.count(), 0)
-        影音.原始影音資料. open()
-        self.assertEqual(影音.原始影音資料.read(), self.句檔案.getvalue())
-        影音.原始影音資料. close()
+        影音.影音資料. open()
+        self.assertEqual(影音.影音資料.read(), self.句檔案.getvalue())
+        影音.影音資料. close()
