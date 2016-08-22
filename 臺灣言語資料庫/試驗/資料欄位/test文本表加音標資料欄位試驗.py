@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.db import connection
 from django.db.migrations.executor import MigrationExecutor
 from django.test import TestCase
@@ -24,7 +26,7 @@ class 文本表加音標資料欄位試驗(TestCase):
     def test_原本屬性有音標(self):
         原本 = self.加文本()
         原本.屬性.add(self.原本apps.get_model(self.app名, '資料屬性表').objects.create(
-            分類='音標', 性質='sui2'
+            分類='音標', 性質=json.dumps('sui2')
         ))
 
         self.徙資料庫()
@@ -36,7 +38,7 @@ class 文本表加音標資料欄位試驗(TestCase):
     def test_屬性的音標會無去(self):
         原本 = self.加文本()
         原本.屬性.add(self.原本apps.get_model(self.app名, '資料屬性表').objects.create(
-            分類='音標', 性質='sui2'
+            分類='音標', 性質=json.dumps('sui2')
         ))
 
         self.徙資料庫()
