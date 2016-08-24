@@ -234,11 +234,6 @@ class 資料表(models.Model):
             )
 
 
-class 資料類型表(models.Model):
-    # 	外語、文本、影音、聽拍
-    類型 = models.CharField(unique=True, max_length=20)
-
-
 class 外語表(資料表):
     外語語言 = models.ForeignKey(語言腔口表, related_name='+')
     外語資料 = models.TextField(blank=False)
