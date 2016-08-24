@@ -84,16 +84,25 @@ class 版權表(models.Model):
     # 	會使公開，袂使公開
     版權 = models.CharField(unique=True, max_length=100)
 
+    def __str__(self):
+        return self.版權
+
 
 class 種類表(models.Model):
     # 	字詞 = '字詞'
     # 	語句 = '語句'
     種類 = models.CharField(unique=True, max_length=100)
 
+    def __str__(self):
+        return self.種類
+
 
 class 語言腔口表(models.Model):
     # 	閩南語、閩南語永靖腔、客話四縣腔、泰雅seediq…
     語言腔口 = models.CharField(unique=True, max_length=50)
+
+    def __str__(self):
+        return self.語言腔口
 
     @classmethod
     def 揣出有文本的語言腔口(cls):
@@ -114,10 +123,16 @@ class 著作所在地表(models.Model):
     # 	臺灣、員林、…
     著作所在地 = models.CharField(unique=True, max_length=50)
 
+    def __str__(self):
+        return self.著作所在地
+
 
 class 著作年表(models.Model):
     # 	1952、19xx、…
     著作年 = models.CharField(unique=True, max_length=20)
+
+    def __str__(self):
+        return self.著作年
 
 
 class 資料屬性表(屬性表函式, models.Model):
@@ -437,6 +452,9 @@ class 聽拍規範表(models.Model):
     範例 = models.TextField()
     說明 = models.TextField()
 
+    def __str__(self):
+        return self.規範名
+
 
 class 聽拍表(資料表):
     # 	語者詳細資料記佇屬性內底，逐句話記是佗一个語者
@@ -444,7 +462,10 @@ class 聽拍表(資料表):
     聽拍資料 = models.TextField()  # 存json.dumps的資料
 
     def __str__(self):
-        return self.聽拍資料
+        try:
+            return json.loads(self.聽拍資料)[0]['內容']
+        except:
+            return self.聽拍資料
 
     @classmethod
     def 加資料(cls, 輸入內容):
