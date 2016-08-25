@@ -7,7 +7,7 @@ from os.path import abspath, dirname, join
 import wave
 
 
-from 臺灣言語資料庫.試驗.加資料.加資料試驗 import 加資料試驗
+from 試驗.加資料.加資料試驗 import 加資料試驗
 from 臺灣言語資料庫.資料模型 import 影音表
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-from 臺灣言語資料庫.試驗.加關係.加關係試驗 import 加關係試驗
+from 試驗.加關係.加關係試驗 import 加關係試驗
 import json
 from 臺灣言語資料庫.資料模型 import 外語表
 from 臺灣言語資料庫.資料模型 import 文本表
