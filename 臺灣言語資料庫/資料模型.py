@@ -2,7 +2,6 @@
 from builtins import isinstance
 import io
 import json
-import os
 from os.path import join
 from tempfile import mkdtemp
 from urllib import request
@@ -347,6 +346,9 @@ class 影音表(資料表):
     def 源頭的影音資料(cls):
         return cls.objects.filter(來源外語=None)
 
+    def 影音所在(self):
+        return join(settings.MEDIA_ROOT, self.影音資料.name)
+
     def _存影音資料(self, 影音資料):
         self.影音資料.save(
             name='影音資料{0:07}'.format(self.編號()),
@@ -362,7 +364,7 @@ class 影音表(資料表):
         網頁聲音格式.channels(1)
         網頁聲音格式.frequence(16000)
         網頁聲音格式.bitrate('128k')
-        原始檔案 = Input(os.path.join(settings.MEDIA_ROOT, self.影音資料.name))
+        原始檔案 = Input(self.影音所在())
         網頁檔案 = Output(所在)
         指令 = AVConv('avconv', 原始檔案, 網頁聲音格式, NO_VIDEO, 網頁檔案)
         程序 = 指令.run()
