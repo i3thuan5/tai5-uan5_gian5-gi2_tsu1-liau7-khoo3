@@ -59,9 +59,10 @@ setup(
     ],
     install_requires=[
         'tai5-uan5-gian5-gi2-kang1-ku7>=0.6.0',
-        'pypi-libavwrapper',
         'django>=1.8.0',
         'pyyaml',
         'psycopg2',
+        'django-cors-headers',
+        'pypi-libavwrapper',
     ],
 )
