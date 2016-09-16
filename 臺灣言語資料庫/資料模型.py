@@ -2,7 +2,7 @@
 from builtins import isinstance
 import io
 import json
-from os.path import join
+from os.path import join, abspath
 from tempfile import mkdtemp
 from urllib import request
 
@@ -347,7 +347,7 @@ class 影音表(資料表):
         return cls.objects.filter(來源外語=None)
 
     def 影音所在(self):
-        return join(settings.MEDIA_ROOT, self.影音資料.name)
+        return join(abspath(settings.MEDIA_ROOT), self.影音資料.name)
 
     def _存影音資料(self, 影音資料):
         self.影音資料.save(
