@@ -28,6 +28,10 @@ class 屬性表函式:
     def 加屬性(cls, 分類, 性質):
         return cls.objects.get_or_create(分類=分類, 性質=json.dumps(性質))[0]
 
+    @classmethod
+    def 揣屬性(cls, 分類, 性質):
+        return cls.objects.get(分類=分類, 性質=json.dumps(性質))
+
     def __str__(self):
         return '{}:{}'.format(self.分類, json.loads(self.性質))
 
