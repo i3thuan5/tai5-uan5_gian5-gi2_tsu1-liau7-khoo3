@@ -17,6 +17,7 @@ from libavwrapper.codec import AudioCodec, NO_VIDEO
 
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語資料庫.欄位資訊 import 語句
+from 臺灣言語工具.語音辨識.聲音檔 import 聲音檔
 
 
 class 屬性表函式:
@@ -349,6 +350,9 @@ class 影音表(資料表):
     @classmethod
     def 源頭的影音資料(cls):
         return cls.objects.filter(來源外語=None)
+
+    def 聲音檔(self):
+        return 聲音檔.對檔案讀(join(settings.MEDIA_ROOT, self.影音資料.name))
 
     def 影音所在(self):
         return join(abspath(settings.MEDIA_ROOT), self.影音資料.name)
