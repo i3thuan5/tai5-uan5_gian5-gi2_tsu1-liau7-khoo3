@@ -3,7 +3,6 @@
 ## 在Ubuntu14.04/Mint17上快速設定環境
 設定資料庫使用者和密碼
 ```bash
-sudo apt-get install -y libpq-dev python3-dev postgresql postgresql-contrib
 sudo -u postgres createuser --superuser $USER
 sudo -u postgres createdb $USER
 psql
@@ -13,16 +12,12 @@ psql
 ## 在MAC上快速設定環境
 設定資料庫使用者和密碼
 ```bash
-brew install postgresql
 psql
 	\password
 ```
 
 ## Django專案設定
-```
-pip install psycopg2
-```
-在的`setting.py`改
+在`setting.py`改
 ```python3
 DATABASES = {
     'default': {
