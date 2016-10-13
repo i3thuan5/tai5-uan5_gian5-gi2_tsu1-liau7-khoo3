@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>介紹 &mdash; 臺灣言語資料庫 3.1.9 documentation</title>
+  <title>使用CORS &mdash; 臺灣言語資料庫 3.1.9 documentation</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="臺灣言語資料庫 3.1.9 documentation" href="index.html"/>
-        <link rel="next" title="安裝方法" href="安裝.html"/>
-        <link rel="prev" title="臺灣言語資料庫說明文件" href="index.html"/> 
+        <link rel="next" title="使用Postgres" href="使用Postgres.html"/>
+        <link rel="prev" title="安裝方法" href="安裝.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,12 +82,9 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">介紹</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#">相關專案</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="介紹.html">介紹</a></li>
 <li class="toctree-l1"><a class="reference internal" href="安裝.html">安裝方法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="使用cors.html">使用CORS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">使用CORS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="使用Postgres.html">使用Postgres</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料匯入.html">資料匯入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
@@ -123,11 +120,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>介紹</li>
+    <li>使用CORS</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/介紹.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/使用cors.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -137,32 +134,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="">
-<span id="id1"></span><h1>介紹<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="">
-<span id="id2"></span><h2>相關專案<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_kang1-ku7">臺灣言語工具</a><ul>
-<li>母語parser、寫法轉換、…功能。</li>
-<li>翻譯、語音辨識、語音合成等工具整合。</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3">臺灣言語資料庫</a><ul>
-<li>母語資料存放規範</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_hok8-bu7">臺灣言語服務</a><ul>
-<li><code class="docutils literal"><span class="pre">臺灣言語資料庫</span></code>的套件</li>
-<li>結果<code class="docutils literal"><span class="pre">臺灣言語工具</span></code>，做好自動化翻譯、語音合成等功能</li>
-<li>提供Web-based的服務</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_phing5-thai5">臺灣言語平臺</a>。<ul>
-<li>修改<code class="docutils literal"><span class="pre">臺灣言語資料庫</span></code>的網頁介面</li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="cors">
+<span id="cors"></span><h1>使用CORS<a class="headerlink" href="#cors" title="Permalink to this headline">¶</a></h1>
+<p>如果有架設後端主機的需求，設定檔愛閣加上</p>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span>
+    <span class="s1">&#39;corsheaders&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">MIDDLEWARE_CLASSES</span> <span class="o">+=</span> <span class="p">(</span>
+    <span class="s1">&#39;corsheaders.middleware.CorsMiddleware&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">CORS_ORIGIN_ALLOW_ALL</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">CORS_ALLOW_CREDENTIALS</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
 </div>
+<p>若是愛客製化設定，請看<a class="reference external" href="https://github.com/ottoyiu/django-cors-headers#setup">django-cors-header</a></p>
 </div>
 
 
@@ -172,10 +158,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="安裝.html" class="btn btn-neutral float-right" title="安裝方法" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="使用Postgres.html" class="btn btn-neutral float-right" title="使用Postgres" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="臺灣言語資料庫說明文件" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="安裝.html" class="btn btn-neutral" title="安裝方法" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

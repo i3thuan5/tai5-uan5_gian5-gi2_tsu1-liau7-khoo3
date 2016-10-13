@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="臺灣言語資料庫 3.1.9 documentation" href="index.html"/>
-        <link rel="next" title="使用Postgres" href="使用Postgres.html"/>
+        <link rel="next" title="使用CORS" href="使用cors.html"/>
         <link rel="prev" title="介紹" href="介紹.html"/> 
 
   
@@ -88,8 +88,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#">載入環境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#">安裝</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#">設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#">初使化資料庫</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#">試驗有成功無</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="使用cors.html">使用CORS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="使用Postgres.html">使用Postgres</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料匯入.html">資料匯入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="資料結構.html">資料結構</a></li>
@@ -172,9 +175,22 @@ virtualenv --python python3 venv<span class="p">;</span> . venv/bin/activate<spa
 <div class="section" id="">
 <span id="id5"></span><h2>設定<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p>在Django的<code class="docutils literal"><span class="pre">settings.py</span></code>設定檔加上</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span>
     <span class="s1">&#39;臺灣言語資料庫&#39;</span><span class="p">,</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id6"></span><h2>初使化資料庫<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py migrate
+</pre></div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id7"></span><h2>試驗有成功無<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<p>攏有顯示0筆就代表安裝成功矣</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python manage.py 顯示資料數量
 </pre></div>
 </div>
 </div>
@@ -187,7 +203,7 @@ virtualenv --python python3 venv<span class="p">;</span> . venv/bin/activate<spa
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="使用Postgres.html" class="btn btn-neutral float-right" title="使用Postgres" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="使用cors.html" class="btn btn-neutral float-right" title="使用CORS" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="介紹.html" class="btn btn-neutral" title="介紹" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
