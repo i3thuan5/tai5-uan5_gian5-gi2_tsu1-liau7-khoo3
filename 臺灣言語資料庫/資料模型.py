@@ -256,6 +256,7 @@ class 資料表(models.Model):
 class 外語表(資料表):
     外語語言 = models.ForeignKey(語言腔口表, related_name='+')
     外語資料 = models.TextField(blank=False)
+    保存時間 = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.外語資料
