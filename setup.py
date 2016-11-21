@@ -30,6 +30,7 @@ def 揣工具包(頭='.'):
             工具包.append(目錄.replace('/', '.'))
     return 工具包
 
+
 setup(
     name='tai5-uan5_gian5-gi2_tsu1-liau7-khoo3',
     packages=揣工具包('臺灣言語資料庫'),
