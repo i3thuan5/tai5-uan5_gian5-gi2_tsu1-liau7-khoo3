@@ -452,18 +452,8 @@ class 文本表(資料表):
         return cls.objects.filter(文本校對=None)
 
 
-class 聽拍規範表(models.Model):
-    規範名 = models.CharField(max_length=20, unique=True)
-    範例 = models.TextField()
-    說明 = models.TextField()
-
-    def __str__(self):
-        return self.規範名
-
-
 class 聽拍表(資料表):
     # 	語者詳細資料記佇屬性內底，逐句話記是佗一个語者
-    規範 = models.ForeignKey(聽拍規範表, related_name='全部資料')
     聽拍資料 = models.TextField()  # 存json.dumps的資料
 
     def __str__(self):
@@ -476,13 +466,6 @@ class 聽拍表(資料表):
     def _加資料(cls, 輸入內容):
         聽拍 = cls()
         內容 = 聽拍._內容轉物件(輸入內容)
-        if isinstance(內容['規範'], int):
-            聽拍.規範 = 聽拍規範表.objects.get(pk=內容['規範'])
-        elif isinstance(內容['規範'], str):
-            聽拍.規範 = 聽拍規範表.objects.get(規範名=內容['規範'])
-        else:
-            聽拍.規範 = 內容['規範']
-#             raise TypeError('規範必須愛是字串抑是整數型態')
         聽拍資料內容 = 聽拍._內容轉物件(內容['聽拍資料'])
         try:
             for 一句 in 聽拍資料內容:
@@ -499,9 +482,6 @@ class 聽拍表(資料表):
     def 校對做(self, 輸入聽拍內容):
         聽拍內容 = self._內容轉物件(輸入聽拍內容)
         self._加關係的內容檢查(聽拍內容)
-        if 聽拍內容['規範'] != self.規範.規範名:
-            raise ValueError(
-                '新資料的規範「{}」愛佮原本資料的規範「{}」仝款！！'.format(聽拍內容['規範'], self.規範.規範名))
         聽拍 = 聽拍表._加資料(聽拍內容)
         self.聽拍校對.create(新聽拍=聽拍)
         return 聽拍

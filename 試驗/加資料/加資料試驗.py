@@ -231,7 +231,7 @@ class 加資料試驗:
         self.比較屬性(資料, self.句屬性)
 
     def test_來源物件有仝款欄位(self):
-        self.句內容['來源'] = {'名': '阿媠', '職業': '學生', '職業': '暴民', '興趣': '日語'}
+        self.句內容['來源'] = {'名': '阿媠', '職業': '暴民', '興趣': '日語'}
         原來資料數 = self.資料表.objects.all().count()
         資料 = self.資料表.加資料(self.句內容)
         self.assertEqual(self.資料表.objects.all().count(), 原來資料數 + 1)
@@ -240,8 +240,8 @@ class 加資料試驗:
         self.assertEqual(資料.來源.屬性.count(), 2)
         self.assertEqual(資料.來源.屬性.filter(分類='職業').count(), 1)
         self.assertIsInstance(資料.來源.屬性.filter(分類='職業').get(), 來源屬性表)
-        self.assertIn(
-            json.loads(資料.來源.屬性.filter(分類='職業').get().性質), ['學生', '暴民'])
+        self.assertEqual(
+            json.loads(資料.來源.屬性.filter(分類='職業').get().性質),  '暴民')
         self.assertEqual(資料.來源.屬性.get(分類='興趣').分類, '興趣')
         self.assertEqual(json.loads(資料.來源.屬性.get(分類='興趣').性質), '日語')
         self.assertEqual(資料.來源.屬性.get(分類='興趣').內容(), {'興趣': '日語'})
