@@ -292,6 +292,10 @@ class 外語表(資料表):
         self.翻譯文本.create(文本=文本)
         return 文本
 
+    def 分詞資料(self):
+        句物件 = 拆文分析器.建立句物件(self.外語資料)
+        return 句物件.看分詞().replace(分型音符號, '|')
+
     @classmethod
     def 全部外語資料(cls):
         return cls.objects.all()
