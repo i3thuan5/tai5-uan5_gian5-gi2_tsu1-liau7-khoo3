@@ -11,9 +11,13 @@ class Command(BaseCommand):
             try:
                 外語.分詞資料()
             except 解析錯誤:
-                print('{}的「」無法度做分詞'.format(外語.來源.名, 外語.外語資料))
+                self.stdout.write(
+                    '{}的「」無法度做分詞'.format(外語.來源.名, 外語.外語資料)
+                )
         for 文本 in 文本表.objects.all():
             try:
                 文本.分詞資料()
             except 解析錯誤:
-                print('{}的「」無法度做分詞'.format(文本.來源.名, 文本.文本資料))
+                self.stdout.write(
+                    '{}的「」無法度做分詞'.format(文本.來源.名, 文本.文本資料)
+                )
