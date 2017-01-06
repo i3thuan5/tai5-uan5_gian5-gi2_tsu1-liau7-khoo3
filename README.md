@@ -1,7 +1,7 @@
 # 臺灣言語資料庫
 
 [![PyPI](https://img.shields.io/pypi/pyversions/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg)](https://github.com/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
-[![PyPI version](https://badge.fury.io/py/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg)](https://badge.fury.io/py/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
+[![PyPI version](https://badge.fury.io/py/tai5_uan5_gian5_gi2_tsu1_liau7_khoo3.svg)](https://badge.fury.io/py/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 [![Build Status](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3.svg?branch=master)](https://travis-ci.org/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 [![Coverage Status](https://coveralls.io/repos/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/badge.svg)](https://coveralls.io/r/sih4sing5hong5/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)
 
