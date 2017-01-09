@@ -18,6 +18,8 @@ from libavwrapper.codec import AudioCodec, NO_VIDEO
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語資料庫.欄位資訊 import 語句
 from 臺灣言語工具.語音辨識.聲音檔 import 聲音檔
+from 臺灣言語工具.基本物件.公用變數 import 分型音符號
+from 臺灣言語工具.解析整理.文章粗胚 import 文章粗胚
 
 
 class 屬性表函式:
@@ -291,6 +293,10 @@ class 外語表(資料表):
         self.翻譯文本.create(文本=文本)
         return 文本
 
+    def 分詞資料(self):
+        句物件 = 拆文分析器.建立句物件(文章粗胚.建立物件語句前減號變標點符號(self.外語資料))
+        return 句物件.看分詞().replace(分型音符號, '|')
+
     @classmethod
     def 全部外語資料(cls):
         return cls.objects.all()
@@ -392,7 +398,10 @@ class 文本表(資料表):
     音標資料 = models.TextField(blank=True)
 
     def __str__(self):
-        return self.文本佮音標格式化資料()
+        try:
+            return self.看分詞()
+        except:
+            return self.文本資料
 
     @classmethod
     def 加資料(cls, 輸入內容):
@@ -431,7 +440,7 @@ class 文本表(資料表):
     def 是校對後的資料(self):
         return hasattr(self, '來源校對資料')
 
-    def 文本佮音標格式化資料(self):
+    def 分詞資料(self, 拼音=None):
         try:
             對齊句物件 = 拆文分析器.對齊句物件(
                 self.文本資料,
@@ -439,7 +448,22 @@ class 文本表(資料表):
             )
             return 對齊句物件.看分詞()
         except Exception:
-            return self.文本資料
+            try:
+                拼音.音標上長長度
+            except:
+                句物件 = 拆文分析器.建立句物件(
+                    文章粗胚.建立物件語句前減號變標點符號(
+                        self.文本資料
+                    )
+                )
+            else:
+                句物件 = 拆文分析器.建立句物件(
+                    文章粗胚.建立物件語句前處理減號(
+                        拼音,
+                        self.文本資料
+                    )
+                )
+            return 句物件.看分詞().replace(分型音符號, '|')
 
     @classmethod
     def 源頭的文本資料(cls):
