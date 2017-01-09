@@ -19,6 +19,7 @@ from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
 from 臺灣言語資料庫.欄位資訊 import 語句
 from 臺灣言語工具.語音辨識.聲音檔 import 聲音檔
 from 臺灣言語工具.基本物件.公用變數 import 分型音符號
+from 臺灣言語工具.解析整理.文章粗胚 import 文章粗胚
 
 
 class 屬性表函式:
@@ -293,7 +294,7 @@ class 外語表(資料表):
         return 文本
 
     def 分詞資料(self):
-        句物件 = 拆文分析器.建立句物件(self.外語資料)
+        句物件 = 拆文分析器.建立句物件(文章粗胚.建立物件語句前減號變標點符號(self.外語資料))
         return 句物件.看分詞().replace(分型音符號, '|')
 
     @classmethod
@@ -448,7 +449,9 @@ class 文本表(資料表):
             return 對齊句物件.看分詞()
         except Exception:
             句物件 = 拆文分析器.建立句物件(
-                self.文本資料
+                文章粗胚.建立物件語句前減號變標點符號(
+                    self.文本資料
+                )
             )
             return 句物件.看分詞().replace(分型音符號, '|')
 

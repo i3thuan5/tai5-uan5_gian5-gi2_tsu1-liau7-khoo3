@@ -1,6 +1,5 @@
 from django.test.testcases import TestCase
 from 臺灣言語資料庫.資料模型 import 外語表
-from 臺灣言語工具.解析整理.解析錯誤 import 解析錯誤
 from 臺灣言語資料庫.資料模型 import 來源表
 from 臺灣言語資料庫.資料模型 import 版權表
 from 臺灣言語資料庫.欄位資訊 import 會使公開
@@ -30,8 +29,10 @@ class 外語分詞資料(TestCase):
     def test_減號一堆(self):
         self.詞內容['外語資料'] = '------------呵-------------'
         外語 = 外語表.加資料(self.詞內容)
-        with self.assertRaises(解析錯誤):
-            外語.分詞資料()
+        self.assertEqual(
+            外語.分詞資料(),
+            '- - - - - - - - - - - - 呵 - - - - - - - - - - - - -'
+        )
 
     def test_分詞符號換做一般pipe符號(self):
         self.詞內容['外語資料'] = '｜＝安姑＝｜＝＝表弟'
