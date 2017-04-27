@@ -482,7 +482,7 @@ class 聽拍表(資料表):
 
     def __str__(self):
         try:
-            return json.loads(self.聽拍資料)[0]['內容']
+            return self.聽拍內容()[0]['內容']
         except:
             return self.聽拍資料
 
@@ -502,6 +502,9 @@ class 聽拍表(資料表):
         聽拍.聽拍資料 = json.dumps(聽拍資料內容)
         聽拍._加基本內容而且儲存(內容)
         return 聽拍
+
+    def 聽拍內容(self):
+        return json.loads(self.聽拍資料)
 
     def 校對做(self, 輸入聽拍內容):
         聽拍內容 = self._內容轉物件(輸入聽拍內容)
