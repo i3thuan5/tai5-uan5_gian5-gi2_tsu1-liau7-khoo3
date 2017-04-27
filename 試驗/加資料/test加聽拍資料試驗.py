@@ -46,11 +46,19 @@ class 加聽拍資料試驗(TestCase, 加資料試驗):
 
     def test_加句(self):
         self.資料 = 聽拍表._加資料(self.句內容)
-        self.assertEqual(json.loads(self.資料.聽拍資料),
-                         [
+        self.assertEqual(json.loads(self.資料.聽拍資料), [
             {'內容': '請問車頭按怎行？'},
             {'內容': '直直行就到矣。'},
-        ]
+        ])
+
+    def test_聽拍內容(self):
+        self.資料 = 聽拍表._加資料(self.句內容)
+        self.assertEqual(
+            self.資料.聽拍內容(),
+            [
+                {'內容': '請問車頭按怎行？'},
+                {'內容': '直直行就到矣。'},
+            ]
         )
 
     def test_無聽拍資料(self):
