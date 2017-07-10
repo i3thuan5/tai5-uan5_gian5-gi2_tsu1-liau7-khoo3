@@ -43,7 +43,7 @@ pg_dump $USER -O | gzip > 臺灣言語資料庫`date +%m%d`.sql.gz
 ```
 檔案匯入
 ```bash
-gzip -c -d 臺灣言語資料庫20150903.sql.gz | psql $USER
+zcat 臺灣言語資料庫20150903.sql.gz | psql $USER
 ```
 
 ## 清掉全部資料
