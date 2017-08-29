@@ -15,8 +15,10 @@
 
 感謝您的使用與推廣～～勞力！承蒙！
 
-說明文件[佇遮](http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)！！
+## 說明文件
 
+* [Doc](https://i3thuan5.gitbooks.io/doc_tai5-uan5_gian5-gi2_tsu1-liau7-khoo3/content/)(2017~)
+* [Doc](http://sih4sing5hong5.github.io/tai5-uan5_gian5-gi2_tsu1-liau7-khoo3)(~2016)
 
 ## 授權說明
 本程式乃自由軟體，您必須遵照SocialCalc設計的通用公共授權（Common Public Attribution License, CPAL)來修改和重新發佈這一程式，詳情請參閱條文。授權大略如下，若有歧異，以授權原文為主：
