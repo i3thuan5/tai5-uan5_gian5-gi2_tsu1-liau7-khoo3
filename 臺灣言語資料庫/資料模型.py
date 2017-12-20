@@ -11,6 +11,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import File
 from django.db import models
 from django.db.models import Count
+from django.db.models.deletion import CASCADE
+
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
 
@@ -150,15 +152,15 @@ class 資料表(models.Model):
 
     class Meta:
         abstract = True
-    收錄者 = models.ForeignKey(來源表, related_name='+')
+    收錄者 = models.ForeignKey(來源表, related_name='+', on_delete=CASCADE)
     收錄時間 = models.DateTimeField(auto_now_add=True)
-    來源 = models.ForeignKey(來源表, related_name='+')
-    版權 = models.ForeignKey(版權表, related_name='+')
-    種類 = models.ForeignKey(種類表, related_name='+')
-    語言腔口 = models.ForeignKey(語言腔口表, related_name='+')
-    著作所在地 = models.ForeignKey(著作所在地表, related_name='+')
-    著作年 = models.ForeignKey(著作年表, related_name='+')
-    屬性 = models.ManyToManyField(資料屬性表)  # 詞性,分類,…
+    來源 = models.ForeignKey(來源表, related_name='+', on_delete=CASCADE)
+    版權 = models.ForeignKey(版權表, related_name='+', on_delete=CASCADE)
+    種類 = models.ForeignKey(種類表, related_name='+', on_delete=CASCADE)
+    語言腔口 = models.ForeignKey(語言腔口表, related_name='+', on_delete=CASCADE)
+    著作所在地 = models.ForeignKey(著作所在地表, related_name='+', on_delete=CASCADE)
+    著作年 = models.ForeignKey(著作年表, related_name='+', on_delete=CASCADE)
+    屬性 = models.ManyToManyField(資料屬性表, on_delete=CASCADE)  # 詞性,分類,…
 
     def 編號(self):
         return self.pk
