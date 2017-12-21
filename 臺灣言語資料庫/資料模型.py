@@ -160,7 +160,7 @@ class 資料表(models.Model):
     語言腔口 = models.ForeignKey(語言腔口表, related_name='+', on_delete=CASCADE)
     著作所在地 = models.ForeignKey(著作所在地表, related_name='+', on_delete=CASCADE)
     著作年 = models.ForeignKey(著作年表, related_name='+', on_delete=CASCADE)
-    屬性 = models.ManyToManyField(資料屬性表, on_delete=CASCADE)  # 詞性,分類,…
+    屬性 = models.ManyToManyField(資料屬性表)  # 詞性,分類,…
 
     def 編號(self):
         return self.pk
