@@ -637,7 +637,7 @@ class 加資料試驗:
     def 比較屬性(self, 資料, 屬性欄位內容):
         try:
             內容 = json.loads(屬性欄位內容)
-        except:
+        except Exception:
             內容 = 屬性欄位內容
         self.assertEqual(資料.屬性內容(), 內容)
 
