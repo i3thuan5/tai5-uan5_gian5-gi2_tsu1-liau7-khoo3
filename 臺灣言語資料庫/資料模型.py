@@ -258,7 +258,7 @@ class 資料表(models.Model):
 
 
 class 外語表(資料表):
-    外語語言 = models.ForeignKey(語言腔口表, related_name='+')
+    外語語言 = models.ForeignKey(語言腔口表, related_name='+', on_delete=CASCADE)
     外語資料 = models.TextField(blank=False)
 
     def __str__(self):
