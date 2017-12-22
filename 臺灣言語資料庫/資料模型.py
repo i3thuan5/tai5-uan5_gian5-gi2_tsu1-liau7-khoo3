@@ -11,6 +11,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import File
 from django.db import models
 from django.db.models import Count
+from django.db.models.deletion import CASCADE
+
 from libavwrapper.avconv import Input, Output, AVConv
 from libavwrapper.codec import AudioCodec, NO_VIDEO
 
@@ -150,14 +152,14 @@ class 資料表(models.Model):
 
     class Meta:
         abstract = True
-    收錄者 = models.ForeignKey(來源表, related_name='+')
+    收錄者 = models.ForeignKey(來源表, related_name='+', on_delete=CASCADE)
     收錄時間 = models.DateTimeField(auto_now_add=True)
-    來源 = models.ForeignKey(來源表, related_name='+')
-    版權 = models.ForeignKey(版權表, related_name='+')
-    種類 = models.ForeignKey(種類表, related_name='+')
-    語言腔口 = models.ForeignKey(語言腔口表, related_name='+')
-    著作所在地 = models.ForeignKey(著作所在地表, related_name='+')
-    著作年 = models.ForeignKey(著作年表, related_name='+')
+    來源 = models.ForeignKey(來源表, related_name='+', on_delete=CASCADE)
+    版權 = models.ForeignKey(版權表, related_name='+', on_delete=CASCADE)
+    種類 = models.ForeignKey(種類表, related_name='+', on_delete=CASCADE)
+    語言腔口 = models.ForeignKey(語言腔口表, related_name='+', on_delete=CASCADE)
+    著作所在地 = models.ForeignKey(著作所在地表, related_name='+', on_delete=CASCADE)
+    著作年 = models.ForeignKey(著作年表, related_name='+', on_delete=CASCADE)
     屬性 = models.ManyToManyField(資料屬性表)  # 詞性,分類,…
 
     def 編號(self):
@@ -196,7 +198,7 @@ class 資料表(models.Model):
     def _內容轉物件(self, 內容):
         try:
             return json.loads(內容)
-        except:
+        except Exception:
             return 內容
 
     def _揣來源資料(self, 內容資料, 會使加新的):
@@ -256,7 +258,7 @@ class 資料表(models.Model):
 
 
 class 外語表(資料表):
-    外語語言 = models.ForeignKey(語言腔口表, related_name='+')
+    外語語言 = models.ForeignKey(語言腔口表, related_name='+', on_delete=CASCADE)
     外語資料 = models.TextField(blank=False)
 
     def __str__(self):
@@ -331,7 +333,7 @@ class 影音表(資料表):
             with io.open(所在, 'rb') as 檔案:
                 新內容['影音資料'] = 檔案
                 return cls.加資料(新內容)
-        except:
+        except Exception:
             if not 所在.startswith('http://') and not 所在.startswith('https://'):
                 所在 = 'http://' + 所在
             with request.urlopen(所在) as 檔案:
@@ -400,7 +402,7 @@ class 文本表(資料表):
     def __str__(self):
         try:
             return self.看分詞()
-        except:
+        except Exception:
             return self.文本資料
 
     @classmethod
@@ -409,7 +411,7 @@ class 文本表(資料表):
         內容 = 文本._內容轉物件(輸入內容)
         try:
             內容['屬性'] = 文本._內容轉物件(內容['屬性'])
-        except:
+        except Exception:
             pass
         if isinstance(內容['文本資料'], str):
             文本.文本資料 = 內容['文本資料']
@@ -423,11 +425,11 @@ class 文本表(資料表):
         try:
             self.音標資料 = 內容.pop('音標資料')
             return
-        except:
+        except Exception:
             pass
         try:
             self.音標資料 = 內容['屬性'].pop('音標')
-        except:
+        except Exception:
             self.音標資料 = ''
 
     def 校對做(self, 輸入文本內容):
@@ -450,7 +452,7 @@ class 文本表(資料表):
         except Exception:
             try:
                 拼音.音標上長長度
-            except:
+            except Exception:
                 句物件 = 拆文分析器.建立句物件(
                     文章粗胚.建立物件語句前減號變標點符號(
                         self.文本資料
@@ -483,7 +485,7 @@ class 聽拍表(資料表):
     def __str__(self):
         try:
             return self.聽拍內容()[0]['內容']
-        except:
+        except Exception:
             return self.聽拍資料
 
     @classmethod
