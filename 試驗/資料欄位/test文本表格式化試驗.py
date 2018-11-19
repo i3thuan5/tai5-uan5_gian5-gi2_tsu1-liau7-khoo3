@@ -26,7 +26,7 @@ class 文本表格式化試驗(TestCase):
         文本 = 文本表.加資料(文本內容)
         self.assertEqual(
             文本.分詞資料(),
-            '食 飽 未 ？'
+            '食-飽-未 ？'
         )
 
     def test_對齊成功文本(self):
@@ -50,7 +50,7 @@ class 文本表格式化試驗(TestCase):
         文本 = 文本表.加資料(文本內容)
         self.assertEqual(
             文本.分詞資料(),
-            '食 飽 未 ？'
+            '食-飽-未 ？'
         )
 
     def test_兩個文本嘛愛有法度對齊(self):

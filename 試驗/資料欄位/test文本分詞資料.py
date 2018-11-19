@@ -24,7 +24,7 @@ class 文本分詞資料(TestCase):
     def test_文本爾(self):
         self.詞內容['文本資料'] = '豬仔'
         文本 = 文本表.加資料(self.詞內容)
-        self.assertEqual(文本.分詞資料(), '豬 仔')
+        self.assertEqual(文本.分詞資料(), '豬-仔')
 
     def test_文本佮音標(self):
         self.詞內容['文本資料'] = '豬仔'
@@ -48,7 +48,7 @@ class 文本分詞資料(TestCase):
     def test_分詞符號換做一般pipe符號(self):
         self.詞內容['文本資料'] = '｜＝安姑＝｜＝＝表小弟'
         文本 = 文本表.加資料(self.詞內容)
-        self.assertEqual(文本.分詞資料(), '| ＝ 安 姑 ＝ | ＝ ＝ 表 小 弟')
+        self.assertEqual(文本.分詞資料(), '| ＝ 安-姑 ＝ | ＝ ＝ 表-小-弟')
 
     def test_文本顯示(self):
         self.詞內容['文本資料'] = '------------呵-------------'
