@@ -60,7 +60,7 @@ setup(
     ],
     install_requires=[
         'tai5-uan5-gian5-gi2-kang1-ku7>=0.6.0',
-        'django<2.0',
+        'django',
         'pyyaml',
         'psycopg2',
         'django-cors-headers',
