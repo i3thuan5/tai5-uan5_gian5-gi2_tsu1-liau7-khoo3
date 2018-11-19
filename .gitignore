@@ -5,3 +5,7 @@ __pycache__/
 /venv
 /文件/_*
 /node_modules/
+/.project
+/.pydevproject
+/db.sqlite3
+/資料庫影音檔案
