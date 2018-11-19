@@ -59,6 +59,7 @@ class 匯入資料指令試驗(TestCase):
     @patch('臺灣言語資料庫.匯出入.匯出入工具._匯入物件')
     @patch('urllib.request.urlopen')
     def test_愛算資料狀態(self, urlopenMocka, 匯入物件mocka, 顯示資料狀態mocka):
+        顯示資料狀態mocka.return_value = 'Sui!'
         with io.StringIO() as out:
             call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
         self.assertEqual(顯示資料狀態mocka.call_count, 2)
@@ -111,6 +112,7 @@ class 匯入資料指令試驗(TestCase):
     @patch('urllib.request.urlopen')
     def test_程式錯誤愛算資料狀態(self, urlopenMocka, 匯入物件mocka, 顯示資料狀態mocka):
         匯入物件mocka.side_effect = ValidationError('資料格式錯誤')
+        顯示資料狀態mocka.return_value = 'Sui!'
         with io.StringIO() as out:
             call_command('匯入資料', 'http://意傳.台灣/臺灣言語資料庫.yaml', stdout=out)
         self.assertEqual(顯示資料狀態mocka.call_count, 2)
