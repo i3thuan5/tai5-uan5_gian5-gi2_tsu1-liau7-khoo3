@@ -24,7 +24,7 @@ class 外語分詞資料(TestCase):
     def test_外語爾(self):
         self.詞內容['外語資料'] = '小豬'
         外語 = 外語表.加資料(self.詞內容)
-        self.assertEqual(外語.分詞資料(), '小 豬')
+        self.assertEqual(外語.分詞資料(), '小-豬')
 
     def test_減號一堆(self):
         self.詞內容['外語資料'] = '------------呵-------------'
@@ -37,7 +37,7 @@ class 外語分詞資料(TestCase):
     def test_分詞符號換做一般pipe符號(self):
         self.詞內容['外語資料'] = '｜＝安姑＝｜＝＝表弟'
         外語 = 外語表.加資料(self.詞內容)
-        self.assertEqual(外語.分詞資料(), '| ＝ 安 姑 ＝ | ＝ ＝ 表 弟')
+        self.assertEqual(外語.分詞資料(), '| ＝ 安-姑 ＝ | ＝ ＝ 表-弟')
 
     def test_外語顯示(self):
         self.詞內容['外語資料'] = '｜＝安姑＝｜＝＝表弟'
