@@ -62,7 +62,7 @@ setup(
         'tai5-uan5-gian5-gi2-kang1-ku7>=0.6.0',
         'django',
         'pyyaml',
-        'psycopg2',
+        'psycopg2-binary',
         'django-cors-headers',
         'pypi-libavwrapper',
     ],
